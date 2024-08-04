@@ -1,35 +1,56 @@
 <template>
-  <a-modal
-    v-model:visible="visible"
-    :title="`生成 ${previewTableName} 表预览`"
-    :mask-closable="false"
-    :esc-to-close="false"
-    width="100%"
-    :footer="false"
-  >
+  <a-modal v-model:visible="visible" width="90%" :footer="false">
+    <template #title>
+      {{ `生成 ${previewTableName} 表预览` }}
+      <a-link style="margin-left: 10px" icon @click="onDownload">下载源码</a-link>
+    </template>
     <div class="preview-content">
-      <a-layout>
-        <a-layout-sider theme="dark" :resize-directions="['right']" style="height: 700px">
-          <a-tree class="selectPreview" :data="treeData" :show-line="true" @select="onSelectPreview" />
+      <a-layout :has-sider="true">
+        <a-layout-sider theme="dark" style="max-width:600px; height: 700px" :resize-directions="['right']" :width="370">
+          <a-tree
+            ref="treeRef"
+            :data="treeData"
+            show-line
+            block-node
+            :selected-keys="selectedKeys"
+            class="selectPreview"
+            @select="onSelectPreview"
+          >
+            <template #switcher-icon="node, { isLeaf }">
+              <icon-caret-down v-if="!isLeaf" />
+            </template>
+            <template #icon="node">
+              <GiSvgIcon v-if="!node.isLeaf && !node.expanded" :size="16" name="directory-blue" />
+              <GiSvgIcon v-if="!node.isLeaf && node.expanded" :size="16" name="directory-open-blue" />
+              <GiSvgIcon v-if="node.isLeaf && checkFileType(node.node.title, '.java')" :size="16" name="file-java" />
+              <GiSvgIcon v-if="node.isLeaf && checkFileType(node.node.title, '.vue')" :size="16" name="file-vue" />
+              <GiSvgIcon v-if="node.isLeaf && checkFileType(node.node.title, '.ts')" :size="16"
+                         name="file-typescript" />
+              <GiSvgIcon v-if="node.isLeaf && checkFileType(node.node.title, '.js')" :size="16"
+                         name="file-javascript" />
+              <GiSvgIcon v-if="node.isLeaf && checkFileType(node.node.title, '.json')" :size="16" name="file-json" />
+              <GiSvgIcon v-if="node.isLeaf && checkFileType(node.node.title, 'pom.xml')" :size="16" name="file-maven" />
+              <GiSvgIcon
+                v-if="node.isLeaf && checkFileType(node.node.title, '.xml') && !checkFileType(node.node.title, 'pom.xml')"
+                :size="16" name="file-xml" />
+              <GiSvgIcon v-if="node.isLeaf && checkFileType(node.node.title, '.sql')" :size="16" name="file-sql" />
+            </template>
+          </a-tree>
         </a-layout-sider>
         <a-layout-content>
-          <a-card :header-style="{ height: '50px' }">
-            <template #title> {{ currentPreview?.path }}\{{ currentPreview?.fileName }} </template>
-            <template #extra>
-              <a-button-group type="outline" size="small">
-                <a-button @click="onCopy">
-                  <template #icon>
-                    <icon-copy />
-                  </template>
-                </a-button>
-                <a-button @click="gen">
-                  <template #icon>
-                    <icon-download />
-                  </template>
-                </a-button>
-              </a-button-group>
+          <a-card>
+            <template #title>
+              <a-typography-title :heading="6" ellipsis>
+                {{ currentPreview?.path }}{{ currentPreview?.path.indexOf('/') !== -1 ? '/' : '\\' }}{{ currentPreview?.fileName }}
+              </a-typography-title>
             </template>
             <a-scrollbar style="height: 650px; overflow: auto">
+              <a-link style="position: absolute; right: 20px; z-index: 999" @click="onCopy">
+                <template #icon>
+                  <icon-copy size="large" />
+                </template>
+                复制
+              </a-link>
               <GiCodeView
                 :type="'vue' === currentPreview?.fileName.split('.')[1] ? 'vue' : 'javascript'"
                 :code-json="currentPreview?.content"
@@ -54,9 +75,10 @@ const currentPreview = ref<GeneratePreviewResp>()
 const genPreviewList = ref<GeneratePreviewResp[]>([])
 
 const visible = ref(false)
-const treeData = ref<TreeNodeData[]>([])
 const previewTableName = ref<string>('')
-
+const treeRef = ref()
+const treeData = ref<TreeNodeData[]>([])
+// 合并目录
 const mergeDir = (parent: TreeNodeData) => {
   // 合并目录
   if (parent.children?.length === 1 && typeof parent.children[0].key === 'number') {
@@ -73,7 +95,7 @@ const mergeDir = (parent: TreeNodeData) => {
       mergeDir(child)
     }
   }
-  return ''
+  return parent.title
 }
 
 const pushDir = (children: TreeNodeData[] | undefined, treeNode: TreeNodeData) => {
@@ -92,7 +114,8 @@ const pushDir = (children: TreeNodeData[] | undefined, treeNode: TreeNodeData) =
 let autoIncrementKey = 0
 // 将生成的目录组装成树结构
 const assembleTree = (genPreview: GeneratePreviewResp) => {
-  const paths: string[] = genPreview.path.split('\\')
+  const separator = genPreview.path.includes('/') ? '/' : '\\'
+  const paths: string[] = genPreview.path.split(separator)
   let tempChildren: TreeNodeData[] | undefined = treeData.value
   for (const path of paths) {
     // 向treeData中推送目录,如果该级目录有那么不推送进行下级的合并
@@ -101,6 +124,7 @@ const assembleTree = (genPreview: GeneratePreviewResp) => {
   tempChildren?.push({ title: genPreview.fileName, key: genPreview.fileName, children: new Array<TreeNodeData>() })
 }
 
+const selectedKeys = ref()
 // 打开
 const onPreview = async (tableName: string) => {
   treeData.value = []
@@ -113,14 +137,22 @@ const onPreview = async (tableName: string) => {
   for (const valueElement of treeData.value) {
     mergeDir(valueElement)
   }
+  selectedKeys.value = genPreviewList.value[0].fileName
   currentPreview.value = genPreviewList.value[0]
+  await nextTick(() => {
+    treeRef.value.expandAll(true)
+  })
   visible.value = true
 }
 
 // 选择文件预览
-const onSelectPreview = (selectedKeys) => {
-  if (typeof selectedKeys[0] === 'string') {
-    currentPreview.value = genPreviewList.value.filter((p) => p.fileName === selectedKeys[0])[0]
+const onSelectPreview = (keys: (string | number)[]) => {
+  if (typeof keys[0] === 'string') {
+    currentPreview.value = genPreviewList.value.filter((p) => p.fileName === keys[0])[0]
+    selectedKeys.value = keys[0]
+  } else {
+    const expandedKeys = treeRef.value.getExpandedNodes().map((node) => node.key)
+    treeRef.value.expandNode(keys[0], !expandedKeys.includes(keys[0]))
   }
 }
 
@@ -136,13 +168,22 @@ watch(copied, () => {
   }
 })
 
-const gen = () => {
+// 下载
+const onDownload = () => {
   emit('generate', [previewTableName.value])
 }
+// 校验文件类型
+const checkFileType = (title: string, type: string) => {
+  return title.endsWith(type)
+}
+
 defineExpose({ onPreview })
 </script>
 
 <style scoped>
+:deep(.arco-tree-show-line .arco-tree-node-is-leaf:not(.arco-tree-node-is-tail) .arco-tree-node-indent::after) {
+  content: none;
+}
 .preview-content :deep(.arco-layout-sider) {
   min-width: 200px;
   white-space: nowrap;
