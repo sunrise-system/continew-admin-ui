@@ -6,6 +6,7 @@
     :esc-to-close="false"
     :modal-style="{ maxWidth: '520px' }"
     width="90%"
+    draggable
     @before-ok="save"
     @close="reset"
   >
@@ -37,7 +38,7 @@ const options: Options = {
   btns: { hide: true }
 }
 
-const columns: Columns = [
+const columns: Columns = reactive([
   {
     label: '上级部门',
     field: 'parentId',
@@ -59,7 +60,15 @@ const columns: Columns = [
     },
     rules: [{ required: true, message: '请选择上级部门' }]
   },
-  { label: '名称', field: 'name', type: 'input', rules: [{ required: true, message: '请输入名称' }] },
+  {
+    label: '名称',
+    field: 'name',
+    type: 'input',
+    rules: [{ required: true, message: '请输入名称' }],
+    props: {
+      maxLength: 30
+    }
+  },
   {
     label: '排序',
     field: 'sort',
@@ -90,7 +99,7 @@ const columns: Columns = [
       uncheckedText: '禁用'
     }
   }
-]
+])
 
 const { form, resetForm } = useForm({
   sort: 999,

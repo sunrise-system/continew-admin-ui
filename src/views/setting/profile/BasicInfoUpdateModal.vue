@@ -5,6 +5,7 @@
     :mask-closable="false"
     :esc-to-close="false"
     :width="width >= 500 ? 500 : '100%'"
+    draggable
     @before-ok="save"
     @close="reset"
   >
@@ -28,7 +29,7 @@ const options: Options = {
   btns: { hide: true }
 }
 
-const columns: Columns = [
+const columns: Columns = reactive([
   {
     label: '昵称',
     field: 'nickname',
@@ -46,7 +47,7 @@ const columns: Columns = [
     ],
     rules: [{ required: true, message: '请选择性别' }]
   }
-]
+])
 
 const userStore = useUserStore()
 const userInfo = computed(() => userStore.userInfo)

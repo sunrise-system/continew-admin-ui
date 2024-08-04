@@ -1,45 +1,28 @@
 <template>
-  <a-modal
-    v-model:visible="visible"
-    :title="title"
-    :mask-closable="false"
-    :esc-to-close="false"
-    :width="width >= 500 ? 500 : '100%'"
-    @before-ok="save"
-    @close="reset"
-  >
+  <a-modal v-model:visible="visible" :title="title" :mask-closable="false" :esc-to-close="false"
+    :width="width >= 500 ? 500 : '100%'" draggable @before-ok="save" @close="reset">
     <GiForm ref="formRef" v-model="form" :options="options" :columns="columns">
       <template #captcha>
-        <a-input v-model="form.captcha" placeholder="请输入验证码" :max-length="4" allow-clear style="flex: 1 1" />
-        <a-button
-          class="captcha-btn"
-          :loading="captchaLoading"
-          :disabled="captchaDisable"
-          size="large"
-          @click="onCaptcha"
-        >
+        <a-input v-model="form.captcha" placeholder="请输入验证码" :max-length="6" allow-clear style="flex: 1 1" />
+        <a-button class="captcha-btn" :loading="captchaLoading" :disabled="captchaDisable" size="large"
+          @click="onCaptcha">
           {{ captchaBtnName }}
         </a-button>
       </template>
     </GiForm>
-    <Verify
-      ref="VerifyRef"
-      :captcha-type="captchaType"
-      :mode="captchaMode"
-      :img-size="{ width: '330px', height: '155px' }"
-      @success="getCaptcha"
-    />
+    <Verify ref="VerifyRef" :captcha-type="captchaType" :mode="captchaMode"
+      :img-size="{ width: '330px', height: '155px' }" @success="getCaptcha" />
   </a-modal>
 </template>
 
 <script setup lang="ts">
 import { useWindowSize } from '@vueuse/core'
 import { Message } from '@arco-design/web-vue'
-// import { getSmsCaptcha, getEmailCaptcha, updateUserEmail, updateUserPhone } from '@/apis'
-import { updateUserPassword } from '@/apis'
+import { getEmailCaptcha, updateUserEmail, updateUserPassword } from '@/apis'
+
 import { encryptByRsa } from '@/utils/encrypt'
 import { useUserStore } from '@/stores'
-import { type Columns, GiForm } from '@/components/GiForm'
+import { type Columns, GiForm, type Options } from '@/components/GiForm'
 import { useForm } from '@/hooks'
 import * as Regexp from '@/utils/regexp'
 
@@ -68,7 +51,7 @@ const { form, resetForm } = useForm({
   rePassword: ''
 })
 
-const columns: Columns = [
+const columns: Columns = reactive([
   {
     label: '手机号',
     field: 'phone',
@@ -154,7 +137,7 @@ const columns: Columns = [
       return verifyType.value !== 'password'
     }
   }
-]
+])
 
 const VerifyRef = ref<InstanceType<any>>()
 const captchaType = ref('blockPuzzle')
@@ -198,9 +181,9 @@ const getCaptcha = async () => {
       //   phone: form.phone
       // })
     } else if (verifyType.value === 'email') {
-      // await getEmailCaptcha({
-      //   email: form.email
-      // })
+      await getEmailCaptcha({
+        email: form.email
+      })
     }
     captchaLoading.value = false
     captchaDisable.value = true
@@ -233,11 +216,11 @@ const save = async () => {
       //   oldPassword: encryptByRsa(form.oldPassword) as string
       // })
     } else if (verifyType.value === 'email') {
-      // await updateUserEmail({
-      //   email: form.email,
-      //   captcha: form.captcha,
-      //   oldPassword: encryptByRsa(form.oldPassword) as string
-      // })
+      await updateUserEmail({
+        email: form.email,
+        captcha: form.captcha,
+        oldPassword: encryptByRsa(form.oldPassword) as string
+      })
     } else if (verifyType.value === 'password') {
       if (form.newPassword !== form.rePassword) {
         Message.error('两次新密码不一致')
