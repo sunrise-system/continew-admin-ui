@@ -6,7 +6,7 @@
       :data="dataList"
       :columns="columns"
       :loading="loading"
-      :scroll="{ x: '100%', y: '100%', minWidth: 1000 }"
+      :scroll="{ x: '100%', y: '100%', minWidth: 1200 }"
       :pagination="pagination"
       :disabled-tools="['size']"
       :disabled-column-keys="['title']"
@@ -67,6 +67,7 @@ defineOptions({ name: 'SystemNotice' })
 
 const { notice_type, notice_status_enum } = useDict('notice_type', 'notice_status_enum')
 
+const router = useRouter()
 const queryForm = reactive<NoticeQuery>({
   sort: ['createTime,desc']
 })
@@ -111,9 +112,9 @@ const reset = () => {
 }
 
 // 删除
-const onDelete = (item: NoticeResp) => {
-  return handleDelete(() => deleteNotice(item.id), {
-    content: `是否确定删除公告 [${item.title}]？`,
+const onDelete = (record: NoticeResp) => {
+  return handleDelete(() => deleteNotice(record.id), {
+    content: `是否确定删除公告 [${record.title}]？`,
     showModal: true
   })
 }
@@ -121,18 +122,21 @@ const onDelete = (item: NoticeResp) => {
 const NoticeAddModalRef = ref<InstanceType<typeof NoticeAddModal>>()
 // 新增
 const onAdd = () => {
-  NoticeAddModalRef.value?.onAdd()
+  // NoticeAddModalRef.value?.onAdd()
+  router.push({ path: '/system/notice/add' })
 }
 
 // 修改
-const onUpdate = (item: NoticeResp) => {
-  NoticeAddModalRef.value?.onUpdate(item.id)
+const onUpdate = (record: NoticeResp) => {
+  // NoticeAddModalRef.value?.onUpdate(record.id)
+  router.push({ path: '/system/notice/add', query: { id: record.id, type: 'edit' } })
 }
 
 const NoticeDetailModalRef = ref<InstanceType<typeof NoticeDetailModal>>()
 // 详情
-const onDetail = (item: NoticeResp) => {
-  NoticeDetailModalRef.value?.onDetail(item.id)
+const onDetail = (record: NoticeResp) => {
+  // NoticeDetailModalRef.value?.onDetail(record.id)
+  router.push({ path: '/system/notice/detail', query: { id: record.id } })
 }
 </script>
 
