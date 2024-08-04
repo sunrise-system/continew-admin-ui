@@ -1,12 +1,13 @@
 {
-  "theme": "light",
-  "themeColor": "#165DFF",
-  "tab": true,
-  "tabMode": "card",
   "animate": false,
   "animateMode": "zoom-fade",
-  "menuCollapse": true,
+  "copyrightDisplay": true,
+  "layout": "left",
   "menuAccordion": true,
+  "menuCollapse": true,
   "menuDark": false,
-  "layout": "left"
+  "tab": true,
+  "tabMode": "card",
+  "theme": "light",
+  "themeColor": "#165DFF"
 }
