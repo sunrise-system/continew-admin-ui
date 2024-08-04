@@ -12,35 +12,31 @@
         <DeptTree placeholder="请输入关键词" @node-click="handleSelectDept" />
       </a-col>
       <a-col :xs="24" :sm="16" :md="17" :lg="18" :xl="19" :xxl="20" flex="1" class="h-full ov-hidden">
-        <GiTable
-          row-key="id"
-          :data="dataList"
-          :columns="columns"
-          :loading="loading"
-          :scroll="{ x: '100%', y: '100%', minWidth: 1500 }"
-          :pagination="pagination"
-          :disabled-tools="['size']"
-          :disabled-column-keys="['username']"
-          @refresh="search"
-        >
+        <GiTable row-key="id" :data="dataList" :columns="columns" :loading="loading"
+                 :scroll="{ x: '100%', y: '100%', minWidth: 1500 }" :pagination="pagination" :disabled-tools="['size']"
+                 :disabled-column-keys="['username']" @refresh="search">
           <template #custom-left>
             <a-input v-model="queryForm.description" placeholder="请输入关键词" allow-clear @change="search">
-              <template #prefix><icon-search /></template>
+              <template #prefix>
+                <icon-search />
+              </template>
             </a-input>
-            <a-select
-              v-model="queryForm.status"
-              :options="DisEnableStatusList"
-              placeholder="请选择状态"
-              allow-clear
-              style="width: 150px"
-              @change="search"
-            />
+            <a-select v-model="queryForm.status" :options="DisEnableStatusList" placeholder="请选择状态" allow-clear
+                      style="width: 150px" @change="search" />
             <a-button @click="reset">重置</a-button>
           </template>
           <template #custom-right>
             <a-button v-permission="['system:user:add']" type="primary" @click="onAdd">
-              <template #icon><icon-plus /></template>
+              <template #icon>
+                <icon-plus />
+              </template>
               <span>新增</span>
+            </a-button>
+            <a-button v-permission="['system:user:import']" @click="onImport">
+              <template #icon>
+                <icon-upload />
+              </template>
+              <span>导入</span>
             </a-button>
             <a-tooltip content="导出">
               <a-button v-permission="['system:user:export']" class="gi_hover_btn-border" @click="onExport">
@@ -52,7 +48,7 @@
           </template>
           <template #username="{ record }">
             <GiCellAvatar :avatar="getAvatar(record.avatar, record.gender)" :name="record.username" is-link
-              @click="onDetail(record)" />
+                          @click="onDetail(record)" />
           </template>
           <template #gender="{ record }">
             <GiCellGender :gender="record.gender" />
@@ -71,7 +67,8 @@
             <a-space>
               <a-link v-permission="['system:user:update']" @click="onUpdate(record)">修改</a-link>
               <a-link v-permission="['system:user:delete']" status="danger"
-                :title="record.isSystem ? '系统内置数据不能删除' : '删除'" :disabled="record.disabled" @click="onDelete(record)">
+                      :title="record.isSystem ? '系统内置数据不能删除' : '删除'" :disabled="record.disabled"
+                      @click="onDelete(record)">
                 删除
               </a-link>
               <a-dropdown>
@@ -86,7 +83,8 @@
       </a-col>
     </a-row>
 
-    <UserAddModal ref="UserAddModalRef" @save-success="search" />
+    <UserAddDrawer ref="UserAddDrawerRef" @save-success="search" />
+    <UserImportDrawer ref="UserImportDrawerRef" @save-success="search" />
     <UserDetailDrawer ref="UserDetailDrawerRef" />
     <UserResetPwdModal ref="UserResetPwdModalRef" />
   </div>
@@ -94,7 +92,8 @@
 
 <script setup lang="ts">
 import DeptTree from './dept/index.vue'
-import UserAddModal from './UserAddModal.vue'
+import UserAddDrawer from './UserAddDrawer.vue'
+import UserImportDrawer from './UserImportDrawer.vue'
 import UserDetailDrawer from './UserDetailDrawer.vue'
 import UserResetPwdModal from './UserResetPwdModal.vue'
 import { type UserQuery, type UserResp, deleteUser, exportUser, listUser } from '@/apis'
@@ -166,9 +165,9 @@ const reset = () => {
 }
 
 // 删除
-const onDelete = (item: UserResp) => {
-  return handleDelete(() => deleteUser(item.id), {
-    content: `是否确定删除 [${item.nickname}(${item.username})]？`,
+const onDelete = (record: UserResp) => {
+  return handleDelete(() => deleteUser(record.id), {
+    content: `是否确定删除 [${record.nickname}(${record.username})]？`,
     showModal: true
   })
 }
@@ -184,27 +183,33 @@ const handleSelectDept = (keys: Array<any>) => {
   search()
 }
 
-const UserAddModalRef = ref<InstanceType<typeof UserAddModal>>()
+const UserAddDrawerRef = ref<InstanceType<typeof UserAddDrawer>>()
 // 新增
 const onAdd = () => {
-  UserAddModalRef.value?.onAdd()
+  UserAddDrawerRef.value?.onAdd()
+}
+
+const UserImportDrawerRef = ref<InstanceType<typeof UserImportDrawer>>()
+// 导入
+const onImport = () => {
+  UserImportDrawerRef.value?.onImport()
 }
 
 // 修改
-const onUpdate = (item: UserResp) => {
-  UserAddModalRef.value?.onUpdate(item.id)
+const onUpdate = (record: UserResp) => {
+  UserAddDrawerRef.value?.onUpdate(record.id)
 }
 
 const UserDetailDrawerRef = ref<InstanceType<typeof UserDetailDrawer>>()
 // 详情
-const onDetail = (item: UserResp) => {
-  UserDetailDrawerRef.value?.onDetail(item.id)
+const onDetail = (record: UserResp) => {
+  UserDetailDrawerRef.value?.onDetail(record.id)
 }
 
 const UserResetPwdModalRef = ref<InstanceType<typeof UserResetPwdModal>>()
 // 重置密码
-const onResetPwd = (item: UserResp) => {
-  UserResetPwdModalRef.value?.onReset(item.id)
+const onResetPwd = (record: UserResp) => {
+  UserResetPwdModalRef.value?.onReset(record.id)
 }
 </script>
 
