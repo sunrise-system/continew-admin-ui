@@ -1,4 +1,4 @@
-import { type RouteRecordRaw, createRouter, createWebHashHistory } from 'vue-router'
+import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
 import { useRouteStore } from '@/stores'
 
 /** 默认布局 */
@@ -19,6 +19,7 @@ export const constantRoutes: RouteRecordRaw[] = [
   },
   {
     path: '/login',
+    name: 'Login',
     component: () => import('@/views/login/index.vue'),
     meta: { hidden: true }
   },
@@ -34,7 +35,6 @@ export const constantRoutes: RouteRecordRaw[] = [
   },
   {
     path: '/',
-    name: 'Home',
     component: Layout,
     redirect: '/home',
     meta: { hidden: false },
@@ -50,6 +50,11 @@ export const constantRoutes: RouteRecordRaw[] = [
   {
     path: '/social/callback',
     component: () => import('@/views/login/social/index.vue'),
+    meta: { hidden: true }
+  },
+  {
+    path: '/pwdExpired',
+    component: () => import('@/views/login/pwdExpired/index.vue'),
     meta: { hidden: true }
   },
   {
@@ -75,7 +80,7 @@ export const constantRoutes: RouteRecordRaw[] = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(import.meta.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes: constantRoutes,
   scrollBehavior: () => ({ left: 0, top: 0 })
 })

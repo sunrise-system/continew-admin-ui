@@ -1,6 +1,5 @@
 /* 全局样式 */
 @import './var.scss';
-
 // 通用外边距
 .gi_margin {
   margin: $margin;
@@ -228,7 +227,25 @@
   max-height: 100%;
   overflow: hidden;
 }
-
+.detail{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  &_header{
+    background: var(--color-bg-1);
+  }
+  &_content{
+    position: relative;
+    flex: 1;
+    // height: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    padding: $padding;
+    margin: $margin;
+    background: var(--color-bg-1);
+  }
+}
 .gi_card_title {
   .arco-card-header-title::before {
     content: '';
