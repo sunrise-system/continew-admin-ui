@@ -104,10 +104,10 @@ http.interceptors.response.use(
     NProgress.done()
     const response = Object.assign({}, error.response)
     response
-    && messageErrorWrapper({
-      content: StatusCodeMessage[response.status] || '服务器暂时未响应，请刷新页面并重试。若无法解决，请联系管理员',
-      duration: 5 * 1000
-    })
+      && messageErrorWrapper({
+        content: StatusCodeMessage[response.status] || '服务器暂时未响应，请刷新页面并重试。若无法解决，请联系管理员',
+        duration: 5 * 1000
+      })
     return Promise.reject(error)
   }
 )
@@ -186,4 +186,10 @@ const download = (url: string, params?: object, config?: AxiosRequestConfig): Pr
     ...config
   })
 }
-export default { get, post, put, patch, del, request, requestNative, download }
+const activity = '/activity'
+
+export function fnMotion(sUrl: string, data: any) {
+  return http.post(`${activity}/${sUrl}`, data)
+}
+
+export default { get, post, put, patch, del, request, requestNative, download, fnMotion }
