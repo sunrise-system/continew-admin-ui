@@ -25,6 +25,15 @@ export type UserDetailResp = UserResp & {
   pwdResetTime?: string
 }
 
+export interface UserImportResp {
+  importKey: string
+  totalRows: number
+  validRows: number
+  duplicateUserRows: number
+  duplicateEmailRows: number
+  duplicatePhoneRows: number
+}
+
 export interface UserQuery {
   description?: string
   status?: number
@@ -263,6 +272,7 @@ export interface StoragePageQuery extends StorageQuery, PageQuery {
 
 /** 系统参数类型 */
 export interface OptionResp {
+  id: string
   name: string
   code: string
   value: string
@@ -270,7 +280,8 @@ export interface OptionResp {
 }
 
 export interface OptionQuery {
-  code: Array<string>
+  code?: Array<string>
+  category?: string
 }
 
 /** 基础配置类型 */
@@ -279,17 +290,28 @@ export interface BasicConfig {
   SITE_LOGO: string
   SITE_TITLE: string
   SITE_COPYRIGHT: string
+  SITE_BEIAN: string
+}
+
+/** 基础配置类型 */
+export interface SiteConfig {
+  SITE_FAVICON: OptionResp
+  SITE_LOGO: OptionResp
+  SITE_TITLE: OptionResp
+  SITE_DESCRIPTION: OptionResp
+  SITE_COPYRIGHT: OptionResp
+  SITE_BEIAN: OptionResp
 }
 
 /** 邮箱配置类型 */
 export interface MailConfig {
-  MAIL_SEND_TYPE: string
-  MAIL_SMTP_SERVER: string
-  MAIL_SMTP_PORT: string
-  MAIL_SMTP_USERNAME: string
-  MAIL_SMTP_PASSWORD: string
-  MAIL_SMTP_VERIFY_TYPE: string
-  MAIL_FROM: string
+  MAIL_PROTOCOL: OptionResp
+  MAIL_HOST: OptionResp
+  MAIL_PORT: OptionResp
+  MAIL_USERNAME: OptionResp
+  MAIL_PASSWORD: OptionResp
+  MAIL_SSL_ENABLED: OptionResp
+  MAIL_SSL_PORT: OptionResp
 }
 
 /** 安全配置类型 */
@@ -298,10 +320,10 @@ export interface SecurityConfig {
   PASSWORD_ERROR_LOCK_MINUTES: OptionResp
   PASSWORD_EXPIRATION_DAYS: OptionResp
   PASSWORD_EXPIRATION_WARNING_DAYS: OptionResp
-  PASSWORD_REUSE_POLICY: OptionResp
+  PASSWORD_REPETITION_TIMES: OptionResp
   PASSWORD_MIN_LENGTH: OptionResp
   PASSWORD_ALLOW_CONTAIN_USERNAME: OptionResp
-  PASSWORD_CONTAIN_SPECIAL_CHARACTERS: OptionResp
+  PASSWORD_REQUIRE_SYMBOLS: OptionResp
 }
 
 /** 绑定三方账号信息 */
