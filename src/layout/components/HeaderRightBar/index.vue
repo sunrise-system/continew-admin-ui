@@ -93,14 +93,13 @@ onBeforeUnmount(() => {
 const unreadMessageCount = ref(0)
 // 初始化 WebSocket
 const initWebSocket = (token: string) => {
-  socket = new WebSocket(`${import.meta.env.VITE_API_WS_URL}/ws?token=${token}`)
+  socket = new WebSocket(`${import.meta.env.VITE_API_WS_URL}/websocket?token=${token}`)
   socket.onopen = () => {
     // console.log('WebSocket connection opened')
   }
 
   socket.onmessage = (event) => {
-    const data = JSON.parse(event.data)
-    unreadMessageCount.value = Number.parseInt(data?.content)
+    unreadMessageCount.value = Number.parseInt(event.data)
   }
 
   socket.onerror = () => {
@@ -147,32 +146,7 @@ const logout = () => {
   })
 }
 
-const checkPasswordExpired = () => {
-  if (!userStore.pwdExpiredShow || !userStore.userInfo.pwdExpired) {
-    return
-  }
-  Modal.confirm({
-    title: '提示',
-    content: '密码已过期，需要跳转到修改密码页面？',
-    hideCancel: false,
-    closable: true,
-    onBeforeOk: async () => {
-      try {
-        await router.push({ path: '/setting/profile' })
-        return true
-      } catch (error) {
-        return false
-      }
-    },
-    onCancel: () => {
-      // 当前登录会话不再提示
-      userStore.pwdExpiredShow = false
-    }
-  })
-}
-
 onMounted(() => {
-  checkPasswordExpired()
   getMessageCount()
 })
 </script>

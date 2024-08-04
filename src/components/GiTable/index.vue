@@ -70,8 +70,8 @@
     </a-row>
     <div class="gi-table__body" :class="`gi-table__body-pagination-${attrs['page-position']}`">
       <div class="gi-table__container">
-        <a-table ref="tableRef" :stripe="stripe" :size="size" :bordered="{ cell: isBordered }"
-          v-bind="{ ...attrs, columns: _columns }" :scrollbar="false" :pagination="false">
+        <a-table ref="tableRef" :stripe="stripe" :size="size" column-resizable :bordered="{ cell: isBordered }"
+          v-bind="{ ...attrs, columns: _columns }" :scrollbar="true" :pagination="false">
           <template v-for="key in Object.keys(slots)" :key="key" #[key]="scoped">
             <slot :key="key" :name="key" v-bind="scoped"></slot>
           </template>
@@ -202,7 +202,7 @@ defineExpose({ tableRef })
   height: 100%;
   background: var(--color-bg-1);
   position: relative;
-
+  box-sizing:border-box;
   &--fullscreen {
     padding: $padding;
     position: fixed;
