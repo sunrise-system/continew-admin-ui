@@ -1,3 +1,24 @@
+## [v3.2.0](https://github.com/continew-org/continew-admin-ui/compare/v3.1.0...v3.2.0) (2024-08-05)
+### ✨ 新特性
+* 新增用户批量导入功能 (GitHub#23) ([f72b4b8](https://github.com/continew-org/continew-admin-ui/commit/f72b4b8d563acd6d2829018be0d079a835911f18))
+* 新增任务调度模块 SnailJob（灵活，可靠和快速的分布式任务重试和分布式任务调度平台） (Gitee#13) ([e8c1d4b](https://github.com/continew-org/continew-admin-ui/commit/e8c1d4b69b10a53f4adfaf8a2fd4b8280de965c7)) ([d7fc693](https://github.com/continew-org/continew-admin-ui/commit/d7fc693650259d8ad50aaf69504b991343f4694b)) ([edadea9](https://github.com/continew-org/continew-admin-ui/commit/edadea91edc74a7f95b67e7401aa7efb439f6ffd)) ([0a596f3](https://github.com/continew-org/continew-admin-ui/commit/0a596f3fdccc9fcecdb3d550889cb006450b30a3)) ([ff405d1](https://github.com/continew-org/continew-admin-ui/commit/ff405d12ab441f64c29b986fccb91caf727a5811))
+* 系统配置-基础配置 logo 及 favicon 改为 base64 存储 (Gitee#16) ([881c1ee](https://github.com/continew-org/continew-admin-ui/commit/881c1ee1e41805d5728648b1a72e50480199216b))
+* 新增支持 KKFileView 文件预览功能，需要自行部署文件预览服务器 (Gitee#17) ([99fa570](https://github.com/continew-org/continew-admin-ui/commit/99fa5709ee03a6f368c8297a7306c02872adfcb2))
+* 新增单页面通知公告编辑与查看 ([90693cb](https://github.com/continew-org/continew-admin-ui/commit/90693cb25d061af9d15b4579cf82db80a38cfc40))
+
+### 💎 功能优化
+
+- 优化部分代码格式 ([ed085c9](https://github.com/continew-org/continew-admin-ui/commit/ed085c92bdbf61bae6334ceaee4a3b7e5c605065))
+- 优化部分命名 ([805ae65](https://github.com/continew-org/continew-admin-ui/commit/805ae65556e7969cd0a1ac0ddee24b9a2c0be0ff))
+- 移除滚动条样式 ([b154375](https://github.com/continew-org/continew-admin-ui/commit/b15437537b0b8948e6ede22830852cd3eb778e84))
+- 回退用户管理部门树组件（此树查询不应该校验功能权限） ([ee6a6e4](https://github.com/continew-org/continew-admin-ui/commit/ee6a6e437d8f0806137ab49252c8d6f34337d3cd))
+- 优化子路由设置 ([f54caed](https://github.com/continew-org/continew-admin-ui/commit/f54caed4da38dc329c52e3e07419fca31f56bee7))
+- 路由切换时检测前端版本更新（原为定时器检测） ([5fdfada](https://github.com/continew-org/continew-admin-ui/commit/5fdfada11d6813ae2728797e0c5ef81387c39c6d))
+- 修复部分路由错误 ([92e773e](https://github.com/continew-org/continew-admin-ui/commit/92e773e621657946aab3a9149208139d98cac996))
+- 修复通知公告重叠问题 ([3364cb1](https://github.com/continew-org/continew-admin-ui/commit/3364cb185855541246a93f8663efe197597df170))
+- 解决代码生成页面丢失目录层级问题 (Gitee#12) ([fe08683](https://github.com/continew-org/continew-admin-ui/commit/fe086830dd6a50a0bbf7d1d59563b85a3bfa401c))
+- 修复表格固定操作列滚动时的错位样式问题 (Gitee#14) ([ce297c0](https://github.com/continew-org/continew-admin-ui/commit/ce297c0904f00ef6f93a9772b149f817a91a3f2a))
+- 修复文件管理没有文件时控制台报错 ([bad6e30](https://github.com/continew-org/continew-admin-ui/commit/bad6e30e4133507cd6e44de9f525c25d3ebc1adb))
 ## [v3.1.0](https://github.com/Charles7c/continew-admin-ui/compare/v3.0.1...v3.1.0) (2024-06-16)
 
 ### ✨ 新特性
