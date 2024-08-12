@@ -60,13 +60,13 @@ http.interceptors.request.use(
 http.interceptors.response.use(
   (response: AxiosResponse) => {
     const { data } = response
-    const { success, code, msg } = data
+    const { sCode, success, code, msg } = data
     if (response.request.responseType === 'blob') {
       NProgress.done()
       return response
     }
     // 成功
-    if (success) {
+    if (success || sCode === 'SUCCESS') {
       NProgress.done()
       return response
     }

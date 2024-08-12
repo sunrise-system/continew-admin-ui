@@ -52,8 +52,8 @@ const formatAsyncRoutes = (menus: RouteItem[]) => {
       item.children.sort((a, b) => (a?.sort ?? 0) - (b?.sort ?? 0)) // 排序
     }
     // 部分子菜单，例如：通知公告新增、查看详情，需要选中其父菜单
-    if (item.parentId && item.type === 2 && item.permission) {
-      item.activeMenu = pathMap.get(item.parentId)
+    if (item.pid && item.type === 2 && item.permission) {
+      item.activeMenu = pathMap.get(item.pid)
     }
     return {
       path: item.path,
@@ -112,7 +112,7 @@ const storeSetup = () => {
     return new Promise((resolve) => {
       // 向后端请求路由数据 这个接口已经根据用户角色过滤了没权限的路由(后端根据用户角色过滤路由显得比较安全些)
       getUserRoute().then((res) => {
-        const asyncRoutes = formatAsyncRoutes(res.data)
+        const asyncRoutes = formatAsyncRoutes(res.data.Context)
         setRoutes(asyncRoutes)
         const cloneRoutes = cloneDeep(asyncRoutes)
         const flatRoutes = flatMultiLevelRoutes(cloneRoutes as RouteRecordRaw[])

@@ -33,6 +33,12 @@ export default defineConfig(({ command, mode }) => {
           changeOrigin: true, // 是否允许不同源
           secure: false, // 支持https
           rewrite: (path) => path.replace(/^\/api/, '')
+        },
+        '/report': {
+          target: env.VITE_VOLTE_BASE_URL, // 后台服务器地址
+          changeOrigin: true, // 是否允许不同源
+          secure: false, // 支持https
+          rewrite: (path) => path.replace(/^\/report/, '')
         }
       }
     },

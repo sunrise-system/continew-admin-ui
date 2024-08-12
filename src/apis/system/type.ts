@@ -89,7 +89,7 @@ export interface RolePageQuery extends RoleQuery, PageQuery {
 export interface MenuResp {
   id: string
   title: string
-  parentId: string
+  pid: string
   type: 1 | 2 | 3
   path: string
   name: string

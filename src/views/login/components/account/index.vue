@@ -7,7 +7,7 @@
     <a-form-item field="password" hide-label>
       <a-input-password v-model="form.password" placeholder="请输入密码" />
     </a-form-item>
-    <a-form-item field="captcha" hide-label>
+    <a-form-item v-if="Captcha" field="captcha" hide-label>
       <a-input v-model="form.captcha" placeholder="请输入验证码" :max-length="4" allow-clear style="flex: 1 1" />
       <div class="captcha-container" @click="getCaptcha">
         <img :src="captchaImgBase64" alt="验证码" class="captcha" />
@@ -82,12 +82,15 @@ onBeforeUnmount(() => {
 })
 
 const captchaImgBase64 = ref()
+const Captcha = ref(false)
+
 // 获取验证码
 const getCaptcha = () => {
   getImageCaptcha().then((res) => {
-    const { uuid, img, expireTime } = res.data
+    const { openCaptcha, uuid, img, expireTime } = res.data
     form.uuid = uuid
     captchaImgBase64.value = img
+    Captcha.value = openCaptcha
     form.expired = false
     startTimer(expireTime)
   })
@@ -104,7 +107,8 @@ const handleLogin = async () => {
     loading.value = true
     await userStore.accountLogin({
       username: form.username,
-      password: encryptByRsa(form.password) || '',
+      // password: encryptByRsa(form.password) || '',
+      password: form.password || '',
       captcha: form.captcha,
       uuid: form.uuid
     })

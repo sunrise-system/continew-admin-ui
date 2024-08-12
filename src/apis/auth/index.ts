@@ -1,11 +1,11 @@
 import type * as Auth from './type'
-import http from '@/utils/http'
+import http, { fnMotion } from '@/utils/http'
 
 const BASE_URL = '/auth'
 
 /** @desc 账号登录 */
-export function accountLogin(req: Auth.AccountLoginReq) {
-  return http.post<Auth.LoginResp>(`${BASE_URL}/account`, req)
+export function accountLogin(req: any) {
+  return fnMotion(`ADM08901A`, req)
 }
 
 /** @desc 手机号登录 */
@@ -35,10 +35,10 @@ export function logout() {
 
 /** @desc 获取用户信息 */
 export const getUserInfo = () => {
-  return http.get<Auth.UserInfo>(`${BASE_URL}/user/info`)
+  return fnMotion(`ADM08903A`, {})
 }
 
 /** @desc 获取路由信息 */
 export const getUserRoute = () => {
-  return http.get<Auth.RouteItem[]>(`${BASE_URL}/route`)
+  return fnMotion(`ADM08906A`, {})
 }

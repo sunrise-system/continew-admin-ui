@@ -49,21 +49,21 @@ const storeSetup = () => {
   }
 
   // 登录
-  const accountLogin = async (req: AccountLoginReq) => {
+  const accountLogin = async (req: any) => {
     const res = await accountLoginApi(req)
-    setToken(res.data.token)
-    token.value = res.data.token
+    setToken(res.data.Context.token)
+    token.value = res.data.Context.token
   }
 
   // 邮箱登录
-  const emailLogin = async (req: EmailLoginReq) => {
+  const emailLogin = async (req: any) => {
     const res = await emailLoginApi(req)
     setToken(res.data.token)
     token.value = res.data.token
   }
 
   // 手机号登录
-  const phoneLogin = async (req: PhoneLoginReq) => {
+  const phoneLogin = async (req: any) => {
     const res = await phoneLoginApi(req)
     setToken(res.data.token)
     token.value = res.data.token

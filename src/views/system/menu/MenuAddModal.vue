@@ -19,9 +19,9 @@
           <a-radio :value="3">按钮</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="上级菜单" field="parentId">
+      <a-form-item label="上级菜单" field="pid">
         <a-tree-select
-          v-model="form.parentId"
+          v-model="form.pid"
           placeholder="请选择上级菜单"
           allow-clear
           allow-search
@@ -179,8 +179,8 @@ const formRules = computed(() => {
     return { title, name, path } as FormInstance['rules']
   }
   if (form.type === 3) {
-    const { parentId, title, permission } = rules
-    return { parentId, title, permission } as FormInstance['rules']
+    const { pid, title, permission } = rules
+    return { pid, title, permission } as FormInstance['rules']
   }
 })
 // 设置建议组件名

@@ -19,7 +19,7 @@ export interface UserInfo {
 export interface RouteItem {
   id: string
   title: string
-  parentId: string
+  pid: string
   type: 1 | 2 | 3
   path: string
   name: string

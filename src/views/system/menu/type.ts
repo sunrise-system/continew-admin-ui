@@ -11,6 +11,6 @@ export interface MenuForm {
   isExternal: boolean
   isCache: boolean
   isHidden: boolean
-  parentId: string
+  pid: string
   status: 1 | 0
 }
