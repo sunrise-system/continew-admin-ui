@@ -1,11 +1,12 @@
 import type * as System from './type'
-import http from '@/utils/http'
+import http, { fnMotion } from '@/utils/http'
 
 const BASE_URL = '/system/role'
 
 /** @desc 查询角色列表 */
 export function listRole(query: System.RolePageQuery) {
-  return http.get<PageRes<System.RoleResp[]>>(`${BASE_URL}`, query)
+  return fnMotion(`ADM08902A/list`, query)
+  //  return http.get<PageRes<System.RoleResp[]>>(`${BASE_URL}`, query)
 }
 
 /** @desc 查询角色详情 */
