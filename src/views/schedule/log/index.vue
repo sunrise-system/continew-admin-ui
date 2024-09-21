@@ -65,7 +65,7 @@ import { Message } from '@arco-design/web-vue'
 import { useRoute } from 'vue-router'
 import dayjs from 'dayjs'
 import JobLogDetailModal from './LogDetailModal.vue'
-import { type JobLogQuery, type JobLogResp, listGroup, listJobLog, retryJob, stopJob } from '@/apis'
+import { type JobLogQuery, type JobLogResp, listGroup, listJobLog, retryJob, stopJob } from '@/apis/schedule'
 import type { TableInstanceColumns } from '@/components/GiTable/type'
 import { useTable } from '@/hooks'
 import { useDict } from '@/hooks/app'
@@ -125,7 +125,10 @@ const getGroupList = async () => {
 // 重置
 const reset = () => {
   queryForm.taskBatchStatus = undefined
-  queryForm.datetimeRange = undefined
+  queryForm.datetimeRange = [
+    dayjs().subtract(6, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
+    dayjs().endOf('day').format('YYYY-MM-DD HH:mm:ss')
+  ]
   search()
 }
 

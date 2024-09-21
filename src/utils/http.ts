@@ -72,7 +72,7 @@ http.interceptors.response.use(
     }
 
     // Token 失效
-    if (code === 401 && response.config.url !== '/auth/user/info') {
+    if (code === '401' && response.config.url !== '/auth/user/info') {
       modalErrorWrapper({
         title: '提示',
         content: msg,
@@ -104,10 +104,10 @@ http.interceptors.response.use(
     NProgress.done()
     const response = Object.assign({}, error.response)
     response
-      && messageErrorWrapper({
-        content: StatusCodeMessage[response.status] || '服务器暂时未响应，请刷新页面并重试。若无法解决，请联系管理员',
-        duration: 5 * 1000
-      })
+    && messageErrorWrapper({
+      content: StatusCodeMessage[response.status] || '服务器暂时未响应，请刷新页面并重试。若无法解决，请联系管理员',
+      duration: 5 * 1000
+    })
     return Promise.reject(error)
   }
 )

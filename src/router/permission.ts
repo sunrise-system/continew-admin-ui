@@ -3,6 +3,7 @@ import router from '@/router'
 import { useRouteStore, useUserStore } from '@/stores'
 import { getToken } from '@/utils/auth'
 import { isHttp } from '@/utils/validate'
+
 // 版本更新
 let versionTag: string | null = null // 版本标识
 // 更新
@@ -40,6 +41,7 @@ const getVersionTag = async () => {
   })
   return response.headers.get('etag') || response.headers.get('last-modified')
 }
+
 /**
  * 比较当前的 ETag 或 Last-Modified 值与最新获取的值
  */
@@ -108,5 +110,11 @@ router.beforeEach(async (to, from, next) => {
       // 其他没有访问权限的页面将被重定向到登录页面
       next('/login')
     }
+  }
+
+  // 生产环境开启检测版本更新
+  const isProd = import.meta.env.PROD
+  if (isProd) {
+    await compareTag()
   }
 })

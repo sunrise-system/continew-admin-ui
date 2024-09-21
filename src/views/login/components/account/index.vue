@@ -33,8 +33,8 @@
 <script setup lang="ts">
 import { type FormInstance, Message } from '@arco-design/web-vue'
 import { useStorage } from '@vueuse/core'
-import { getImageCaptcha } from '@/apis'
-import { useUserStore } from '@/stores'
+import { getImageCaptcha } from '@/apis/common'
+import { useTabsStore, useUserStore } from '@/stores'
 import { encryptByRsa } from '@/utils/encrypt'
 
 const loginConfig = useStorage('login-config', {
@@ -97,6 +97,7 @@ const getCaptcha = () => {
 }
 
 const userStore = useUserStore()
+const tabsStore = useTabsStore()
 const router = useRouter()
 const loading = ref(false)
 // 登录
@@ -112,6 +113,7 @@ const handleLogin = async () => {
       captcha: form.captcha,
       uuid: form.uuid
     })
+    tabsStore.reset()
     const { redirect, ...othersQuery } = router.currentRoute.value.query
     router.push({
       path: (redirect as string) || '/',

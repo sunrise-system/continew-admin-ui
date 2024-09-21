@@ -1,5 +1,7 @@
-import type * as Common from './type'
+import type * as T from './type'
 import http, { fnMotion } from '@/utils/http'
+
+export type * from './type'
 
 const BASE_URL = '/captcha'
 
@@ -20,10 +22,10 @@ export function getEmailCaptcha(query: { email: string }) {
 
 /** @desc 获取行为验证码 */
 export function getBehaviorCaptcha(req: any) {
-  return http.get<Common.BehaviorCaptchaResp>(`${BASE_URL}/behavior`, req)
+  return http.get<T.BehaviorCaptchaResp>(`${BASE_URL}/behavior`, req)
 }
 
 /** @desc 校验行为验证码 */
 export function checkBehaviorCaptcha(req: any) {
-  return http.post<Common.CheckBehaviorCaptchaResp>(`${BASE_URL}/behavior`, req)
+  return http.post<T.CheckBehaviorCaptchaResp>(`${BASE_URL}/behavior`, req)
 }

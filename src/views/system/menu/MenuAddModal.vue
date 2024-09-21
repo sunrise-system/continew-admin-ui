@@ -19,9 +19,9 @@
           <a-radio :value="3">按钮</a-radio>
         </a-radio-group>
       </a-form-item>
-      <a-form-item label="上级菜单" field="pid">
+      <a-form-item label="上级菜单" field="parentId">
         <a-tree-select
-          v-model="form.pid"
+          v-model="form.parentId"
           placeholder="请选择上级菜单"
           allow-clear
           allow-search
@@ -123,7 +123,7 @@
 <script setup lang="ts">
 import { type FormInstance, Message } from '@arco-design/web-vue'
 import { mapTree } from 'xe-utils'
-import { type MenuResp, addMenu, getMenu, updateMenu } from '@/apis'
+import { type MenuResp, addMenu, getMenu, updateMenu } from '@/apis/system'
 import { useForm } from '@/hooks'
 import { filterTree, transformPathToName } from '@/utils'
 
@@ -179,8 +179,8 @@ const formRules = computed(() => {
     return { title, name, path } as FormInstance['rules']
   }
   if (form.type === 3) {
-    const { pid, title, permission } = rules
-    return { pid, title, permission } as FormInstance['rules']
+    const { parentId, title, permission } = rules
+    return { parentId, title, permission } as FormInstance['rules']
   }
 })
 // 设置建议组件名

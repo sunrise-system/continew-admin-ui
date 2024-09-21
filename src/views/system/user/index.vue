@@ -1,13 +1,13 @@
 <template>
   <div class="table-page">
-    <a-row justify="space-between" align="center" class="header">
+    <a-row justify="space-between" align="center" class="header page_header">
       <a-space wrap>
         <slot name="custom-title">
           <div class="title">用户管理</div>
         </slot>
       </a-space>
     </a-row>
-    <a-row align="stretch" :gutter="14" class="h-full">
+    <a-row align="stretch" :gutter="14" class="h-full page_content">
       <a-col :xs="0" :sm="8" :md="7" :lg="6" :xl="5" :xxl="4" flex="260px" class="h-full ov-hidden">
         <DeptTree placeholder="请输入关键词" @node-click="handleSelectDept" />
       </a-col>
@@ -96,7 +96,7 @@ import UserAddDrawer from './UserAddDrawer.vue'
 import UserImportDrawer from './UserImportDrawer.vue'
 import UserDetailDrawer from './UserDetailDrawer.vue'
 import UserResetPwdModal from './UserResetPwdModal.vue'
-import { type UserQuery, type UserResp, deleteUser, exportUser, listUser } from '@/apis'
+import { type UserQuery, type UserResp, deleteUser, exportUser, listUser } from '@/apis/system'
 import type { TableInstanceColumns } from '@/components/GiTable/type'
 import { useDownload, useTable } from '@/hooks'
 import { isMobile } from '@/utils'
@@ -128,6 +128,7 @@ const columns: TableInstanceColumns[] = [
   },
   {
     title: '用户名',
+    dataIndex: 'username',
     slotName: 'username',
     width: 140,
     ellipsis: true,
@@ -213,4 +214,13 @@ const onResetPwd = (record: UserResp) => {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.page_header {
+  flex: 0 0 auto;
+}
+
+.page_content {
+  flex: 1;
+  overflow: auto;
+}
+</style>

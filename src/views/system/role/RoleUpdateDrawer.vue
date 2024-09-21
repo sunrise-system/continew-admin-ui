@@ -9,9 +9,6 @@
     @close="reset"
   >
     <a-form ref="formRef" :model="form" :rules="rules" size="large" auto-label-width>
-      <a-alert v-if="!form.disabled" type="warning" style="margin-bottom: 15px">
-        变更功能权限或数据权限后，关联在线用户会自动下线！
-      </a-alert>
       <fieldset>
         <legend>基础信息</legend>
         <a-form-item label="名称" field="name">
@@ -39,15 +36,14 @@
           <a-space>
             <a-checkbox v-model="isMenuExpanded" @change="onExpanded('menu')">展开/折叠</a-checkbox>
             <a-checkbox v-model="isMenuCheckAll" @change="onCheckAll('menu')">全选/全不选</a-checkbox>
-            <a-checkbox v-model="isMenuCheckStrictly">父子联动</a-checkbox>
+            <a-checkbox v-model="form.menuCheckStrictly">父子联动</a-checkbox>
           </a-space>
           <template #extra>
             <a-tree
               ref="menuTreeRef"
-              v-model:checked-keys="form.menuIds"
               :data="menuList"
               :default-expand-all="isMenuExpanded"
-              :check-strictly="!isMenuCheckStrictly"
+              :check-strictly="!form.menuCheckStrictly"
               checkable
             />
           </template>
@@ -67,15 +63,14 @@
           <a-space>
             <a-checkbox v-model="isDeptExpanded" @change="onExpanded('dept')">展开/折叠</a-checkbox>
             <a-checkbox v-model="isDeptCheckAll" @change="onCheckAll('dept')">全选/全不选</a-checkbox>
-            <a-checkbox v-model="isDeptCheckStrictly">父子联动</a-checkbox>
+            <a-checkbox v-model="form.deptCheckStrictly">父子联动</a-checkbox>
           </a-space>
           <template #extra>
             <a-tree
               ref="deptTreeRef"
-              v-model:checked-keys="form.deptIds"
               :data="deptList"
               :default-expand-all="isDeptExpanded"
-              :check-strictly="!isDeptCheckStrictly"
+              :check-strictly="!form.deptCheckStrictly"
               checkable
             />
           </template>
@@ -88,7 +83,7 @@
 <script setup lang="ts">
 import { type FormInstance, Message, type TreeNodeData } from '@arco-design/web-vue'
 import { useWindowSize } from '@vueuse/core'
-import { addRole, getRole, updateRole } from '@/apis'
+import { addRole, getRole, updateRole } from '@/apis/system'
 import { useForm } from '@/hooks'
 import { useDept, useDict, useMenu } from '@/hooks/app'
 
@@ -112,6 +107,8 @@ const rules: FormInstance['rules'] = {
 }
 
 const { form, resetForm } = useForm({
+  menuCheckStrictly: true,
+  deptCheckStrictly: true,
   sort: 999,
   dataScope: 4
 })
@@ -122,8 +119,6 @@ const isMenuExpanded = ref(false)
 const isDeptExpanded = ref(true)
 const isMenuCheckAll = ref(false)
 const isDeptCheckAll = ref(false)
-const isMenuCheckStrictly = ref(true)
-const isDeptCheckStrictly = ref(true)
 // 重置
 const reset = () => {
   isMenuExpanded.value = false
@@ -143,8 +138,6 @@ const onAdd = () => {
     getMenuList()
   }
   reset()
-  isMenuCheckStrictly.value = true
-  isDeptCheckStrictly.value = true
   dataId.value = ''
   visible.value = true
   if (!deptList.value.length) {
@@ -161,11 +154,19 @@ const onUpdate = async (id: string) => {
     await getDeptList()
   }
   reset()
-  isMenuCheckStrictly.value = false
-  isDeptCheckStrictly.value = false
   dataId.value = id
-  const res = await getRole(id)
-  Object.assign(form, res.data)
+  const { data } = await getRole(id)
+  Object.assign(form, data)
+  data.menuIds?.forEach((node) => {
+    nextTick(() => {
+      menuTreeRef.value?.checkNode(node, true, true)
+    })
+  })
+  data.deptIds?.forEach((node) => {
+    nextTick(() => {
+      deptTreeRef.value?.checkNode(node, true, true)
+    })
+  })
   visible.value = true
 }
 

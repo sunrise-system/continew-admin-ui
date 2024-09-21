@@ -4,7 +4,7 @@
     :title="title"
     :mask-closable="false"
     :esc-to-close="false"
-    :width="width >= 1050 ? 1050 : '100%'"
+    :width="width >= 1350 ? 1350 : '100%'"
     @before-ok="save"
     @close="reset"
   >
@@ -42,8 +42,10 @@
           :loading="loading"
           :scroll="{ x: '100%', y: 800, minWidth: 900 }"
           :pagination="false"
+          :draggable="{ type: 'handle', width: 40 }"
           :disabled-tools="['setting', 'refresh']"
           :disabled-column-keys="['tableName']"
+          @change="handleChangeSort"
         >
           <template #custom-left>
             <a-popconfirm
@@ -64,11 +66,28 @@
               </a-tooltip>
             </a-popconfirm>
           </template>
+          <template #fieldName="{ record }">
+            <a-input v-model="record.fieldName" />
+          </template>
           <template #fieldType="{ record }">
-            <span v-if="record.fieldType">{{ record.fieldType }}</span>
-            <a-tooltip v-else content="请检查 generator.properties 配置">
-              <icon-exclamation-circle-fill size="large" style="color: #f53f3f" />
-            </a-tooltip>
+            <a-select
+              v-model="record.fieldType"
+              placeholder="请选择字段类型"
+              allow-search
+              allow-create
+              :error="!record.fieldType"
+            >
+              <a-option value="String">String</a-option>
+              <a-option value="Integer">Integer</a-option>
+              <a-option value="Long">Long</a-option>
+              <a-option value="Float">Float</a-option>
+              <a-option value="Double">Double</a-option>
+              <a-option value="Boolean">Boolean</a-option>
+              <a-option value="BigDecimal">BigDecimal</a-option>
+              <a-option value="LocalDate">LocalDate</a-option>
+              <a-option value="LocalTime">LocalTime</a-option>
+              <a-option value="LocalDateTime">LocalDateTime</a-option>
+            </a-select>
           </template>
           <template #comment="{ record }">
             <a-input v-model="record.comment" />
@@ -91,6 +110,7 @@
               v-if="record.showInForm || record.showInQuery"
               v-model="record.formType"
               :options="form_type_enum"
+              :default-value="1"
               placeholder="请选择表单类型"
             />
             <span v-else>无需设置</span>
@@ -100,9 +120,19 @@
               v-if="record.showInQuery"
               v-model="record.queryType"
               :options="query_type_enum"
+              :default-value="1"
               placeholder="请选择查询方式"
             />
             <span v-else>无需设置</span>
+          </template>
+          <template #dictCode="{ record }">
+            <a-select
+              v-model="record.dictCode"
+              :options="dictList"
+              placeholder="请选择字典类型"
+              allow-search
+              allow-clear
+            />
           </template>
         </GiTable>
       </a-tab-pane>
@@ -113,7 +143,8 @@
 <script setup lang="ts">
 import { type FormInstance, Message } from '@arco-design/web-vue'
 import { useWindowSize } from '@vueuse/core'
-import { type FieldConfigResp, type GeneratorConfigResp, getGenConfig, listFieldConfig, saveGenConfig } from '@/apis'
+import { type FieldConfigResp, type GeneratorConfigResp, getGenConfig, listFieldConfig, listFieldConfigDict, saveGenConfig } from '@/apis/tool'
+import type { LabelValueState } from '@/types/global'
 import type { TableInstanceColumns } from '@/components/GiTable/type'
 import { useForm } from '@/hooks'
 import { useDict } from '@/hooks/app'
@@ -126,17 +157,19 @@ const { form_type_enum, query_type_enum } = useDict('form_type_enum', 'query_typ
 
 // Table 字段配置
 const columns: TableInstanceColumns[] = [
-  { title: '名称', dataIndex: 'fieldName', width: 125, ellipsis: true, tooltip: true },
-  { title: '类型', dataIndex: 'fieldType' },
+  { title: '名称', slotName: 'fieldName' },
+  { title: '类型', slotName: 'fieldType' },
   { title: '描述', slotName: 'comment', width: 170 },
   { title: '列表', slotName: 'showInList', width: 60, align: 'center' },
   { title: '表单', slotName: 'showInForm', width: 60, align: 'center' },
   { title: '必填', slotName: 'isRequired', width: 60, align: 'center' },
   { title: '查询', slotName: 'showInQuery', width: 60, align: 'center' },
-  { title: '表单类型', slotName: 'formType', width: 150 },
-  { title: '查询方式', slotName: 'queryType' }
+  { title: '表单类型', slotName: 'formType' },
+  { title: '查询方式', slotName: 'queryType' },
+  { title: '关联字典', slotName: 'dictCode' }
 ]
 
+const dictList = ref<LabelValueState[]>([])
 const dataList = ref<FieldConfigResp[]>([])
 const loading = ref(false)
 // 查询列表数据
@@ -145,6 +178,8 @@ const getDataList = async (tableName: string, requireSync: boolean) => {
     loading.value = true
     const res = await listFieldConfig(tableName, requireSync)
     dataList.value = res.data
+    const { data } = await listFieldConfigDict()
+    dictList.value = data
   } finally {
     loading.value = false
   }
@@ -187,6 +222,11 @@ const onConfig = async (tableName: string, comment: string) => {
 // 同步
 const handleRefresh = async (tableName: string) => {
   await getDataList(tableName, true)
+}
+
+// 拖拽排序
+const handleChangeSort = (newDataList: FieldConfigResp[]) => {
+  dataList.value = newDataList
 }
 
 const activeKey = ref('1')
