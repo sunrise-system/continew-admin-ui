@@ -9,22 +9,14 @@
     @before-ok="save"
     @close="reset"
   >
-    <GiForm ref="formRef" v-model="form" :options="options" :columns="columns">
-      <template #color>
-        <a-input v-model="form.color" placeholder="请选择或输入标签颜色" allow-clear>
-          <template #suffix>
-            <a-color-picker v-model="form.color" />
-          </template>
-        </a-input>
-      </template>
-    </GiForm>
+    <GiForm ref="formRef" v-model="form" :options="options" :columns="columns" />
   </a-modal>
 </template>
 
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { useWindowSize } from '@vueuse/core'
-import { addDictItem, getDictItem, updateDictItem } from '@/apis/system/dict'
+import { addApp, getApp, updateApp } from '@/apis/open/app'
 import { type Columns, GiForm, type Options } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
 
@@ -35,10 +27,9 @@ const emit = defineEmits<{
 const { width } = useWindowSize()
 
 const dataId = ref('')
-const dictId = ref('')
 const visible = ref(false)
 const isUpdate = computed(() => !!dataId.value)
-const title = computed(() => (isUpdate.value ? '修改字典项' : '新增字典项'))
+const title = computed(() => (isUpdate.value ? '修改应用' : '新增应用'))
 const formRef = ref<InstanceType<typeof GiForm>>()
 
 const options: Options = {
@@ -47,22 +38,23 @@ const options: Options = {
 }
 
 const [form, resetForm] = useResetReactive({
-  color: 'blue',
-  sort: 999,
   status: 1,
 })
 
 const columns: Columns = reactive([
-  { label: '标签', field: 'label', type: 'input', rules: [{ required: true, message: '请输入标签' }] },
-  { label: '值', field: 'value', type: 'input', rules: [{ required: true, message: '请输入值' }] },
-  { label: '标签颜色', field: 'color', type: 'input' },
   {
-    label: '排序',
-    field: 'sort',
-    type: 'input-number',
+    label: '名称',
+    field: 'name',
+    type: 'input',
+    rules: [{ required: true, message: '请输入名称' }],
+  },
+  {
+    label: '失效时间',
+    field: 'expireTime',
+    type: 'date-picker',
     props: {
-      min: 1,
-      mode: 'button',
+      placeholder: '请选择失效时间',
+      showTime: true,
     },
   },
   {
@@ -100,10 +92,10 @@ const save = async () => {
     const isInvalid = await formRef.value?.formRef?.validate()
     if (isInvalid) return false
     if (isUpdate.value) {
-      await updateDictItem(form, dataId.value)
+      await updateApp(form, dataId.value)
       Message.success('修改成功')
     } else {
-      await addDictItem({ ...form, dictId: dictId.value })
+      await addApp(form)
       Message.success('新增成功')
     }
     emit('save-success')
@@ -114,10 +106,9 @@ const save = async () => {
 }
 
 // 新增
-const onAdd = (id: string) => {
+const onAdd = () => {
   reset()
   dataId.value = ''
-  dictId.value = id
   visible.value = true
 }
 
@@ -125,12 +116,10 @@ const onAdd = (id: string) => {
 const onUpdate = async (id: string) => {
   reset()
   dataId.value = id
-  const { data } = await getDictItem(id)
+  const { data } = await getApp(id)
   Object.assign(form, data)
   visible.value = true
 }
 
 defineExpose({ onAdd, onUpdate })
 </script>
-
-<style scoped lang="scss"></style>

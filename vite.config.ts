@@ -12,16 +12,21 @@ export default defineConfig(({ command, mode }) => {
     resolve: {
       alias: {
         '~': fileURLToPath(new URL('./', import.meta.url)),
-        '@': fileURLToPath(new URL('./src', import.meta.url))
-      }
+        '@': fileURLToPath(new URL('./src', import.meta.url)),
+      },
     },
     // 引入sass全局样式变量
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "@/styles/var.scss";`
-        }
-      }
+          additionalData: `@import "@/styles/var.scss";`,
+          api: 'modern-compiler',
+        },
+      },
+    },
+    // 添加需要vite优化的依赖
+    optimizeDeps: {
+      include: ['vue-draggable-plus'],
     },
     server: {
       // 服务启动时是否自动打开浏览器

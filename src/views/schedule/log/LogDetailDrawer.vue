@@ -1,16 +1,24 @@
 <template>
-  <a-modal v-model:visible="visible" title="任务日志详情" :body-style="{ maxHeight: '80vh', overflow: 'auto' }"
-    :width="width >= 1500 ? 1500 : '100%'" :footer="false" @close="closed">
+  <a-drawer
+    v-model:visible="visible"
+    title="任务日志详情"
+    :width="width >= 1300 ? 1300 : '100%'"
+    :footer="false"
+    @close="closed"
+  >
     <div style="display: flex;">
       <div style="padding: 10px 10px;">
         <div class="job_list">
-          <div v-for="item in dataList" :key="item.id" :class="`job_list_item ${item.id === activeId ? 'active' : ''}`"
-            @click="onStartInfo(item)">
+          <div
+            v-for="item in dataList"
+            :key="item.id"
+            :class="`job_list_item ${item.id === activeId ? 'active' : ''}`"
+            @click="onStartInfo(item)"
+          >
             <div class="content">
               <span class="title">{{ item.clientInfo.split('@')[1] }}</span>
               <span class="status">
-                <a-tag bordered :color="statusList[item.taskStatus].color">{{ statusList[item.taskStatus].title
-                  }}</a-tag>
+                <a-tag bordered :color="statusList[item.taskStatus].color">{{ statusList[item.taskStatus].title }}</a-tag>
               </span>
             </div>
           </div>
@@ -20,71 +28,67 @@
         <GiCodeView :code-json="content" />
       </div>
     </div>
-</a-modal>
+  </a-drawer>
 </template>
 
 <script setup lang="ts">
-import { useWindowSize } from '@vueuse/core'
 import dayjs from 'dayjs'
+import { useWindowSize } from '@vueuse/core'
 import { type JobInstanceQuery, type JobInstanceResp, type JobLogResp, listJobInstance, listJobInstanceLog } from '@/apis/schedule'
 
 const { width } = useWindowSize()
+
 const queryForm = reactive<JobInstanceQuery>({})
 const dataList = ref<JobInstanceResp[]>([])
+const visible = ref(false)
 const loading = ref(false)
 const activeId = ref<string | number>('')
 const statusList = {
   1: {
     title: '待处理',
     color: 'gray',
-    isRun: false
+    isRun: false,
   },
   2: {
     title: '运行中',
     color: 'cyan',
-    isRun: true
+    isRun: true,
   },
   3: {
     title: '成功',
     color: 'green',
-    isRun: false
+    isRun: false,
   },
   4: {
     title: '已失败',
     color: 'red',
-    isRun: false
+    isRun: false,
   },
   5: {
     title: '已停止',
     color: 'purple',
-    isRun: false
+    isRun: false,
   },
   6: {
     title: '已取消',
     color: 'orange',
-    isRun: false
-  }
+    isRun: false,
+  },
 }
-
-const visible = ref(false)
 
 // 格式化日志
 const formatLog = (log: any) => {
   const date = new Date(Number.parseInt(log.time_stamp))
-  return `${dayjs(date).format('YYYY-MM-DD HH:mm:ss')} ${log.level} [${log.thread}] ${log.location} - ${log.message}`
+  let formatLog = `${dayjs(date).format('YYYY-MM-DD HH:mm:ss')} ${log.level} [${log.thread}] ${log.location} - ${log.message}`
+  // 增加堆栈信息显示
+  if (log.throwable) {
+    formatLog += `\n ${log.throwable}`
+  }
+  return formatLog
 }
 
 const content = ref('')
 const setIntervalNode = ref<NodeJS.Timeout>()
-
-// 详情
-const onDetail = (record: JobLogResp) => {
-  visible.value = true
-  // 更新 queryForm
-  queryForm.jobId = record.jobId
-  queryForm.taskBatchId = record.id
-  getInstanceList()
-}
 
 // 日志输出
 const onLogDetail = async (record: JobInstanceResp) => {
@@ -97,7 +101,7 @@ const onLogDetail = async (record: JobInstanceResp) => {
       taskId: record.id,
       startId: 0,
       fromIndex: 0,
-      size: 50
+      size: 50,
     })
     if (res.data?.finished) {
       clearInterval(setIntervalNode.value)
@@ -130,13 +134,24 @@ const getInstanceList = async (query: JobInstanceQuery = { ...queryForm }) => {
     loading.value = false
   }
 }
+
 const closed = () => {
   clearInterval(setIntervalNode.value)
 }
 onUnmounted(() => {
   clearInterval(setIntervalNode.value)
 })
-defineExpose({ onDetail })
+
+// 打开
+const onOpen = async (record: JobLogResp) => {
+  // 更新 queryForm
+  queryForm.jobId = record.jobId
+  queryForm.taskBatchId = record.id
+  visible.value = true
+  await getInstanceList()
+}
+
+defineExpose({ onOpen })
 </script>
 
 <style scoped lang="scss">

@@ -117,7 +117,7 @@ const onOauth = async (source: string) => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 @media screen and (max-width: 570px) {
   .pc {
     display: none !important;
@@ -472,8 +472,7 @@ const onOauth = async (source: string) => {
           margin-right: 10px;
         }
 
-        .mode:hover,
-        .mode svg:hover {
+        .mode:hover {
           background: rgba(var(--primary-6), 0.05);
           border: 1px solid rgb(var(--primary-3));
           color: rgb(var(--arcoblue-6));

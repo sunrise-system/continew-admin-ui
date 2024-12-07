@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model:visible="visible" :width="width >= 600 ? '70%' : '100%'" :footer="false" draggable @close="reset">
+  <a-modal v-model:visible="visible" :width="width >= 600 ? 'auto' : '100%'" :footer="false" draggable @close="reset">
     <a-typography :style="{ marginTop: '-40px', textAlign: 'center' }">
       <a-typography-title>
         {{ dataDetail?.title }}
@@ -23,7 +23,7 @@
       </a-typography-paragraph>
     </a-typography>
     <a-divider />
-    <MdPreview :editor-id="dataDetail?.id" :model-value="dataDetail?.content" />
+    <AiEditor :model-value="dataDetail?.content" />
     <a-divider />
     <div v-if="dataDetail?.updateTime" class="update-time-row">
       <span>
@@ -36,29 +36,33 @@
 </template>
 
 <script setup lang="ts">
-import { MdPreview } from 'md-editor-v3'
 import { useWindowSize } from '@vueuse/core'
+import AiEditor from './detail/components/index.vue'
 import { type NoticeResp, getNotice } from '@/apis/system'
 
 const { width } = useWindowSize()
-const dataDetail = ref<NoticeResp>()
+const dataDetail = ref<NoticeResp>({
+  content: '',
+})
 const visible = ref(false)
 // 详情
 const onDetail = async (id: string) => {
-  const res = await getNotice(id)
-  dataDetail.value = res.data
+  const { data } = await getNotice(id)
+  dataDetail.value = data
   visible.value = true
 }
 
 // 重置
 const reset = () => {
-  dataDetail.value = {}
+  dataDetail.value = {
+    content: '',
+  }
 }
 
 defineExpose({ onDetail })
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .arco-link {
   color: rgb(var(--gray-8));
 }

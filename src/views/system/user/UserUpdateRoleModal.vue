@@ -1,11 +1,10 @@
 <template>
   <a-modal
     v-model:visible="visible"
-    title="重置密码"
+    title="分配角色"
     :mask-closable="false"
     :esc-to-close="false"
-    :modal-style="{ maxWidth: '520px' }"
-    width="90%"
+    :width="width >= 600 ? 600 : '100%'"
     draggable
     @before-ok="save"
     @close="reset"
@@ -16,18 +15,21 @@
 
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
-import { resetUserPwd } from '@/apis/system'
-import { type Columns, GiForm } from '@/components/GiForm'
+import { useWindowSize } from '@vueuse/core'
+import { getUser, updateUserRole } from '@/apis/system'
+import { type Columns, GiForm, type Options } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
-import { encryptByRsa } from '@/utils/encrypt'
+import { useRole } from '@/hooks/app'
 
 const emit = defineEmits<{
   (e: 'save-success'): void
 }>()
 
+const { width } = useWindowSize()
 const dataId = ref('')
 const visible = ref(false)
 const formRef = ref<InstanceType<typeof GiForm>>()
+const { roleList, getRoleList } = useRole()
 
 const options: Options = {
   form: { size: 'large' },
@@ -37,7 +39,19 @@ const options: Options = {
 const [form, resetForm] = useResetReactive({})
 
 const columns: Columns = reactive([
-  { label: '密码', field: 'newPassword', type: 'input-password', rules: [{ required: true, message: '请输入密码' }] },
+  {
+    label: '角色',
+    field: 'roleIds',
+    type: 'select',
+    options: roleList,
+    props: {
+      multiple: true,
+      allowClear: true,
+      allowSearch: { retainInputValue: true },
+      placeholder: '请选择角色',
+    },
+    rules: [{ required: true, message: '请选择角色' }],
+  },
 ])
 
 // 重置
@@ -51,8 +65,8 @@ const save = async () => {
   try {
     const isInvalid = await formRef.value?.formRef?.validate()
     if (isInvalid) return false
-    await resetUserPwd({ newPassword: encryptByRsa(form.newPassword) || '' }, dataId.value)
-    Message.success('重置成功')
+    await updateUserRole({ roleIds: form.roleIds }, dataId.value)
+    Message.success('分配成功')
     emit('save-success')
     return true
   } catch (error) {
@@ -60,10 +74,15 @@ const save = async () => {
   }
 }
 
-// 打开
-const onOpen = (id: string) => {
+// 初始化
+const onOpen = async (id: string) => {
   reset()
   dataId.value = id
+  if (!roleList.value.length) {
+    await getRoleList()
+  }
+  const { data } = await getUser(id)
+  Object.assign(form, data)
   visible.value = true
 }
 

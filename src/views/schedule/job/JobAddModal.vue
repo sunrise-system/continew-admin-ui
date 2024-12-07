@@ -4,9 +4,8 @@
     :title="title"
     :mask-closable="false"
     :esc-to-close="false"
-    :modal-style="{ maxWidth: '700px' }"
     :body-style="{ maxHeight: width >= 700 ? '76vh' : '100vh' }"
-    :width="width >= 700 ? '90%' : '100%'"
+    :width="width >= 700 ? 700 : '100%'"
     @before-ok="save"
     @close="reset"
   >
@@ -21,7 +20,7 @@
           </a-col>
           <a-col v-bind="colProps">
             <a-form-item label="任务名称" field="jobName">
-              <a-input v-model.trim="form.jobName" placeholder="请输入任务名称" :max-length="64" />
+              <a-input v-model.trim="form.jobName" placeholder="请输入任务名称" :max-length="64" show-word-limit />
             </a-form-item>
           </a-col>
         </a-row>
@@ -49,20 +48,42 @@
             </a-form-item>
           </a-col>
           <a-col v-bind="colProps">
-            <a-form-item :label="form.triggerType === 2 ? '间隔时长' : 'CRON表达式'" field="triggerInterval">
+            <a-form-item
+              v-if="form.triggerType === 2"
+              label="间隔时长"
+              field="triggerInterval"
+              :rules="[{ required: true, message: '请输入间隔时长' }]"
+            >
               <a-input-number
-                v-if="form.triggerType === 2"
-                v-model="triggerIntervalNumber"
+                v-model="form.triggerInterval"
                 placeholder="请输入间隔时长"
                 :min="1"
               >
                 <template #suffix>秒</template>
               </a-input-number>
-              <a-input
-                v-else
-                v-model="form.triggerInterval"
-                placeholder="请输入CRON表达式"
-              />
+            </a-form-item>
+            <a-form-item
+              v-else
+              label="Cron表达式"
+              field="triggerInterval"
+              :rules="[{ required: true, message: '请输入Cron表达式' }]"
+            >
+              <div style="display: flex;">
+                <a-input
+                  v-model="form.triggerInterval"
+                  placeholder="请输入Cron表达式"
+                >
+                  <template #append>
+                    <a-tooltip content="Cron表达式生成">
+                      <a-button @click="openGeneratorCron(form.triggerInterval)">
+                        <template #icon>
+                          <icon-clock-circle />
+                        </template>
+                      </a-button>
+                    </a-tooltip>
+                  </template>
+                </a-input>
+              </div>
             </a-form-item>
           </a-col>
         </a-row>
@@ -99,7 +120,7 @@
                 </template>
               </a-button>
             </div>
-            <a-button type="outline" class="add-button" style="width: 100%;" @click="onAddArgs">
+            <a-button type="primary" class="add-button" @click="onAddArgs">
               <template #icon>
                 <icon-plus />
               </template>
@@ -150,38 +171,45 @@
         </a-row>
       </fieldset>
     </a-form>
+
+    <CronGeneratorModal ref="genModal" @ok="(e) => form.triggerInterval = e" />
   </a-modal>
 </template>
 
 <script setup lang="ts">
 import { type ColProps, type FormInstance, Message } from '@arco-design/web-vue'
 import { useWindowSize } from '@vueuse/core'
-import { addJob, listGroup, updateJob } from '@/apis/schedule'
-import { useForm } from '@/hooks'
+import { addJob, listGroup, updateJob } from '@/apis/schedule/job'
+import type { LabelValueState } from '@/types/global'
+import { useResetReactive } from '@/hooks'
 import { useDict } from '@/hooks/app'
 
 const emit = defineEmits<{
   (e: 'save-success'): void
 }>()
-const colProps: ColProps = { xs: 24, sm: 24, md: 12, lg: 12, xl: 12, xxl: 12 }
+
 const { width } = useWindowSize()
+
+const colProps: ColProps = { xs: 24, sm: 24, md: 12, lg: 12, xl: 12, xxl: 12 }
+
+const dataId = ref()
+const visible = ref(false)
+const isUpdate = computed(() => !!dataId.value)
+const title = computed(() => (isUpdate.value ? '修改任务' : '新增任务'))
+const formRef = ref<FormInstance>()
+const groupList = ref<LabelValueState[]>([])
+const genModal = ref()
 const { job_trigger_type_enum, job_task_type_enum, job_route_strategy_enum, job_block_strategy_enum } = useDict(
   'job_trigger_type_enum',
   'job_task_type_enum',
   'job_route_strategy_enum',
-  'job_block_strategy_enum'
+  'job_block_strategy_enum',
 )
-
-const dataId = ref()
-const isUpdate = computed(() => !!dataId.value)
-const title = computed(() => (isUpdate.value ? '修改任务' : '新增任务'))
-const formRef = ref<FormInstance>()
 
 const rules: FormInstance['rules'] = {
   groupName: [{ required: true, message: '请选择任务组' }],
   jobName: [{ required: true, message: '请输入任务名称' }],
   triggerType: [{ required: true, message: '请选择触发类型' }],
-  triggerInterval: [{ required: true, message: '请输入间隔时长' }],
   taskType: [{ required: true, message: '请选择任务类型' }],
   executorInfo: [{ required: true, message: '请输入执行器名称' }],
   routeKey: [{ required: true, message: '请选择路由策略' }],
@@ -189,10 +217,10 @@ const rules: FormInstance['rules'] = {
   executorTimeout: [{ required: true, message: '请输入超时时间' }],
   maxRetryTimes: [{ required: true, message: '请输入最大重试次数' }],
   retryInterval: [{ required: true, message: '请输入重试间隔' }],
-  parallelNum: [{ required: true, message: '请输入并行数' }]
+  parallelNum: [{ required: true, message: '请输入并行数' }],
 }
 
-const { form, resetForm } = useForm({
+const [form, resetForm] = useResetReactive({
   triggerType: 2,
   triggerInterval: 60,
   taskType: 1,
@@ -201,7 +229,7 @@ const { form, resetForm } = useForm({
   executorTimeout: 60,
   maxRetryTimes: 3,
   retryInterval: 1,
-  parallelNum: 1
+  parallelNum: 1,
 })
 
 const args = ref<any[]>([])
@@ -212,41 +240,31 @@ const reset = () => {
   resetForm()
 }
 
-const groupList = ref()
-// 查询任务组列表
-const getGroupList = async () => {
-  const { data } = await listGroup()
-  groupList.value = data?.map((item: string) => ({
-    label: item,
-    value: item
-  }))
-}
-
-const visible = ref(false)
-// 新增
-const onAdd = () => {
-  reset()
-  getGroupList()
-  dataId.value = undefined
-  visible.value = true
-}
-
-// 修改
-const onUpdate = async (record: any) => {
-  await getGroupList()
-  reset()
-  dataId.value = record.id
-  Object.assign(form, record)
-  // 切片任务，解析 argsStr 并赋值给 args
-  if (form.taskType === 3 && form.argsStr) {
-    try {
-      const parsedArgs = JSON.parse(form.argsStr)
-      args.value = parsedArgs.map((arg: any) => ({ value: arg }))
-    } catch (error: any) {
-      Message.error(error)
-    }
+// 触发类型切换
+const triggerTypeChange = () => {
+  switch (form.triggerType) {
+    case 2:
+      form.triggerInterval = 60
+      break
+    case 3:
+      form.triggerInterval = ''
+      break
   }
-  visible.value = true
+}
+
+// 新增切片参数
+const onAddArgs = () => {
+  args.value.push({ value: '' })
+}
+
+// 删除切片参数
+const onDeleteArgs = (index) => {
+  args.value.splice(index, 1)
+}
+
+// 打开生成表达式
+const openGeneratorCron = (cron: string) => {
+  genModal.value.open(cron)
 }
 
 // 保存
@@ -272,34 +290,43 @@ const save = async () => {
   }
 }
 
-// 触发类型切换
-const triggerTypeChange = () => {
-  switch (form.triggerType) {
-    case 2:
-      form.triggerInterval = 60
-      break
-    case 3:
-      form.triggerInterval = ''
-      break
-  }
+// 查询任务组列表
+const getGroupList = async () => {
+  const { data } = await listGroup()
+  groupList.value = data?.map((item: string) => ({
+    label: item,
+    value: item,
+  }))
 }
-// 间隔时长
-const triggerIntervalNumber = computed({
-  get() {
-    return Number(form.triggerInterval)
-  },
-  set(newValue) {
-    form.triggerInterval = newValue.toString()
-  }
-})
 
-// 新增切片参数
-const onAddArgs = () => {
-  args.value.push({ value: '' })
+// 新增
+const onAdd = async () => {
+  reset()
+  dataId.value = undefined
+  if (!groupList.value.length) {
+    await getGroupList()
+  }
+  visible.value = true
 }
-// 删除切片参数
-const onDeleteArgs = (index) => {
-  args.value.splice(index, 1)
+
+// 修改
+const onUpdate = async (record: any) => {
+  reset()
+  dataId.value = record.id
+  if (!groupList.value.length) {
+    await getGroupList()
+  }
+  Object.assign(form, record)
+  // 切片任务，解析 argsStr 并赋值给 args
+  if (form.taskType === 3 && form.argsStr) {
+    try {
+      const parsedArgs = JSON.parse(form.argsStr)
+      args.value = parsedArgs.map((arg: any) => ({ value: arg }))
+    } catch (error: any) {
+      Message.error(error)
+    }
+  }
+  visible.value = true
 }
 
 defineExpose({ onAdd, onUpdate })
@@ -339,6 +366,15 @@ fieldset legend {
 
 .add-button {
   align-self: flex-start;
-  width: 100px;
+  width: 100%;
+}
+
+:deep(.arco-input-append) {
+  padding: 0;
+  .arco-btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border: 1px solid transparent;
+  }
 }
 </style>

@@ -34,7 +34,7 @@ const editorConfig = reactive<AiEditorOptions>({
   theme: appStore.theme,
   placeholder: '请输入内容',
   content: '',
-  editable: false
+  editable: false,
 })
 const init = () => {
   aieditor.value?.destroy()
@@ -62,7 +62,7 @@ onUnmounted(() => {
 })
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .container {
   height: 100%;
   width: 100%;

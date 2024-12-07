@@ -1,13 +1,20 @@
 <template>
-  <a-form ref="formRef" :model="form" :rules="rules" :label-col-style="{ display: 'none' }"
-    :wrapper-col-style="{ flex: 1 }" size="large" @submit="handleLogin">
+  <a-form
+    ref="formRef"
+    :model="form"
+    :rules="rules"
+    :label-col-style="{ display: 'none' }"
+    :wrapper-col-style="{ flex: 1 }"
+    size="large"
+    @submit="handleLogin"
+  >
     <a-form-item field="username" hide-label>
       <a-input v-model="form.username" placeholder="请输入用户名" allow-clear />
     </a-form-item>
     <a-form-item field="password" hide-label>
       <a-input-password v-model="form.password" placeholder="请输入密码" />
     </a-form-item>
-    <a-form-item v-if="Captcha" field="captcha" hide-label>
+    <a-form-item v-if="isCaptchaEnabled" field="captcha" hide-label>
       <a-input v-model="form.captcha" placeholder="请输入验证码" :max-length="4" allow-clear style="flex: 1 1" />
       <div class="captcha-container" @click="getCaptcha">
         <img :src="captchaImgBase64" alt="验证码" class="captcha" />
@@ -44,6 +51,10 @@ const loginConfig = useStorage('login-config', {
   // username: debug ? 'admin' : '', // 演示默认值
   // password: debug ? 'admin123' : '', // 演示默认值
 })
+// 是否启用验证码
+const isCaptchaEnabled = ref(true)
+// 验证码图片
+const captchaImgBase64 = ref()
 
 const formRef = ref<FormInstance>()
 const form = reactive({
@@ -56,7 +67,7 @@ const form = reactive({
 const rules: FormInstance['rules'] = {
   username: [{ required: true, message: '请输入用户名' }],
   password: [{ required: true, message: '请输入密码' }],
-  captcha: [{ required: true, message: '请输入验证码' }]
+  captcha: [{ required: isCaptchaEnabled.value, message: '请输入验证码' }]
 }
 
 // 验证码过期定时器
@@ -81,16 +92,13 @@ onBeforeUnmount(() => {
   }
 })
 
-const captchaImgBase64 = ref()
-const Captcha = ref(false)
-
 // 获取验证码
 const getCaptcha = () => {
   getImageCaptcha().then((res) => {
     const { openCaptcha, uuid, img, expireTime } = res.data
     form.uuid = uuid
     captchaImgBase64.value = img
-    Captcha.value = openCaptcha
+    isCaptchaEnabled.value = openCaptcha
     form.expired = false
     startTimer(expireTime)
   })

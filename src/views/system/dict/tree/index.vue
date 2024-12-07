@@ -1,109 +1,116 @@
 <template>
-  <div class="dict-tree">
-    <div class="dict-tree__search">
-      <a-input v-model="inputValue" :placeholder="props.placeholder" allow-clear>
+  <div class="container">
+    <div class="search">
+      <a-input v-model="searchKey" placeholder="搜索名称/编码" allow-clear>
         <template #prefix><icon-search /></template>
       </a-input>
+      <a-button v-permission="['system:dict:add']" type="primary" @click="onAdd">
+        <template #icon><icon-plus /></template>
+      </a-button>
     </div>
-    <div class="dict-tree__container">
-      <div class="dict-tree__tree">
-        <a-tree :data="(treeData as unknown as TreeNodeData[])" :field-names="{ key: 'id' }" block-node
-          @select="select">
+    <div class="tree-wrapper">
+      <div class="tree">
+        <a-tree
+          :data="(treeData as unknown as TreeNodeData[])"
+          :field-names="{ key: 'id' }"
+          block-node
+          :selected-keys="selectedKeys"
+          @select="select"
+        >
           <template #title="node">
-            <a-trigger v-model:popup-visible="node.popupVisible" trigger="contextMenu" align-point
-              animation-name="slide-dynamic-origin" auto-fit-transform-origin position="bl" scroll-to-close>
-              <a-tooltip v-if="node.description" :content="node.description" background-color="rgb(var(--primary-6))" position="right">
-                <div @contextmenu="onContextmenu(node)">{{ node.name }} ({{ node.code }})</div>
-              </a-tooltip>
-              <div v-else @contextmenu="onContextmenu(node)">{{ node.name }} ({{ node.code }})</div>
+            <a-typography-paragraph
+              :ellipsis="{
+                rows: 1,
+                showTooltip: true,
+                css: true,
+              }"
+            >
+              {{ node.name }} ({{ node.code }})
+            </a-typography-paragraph>
+          </template>
+          <template #extra="node">
+            <a-trigger trigger="click" align-point animation-name="slide-dynamic-origin" auto-fit-transform-origin position="bl" scroll-to-close>
+              <icon-more-vertical v-if="has.hasPermOr(['system:dict:update', 'system:dict:delete'])" class="action" />
               <template #content>
-                <RightMenu v-if="has.hasPermOr(['system:dict:update', 'system:dict:delete'])" :data="node"
-                  @on-menu-item-click="onMenuItemClick" />
+                <RightMenu :data="node" @on-menu-item-click="onMenuItemClick" />
               </template>
             </a-trigger>
           </template>
         </a-tree>
       </div>
     </div>
-    <div>
-      <a-button v-permission="['system:dict:add']" type="primary" style="width: 100%" @click="onAdd">
-        <template #icon><icon-plus /></template>
-        <span>新增</span>
-      </a-button>
-    </div>
-  </div>
 
-  <DictAddModal ref="DictAddModalRef" @save-success="getTreeData" />
+    <DictAddModal ref="DictAddModalRef" @save-success="getTreeData" />
+  </div>
 </template>
 
-<script setup lang="tsx">
+<script setup lang="ts">
 import { Message, Modal } from '@arco-design/web-vue'
 import type { TreeNodeData } from '@arco-design/web-vue'
 import { mapTree } from 'xe-utils'
 import DictAddModal from './DictAddModal.vue'
 import RightMenu from './RightMenu.vue'
-import { type DictQuery, type DictResp, deleteDict, listDict } from '@/apis/system'
+import { type DictResp, deleteDict, listDict } from '@/apis/system/dict'
 import has from '@/utils/has'
 
-interface Props {
-  placeholder?: string
-}
-const props = withDefaults(defineProps<Props>(), {
-  placeholder: '请输入关键词'
-})
 const emit = defineEmits<{
   (e: 'node-click', keys: Array<any>): void
 }>()
+
+const selectedKeys = ref()
 // 选中节点
 const select = (keys: Array<any>) => {
+  if (selectedKeys.value && selectedKeys.value[0] === keys[0]) {
+    return
+  }
+  selectedKeys.value = keys
   emit('node-click', keys)
 }
-
-const queryForm = reactive<DictQuery>({
-  sort: ['createTime,asc']
-})
 
 interface TreeItem extends DictResp {
   popupVisible: boolean
 }
-const treeData = ref<TreeItem[]>([])
+const dataList = ref<TreeItem[]>([])
 const loading = ref(false)
 // 查询树列表
-const getTreeData = async (query: DictQuery = { ...queryForm }) => {
+const getTreeData = async () => {
   try {
     loading.value = true
-    const { data } = await listDict(query)
-    treeData.value = mapTree(data, (i) => ({
+    const { data } = await listDict()
+    dataList.value = mapTree(data, (i) => ({
       ...i,
       popupVisible: false,
       icon: () => {
         return null
-      }
+      },
     }))
+    await nextTick(() => {
+      select([dataList.value[0]?.id])
+    })
   } finally {
     loading.value = false
   }
 }
 
-// 树查询
-const inputValue = ref('')
-watch(inputValue, (val) => {
-  queryForm.description = val
-  getTreeData()
-})
-
-// 保存当前右键的节点
-const contextmenuNode = ref<TreeItem | null>(null)
-const onContextmenu = (node: TreeItem) => {
-  contextmenuNode.value = node
-}
-
-// 关闭右键菜单弹框
-const closeRightMenuPopup = () => {
-  if (contextmenuNode.value?.popupVisible) {
-    contextmenuNode.value.popupVisible = false
+// 过滤树
+const searchKey = ref('')
+const search = (keyword: string) => {
+  const loop = (data: TreeItem[]) => {
+    const result = [] as TreeItem[]
+    data.forEach((item: TreeItem) => {
+      if (item.name?.toLowerCase().includes(keyword) || item.code?.toLowerCase().includes(keyword)) {
+        result.push({ ...item })
+      }
+    })
+    return result
   }
+  return loop(dataList.value)
 }
+
+const treeData = computed(() => {
+  if (!searchKey.value) return dataList.value
+  return search(searchKey.value.toLowerCase())
+})
 
 const DictAddModalRef = ref<InstanceType<typeof DictAddModal>>()
 // 新增
@@ -111,9 +118,8 @@ const onAdd = () => {
   DictAddModalRef.value?.onAdd()
 }
 
-// 右键菜单项点击
+// 点击菜单项
 const onMenuItemClick = (mode: string, node: DictResp) => {
-  closeRightMenuPopup()
   if (mode === 'update') {
     DictAddModalRef.value?.onUpdate(node.id)
   } else if (mode === 'delete') {
@@ -127,13 +133,13 @@ const onMenuItemClick = (mode: string, node: DictResp) => {
           const res = await deleteDict(node.id)
           if (res.success) {
             Message.success('删除成功')
-            getTreeData()
+            await getTreeData()
           }
           return res.success
         } catch (error) {
           return false
         }
-      }
+      },
     })
   }
 }
@@ -143,17 +149,19 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped>
-:deep(.arco-tree-node-title-text) {
-  width: 100%;
-  white-space: nowrap;
-}
-
+<style scoped lang="scss">
 :deep(.arco-tree-node) {
   line-height: normal;
   border-radius: var(--border-radius-medium);
+  margin: 5px 0;
+  .action {
+    opacity: 0;
+  }
   &:hover {
     background-color: var(--color-secondary-hover);
+    .action {
+      opacity: 1;
+    }
   }
 
   .arco-tree-node-switcher {
@@ -166,6 +174,12 @@ onMounted(() => {
       background-color: transparent;
     }
   }
+
+  .arco-tree-node-title-text {
+    width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
 }
 
 :deep(.arco-tree-node-selected) {
@@ -174,9 +188,12 @@ onMounted(() => {
   &:hover {
     background-color: rgba(var(--primary-6), 0.1);
   }
+  .arco-typography {
+    color: rgb(var(--primary-6));
+  }
 }
 
-.dict-tree {
+.container {
   flex: 1;
   overflow: hidden;
   position: relative;
@@ -185,26 +202,31 @@ onMounted(() => {
   box-sizing: border-box;
   height: 100%;
 
-  &__search {
-    margin-bottom: 10px;
+  .search {
+    display: flex;
+    justify-content: start;
+    margin-bottom: 2px;
+    .arco-btn {
+      margin-left: 8px;
+      padding: 0 15px;
+    }
   }
 
-  &__container {
+  .tree-wrapper {
     flex: 1;
     overflow: hidden;
     background-color: var(--color-bg-1);
     position: relative;
     height: 100%;
     margin-bottom:10px;
-  }
-
-  &__tree {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    overflow: auto
+    .tree {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      overflow: auto
+    }
   }
 }
 </style>
