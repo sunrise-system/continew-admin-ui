@@ -1,5 +1,5 @@
 import type { TreeNodeData } from '@arco-design/web-vue'
-import http from '@/utils/http'
+import http, { fnMotion } from '@/utils/http'
 import type { LabelValueState } from '@/types/global'
 
 const BASE_URL = '/common'
@@ -31,7 +31,9 @@ export function listCommonDict(code: string) {
 
 /** @desc 查询系统配置参数 */
 export function listSiteOptionDict() {
-  return http.get<LabelValueState[]>(`${BASE_URL}/dict/option/site`)
+  let data={}
+  data["isMockMode"]=true
+  return fnMotion(`ADM08900B`, data)
 }
 
 /** @desc 上传文件 */
