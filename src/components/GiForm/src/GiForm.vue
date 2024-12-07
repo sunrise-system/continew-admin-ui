@@ -1,204 +1,62 @@
 <template>
-  <a-form ref="formRef" v-bind="options.form" :model="modelValue" size="large" :auto-label-width="true">
-    <a-row :gutter="14" v-bind="options.row" class="w-full">
+  <a-form ref="formRef" :auto-label-width="true" v-bind="options.form" :model="modelValue">
+    <a-grid class="w-full" :col-gap="8" v-bind="options.grid" :collapsed="collapsed">
       <template v-for="(item, index) in columns" :key="item.field">
-        <a-col
-          v-if="!isHide(item.hide)"
-          v-show="index <= (options.fold?.index || 0) || (index >= (options.fold?.index || 0) && !collapsed)"
-          :span="item.span || 12"
-          v-bind="item.col || item.span ? item.col : options.col"
+        <a-grid-item
+          v-if="!isHide(item.hide)" v-show="colVShow(index)" v-bind="item.gridItemProps || props.options.gridItem"
+          :span="item.span || options.gridItem?.span"
         >
           <a-form-item
-            v-bind="item.item"
-            :label="item.label"
-            :field="item.field"
-            :rules="item.rules"
+            v-bind="item.formItemProps" :field="item.field" :rules="item.rules"
             :disabled="isDisabled(item.disabled)"
           >
-            <slot :name="item.field" v-bind="{ disabled: isDisabled(item.disabled) }">
-              <template v-if="item.type === 'input'">
-                <a-input
-                  :placeholder="`请输入${item.label}`"
-                  v-bind="(item.props as A.InputInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                ></a-input>
-              </template>
-
-              <template v-if="item.type === 'input-password'">
-                <a-input-password
-                  :placeholder="`请输入${item.label}`"
-                  v-bind="(item.props as A.InputInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                ></a-input-password>
-              </template>
-
-              <template v-if="item.type === 'input-number'">
-                <a-input-number
-                  :placeholder="`请输入${item.label}`"
-                  v-bind="(item.props as A.InputNumberInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                ></a-input-number>
-              </template>
-
-              <template v-if="item.type === 'textarea'">
-                <a-textarea
-                  :placeholder="`请输入${item.label}`"
-                  :show-word-limit="true"
-                  v-bind="(item.props as A.TextareaInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                ></a-textarea>
-              </template>
-
-              <template v-if="item.type === 'select'">
-                <a-select
-                  :placeholder="`请选择${item.label}`"
-                  v-bind="(item.props as A.SelectInstance['$props'])"
-                  :options="dicData[item.field] || (item.options as A.SelectInstance['$props']['options'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                ></a-select>
-              </template>
-
-              <template v-if="item.type === 'cascader'">
-                <a-cascader
-                  :placeholder="`请选择${item.label}`"
-                  v-bind="(item.props as A.CascaderInstance['$props'])"
-                  :options="dicData[item.field] || (item.options as A.CascaderInstance['$props']['options'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                />
-              </template>
-
-              <template v-if="item.type === 'tree-select'">
-                <a-tree-select
-                  :placeholder="`请选择${item.label}`"
-                  v-bind="(item.props as A.TreeSelectInstance['$props'])"
-                  :data="dicData[item.field] || (item.data as A.TreeSelectInstance['$props']['data'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                >
-                </a-tree-select>
-              </template>
-
-              <template v-if="item.type === 'radio-group'">
-                <a-radio-group
-                  v-bind="(item.props as A.RadioGroupInstance['$props'])"
-                  :options="dicData[item.field] || (item.options as A.RadioGroupInstance['$props']['options'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                ></a-radio-group>
-              </template>
-
-              <template v-if="item.type === 'checkbox-group'">
-                <a-checkbox-group
-                  v-bind="(item.props as A.CheckboxGroupInstance['$props'])"
-                  :options="dicData[item.field] || (item.options as A.CheckboxGroupInstance['$props']['options'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                ></a-checkbox-group>
-              </template>
-
-              <template v-if="item.type === 'date-picker'">
-                <a-date-picker
-                  placeholder="请选择日期"
-                  v-bind="(item.props as A.DatePickerInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                ></a-date-picker>
-              </template>
-
-              <template v-if="item.type === 'time-picker'">
-                <a-time-picker
-                  placeholder="请选择时间"
-                  v-bind="(item.props as A.TimePickerInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                >
-                </a-time-picker>
-              </template>
-
-              <template v-if="item.type === 'year-picker'">
-                <a-year-picker
-                  v-bind="(item.props as A.YearPickerInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"></a-year-picker>
-              </template>
-
-              <template v-if="item.type === 'month-picker'">
-                <a-month-picker
-                  v-bind="(item.props as A.MonthPickerInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"></a-month-picker>
-              </template>
-
-              <template v-if="item.type === 'quarter-picker'">
-                <a-quarter-picker
-                  v-bind="(item.props as A.QuarterPickerInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"></a-quarter-picker>
-              </template>
-
-              <template v-if="item.type === 'week-picker'">
-                <a-week-picker
-                  v-bind="(item.props as A.WeekPickerInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"></a-week-picker>
-              </template>
-
+            <template #label>
+              <template v-if="typeof item.label === 'string'">{{ item.label }}</template>
+              <component :is="item.label" v-else></component>
+            </template>
+            <slot
+              v-if="!['group-title'].includes(item.type || '')" :name="item.field"
+              v-bind="{ disabled: isDisabled(item.disabled) }"
+            >
               <template v-if="item.type === 'range-picker'">
-                <a-range-picker
+                <DateRangePicker
                   v-bind="(item.props as A.RangePickerInstance['$props'])"
                   :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"></a-range-picker>
-              </template>
-
-              <template v-if="item.type === 'color-picker'">
-                <a-color-picker
-                  v-bind="(item.props as A.ColorPickerInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"></a-color-picker>
-              </template>
-
-              <template v-if="item.type === 'rate'">
-                <a-rate
-                  v-bind="(item.props as A.RateInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
                   @update:model-value="valueChange($event, item.field)"
                 />
               </template>
-
-              <template v-if="item.type === 'switch'">
-                <a-switch
-                  v-bind="(item.props as A.SwitchInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                />
-              </template>
-
-              <template v-if="item.type === 'slider'">
-                <a-slider
-                  v-bind="(item.props as A.SliderInstance['$props'])"
-                  :model-value="modelValue[item.field as keyof typeof modelValue]"
-                  @update:model-value="valueChange($event, item.field)"
-                />
-              </template>
+              <component
+                :is="`a-${item.type}`" v-else v-bind="getComponentBindProps(item)"
+                :model-value="modelValue[item.field as keyof typeof modelValue]"
+                @update:model-value="valueChange($event, item.field)"
+              >
+                <template v-for="(slotValue, slotKey) in item?.slots" :key="slotKey" #[slotKey]>
+                  <template v-if="typeof slotValue === 'string'">{{ slotValue }}</template>
+                  <component :is="slotValue" v-else></component>
+                </template>
+              </component>
+            </slot>
+            <slot v-else name="group-title">
+              <a-alert v-bind="item.props">{{ item.label }}</a-alert>
             </slot>
           </a-form-item>
-        </a-col>
+        </a-grid-item>
       </template>
-      <a-col v-if="!options.btns?.hide" :span="options.btns?.span || 12" v-bind="options.btns?.col">
-        <a-space wrap>
+      <a-grid-item v-if="!options.btns?.hide" :suffix="options.fold?.enable">
+        <a-space wrap :size="[8, 16]" style="flex-wrap: nowrap">
           <slot name="suffix">
             <a-button type="primary" @click="emit('search')">
               <template #icon><icon-search /></template>
-              <template #default>{{ options.btns?.searchBtnText || '查询' }}</template>
+              <template #default>{{ options.btns?.searchBtnText || '搜索' }}</template>
             </a-button>
-            <a-button @click="emit('reset')">重置</a-button>
-            <a-button v-if="options.fold?.enable" type="text" size="mini" @click="collapsed = !collapsed">
+            <a-button @click="emit('reset')">
+              <template #icon><icon-refresh /></template>
+              <template #default>重置</template>
+            </a-button>
+            <a-button
+              v-if="options.fold?.enable" class="gi-form__fold-btn" type="text" size="mini"
+              @click="collapsed = !collapsed"
+            >
               <template #icon>
                 <icon-up v-if="!collapsed" />
                 <icon-down v-else />
@@ -207,23 +65,24 @@
             </a-button>
           </slot>
         </a-space>
-      </a-col>
-    </a-row>
+      </a-grid-item>
+    </a-grid>
   </a-form>
 </template>
 
 <script setup lang="ts">
-import type * as A from '@arco-design/web-vue'
 import { cloneDeep } from 'lodash-es'
-import type { Columns, ColumnsItem, ColumnsItemDisabled, ColumnsItemHide, Options } from './type'
+import type { ColumnsItem, ColumnsItemDisabled, ColumnsItemHide, Options } from './type'
 
 interface Props {
   modelValue: any
-  options: Options
-  columns: Columns
+  options?: Options
+  columns: ColumnsItem[]
 }
 
-const props = withDefaults(defineProps<Props>(), {})
+const props = withDefaults(defineProps<Props>(), {
+  options: () => ({}),
+})
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: any): void
@@ -231,13 +90,75 @@ const emit = defineEmits<{
   (e: 'reset'): void
 }>()
 
+const options = computed(() => ({
+  grid: { cols: 1 },
+  gridItem: { span: { xs: 2, sm: 1 } },
+  ...props.options,
+}
+))
+
+const formRef = useTemplateRef('formRef')
+const collapsed = ref(props.options.fold?.defaultCollapsed ?? false)
+const dicData: Record<string, any> = reactive({})
+
+// col组件的显示隐藏
+const colVShow = (index: number) => {
+  return index <= (props.options.fold?.index || 0) || (index >= (props.options.fold?.index || 0) && !collapsed.value)
+}
+
+// 组件的默认props配置
+const getComponentBindProps = (item: ColumnsItem) => {
+  const obj: Partial<ColumnsItem['props'] & { placeholder: string }> = {}
+  if (item.type === 'input') {
+    obj.allowClear = true
+    obj.placeholder = `请输入${item.label}`
+  }
+  if (item.type === 'input-password') {
+    obj.allowClear = true
+    obj.placeholder = `请输入${item.label}`
+  }
+  if (item.type === 'input-number') {
+    obj.allowClear = true
+    obj.placeholder = `请输入${item.label}`
+  }
+  if (item.type === 'textarea') {
+    obj.placeholder = `请输入${item.label}`
+    obj.maxLength = 200
+  }
+  if (item.type === 'select') {
+    obj.allowClear = true
+    obj.placeholder = `请选择${item.label}`
+    obj.options = dicData[item.field] || item.options
+  }
+  if (item.type === 'cascader') {
+    obj.allowClear = true
+    obj.placeholder = `请选择${item.label}`
+    obj.options = dicData[item.field] || item.options
+  }
+  if (item.type === 'tree-select') {
+    obj.allowClear = true
+    obj.placeholder = `请选择${item.label}`
+    obj.data = dicData[item.field] || item.data
+  }
+  if (item.type === 'radio-group') {
+    obj.options = dicData[item.field] || item.options
+  }
+  if (item.type === 'checkbox-group') {
+    obj.options = dicData[item.field] || item.options
+  }
+  if (item.type === 'date-picker') {
+    obj.placeholder = '请选择日期'
+  }
+  if (item.type === 'time-picker') {
+    obj.allowClear = true
+    obj.placeholder = `请选择时间`
+  }
+  return { ...obj, ...item.props }
+}
+
 const valueChange = (value: any, field: string) => {
   emit('update:modelValue', Object.assign(props.modelValue, { [field]: value }))
 }
-
-const collapsed = ref(props.options.fold?.defaultCollapsed ?? false)
-const formRef = ref<A.FormInstance>()
-defineExpose({ formRef })
 
 const isHide = (hide?: ColumnsItemHide<boolean | object>) => {
   if (hide === undefined) return false
@@ -255,11 +176,11 @@ const isDisabled = (disabled?: ColumnsItemDisabled<boolean | object>) => {
   }
 }
 
-const dicData: Record<string, any> = reactive({})
 props.columns.forEach((item) => {
   if (item.request && typeof item.request === 'function' && item?.init) {
     item.request(props.modelValue).then((res) => {
       dicData[item.field] = item.resultFormat ? item.resultFormat(res) : res.data
+      // console.log('dicData', dicData)
     })
   }
 })
@@ -299,6 +220,15 @@ watch(cloneForm as any, (newVal, oldVal) => {
     }
   })
 })
+
+defineExpose({ formRef })
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped lang="scss">
+:deep(.arco-form-item-layout-inline) {
+  margin-right: 0;
+}
+.gi-form__fold-btn {
+  padding: 0 5px;
+}
+</style>

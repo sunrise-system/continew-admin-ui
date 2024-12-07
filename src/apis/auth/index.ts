@@ -1,5 +1,7 @@
-import type * as Auth from './type'
+import type * as T from './type'
 import http, { fnMotion } from '@/utils/http'
+
+export type * from './type'
 
 const BASE_URL = '/auth'
 
@@ -9,28 +11,28 @@ export function accountLogin(req: any) {
 }
 
 /** @desc 手机号登录 */
-export function phoneLogin(req: Auth.PhoneLoginReq) {
-  return http.post<Auth.LoginResp>(`${BASE_URL}/phone`, req)
+export function phoneLogin(req: T.PhoneLoginReq) {
+  return http.post<T.LoginResp>(`${BASE_URL}/phone`, req)
 }
 
 /** @desc 邮箱登录 */
-export function emailLogin(req: Auth.EmailLoginReq) {
-  return http.post<Auth.LoginResp>(`${BASE_URL}/email`, req)
+export function emailLogin(req: T.EmailLoginReq) {
+  return http.post<T.LoginResp>(`${BASE_URL}/email`, req)
 }
 
 /** @desc 三方账号登录 */
 export function socialLogin(source: string, req: any) {
-  return http.post<Auth.LoginResp>(`/oauth/${source}`, req)
+  return http.post<T.LoginResp>(`/oauth/${source}`, req)
 }
 
 /** @desc 三方账号登录授权 */
 export function socialAuth(source: string) {
-  return http.get<Auth.SocialAuthAuthorizeResp>(`/oauth/${source}`)
+  return http.get<T.SocialAuthAuthorizeResp>(`/oauth/${source}`)
 }
 
 /** @desc 退出登录 */
 export function logout() {
-  return http.post(`${BASE_URL}/logout`)
+  return fnMotion(`ADM08901A/logout`)  
 }
 
 /** @desc 获取用户信息 */

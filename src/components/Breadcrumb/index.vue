@@ -12,7 +12,7 @@
   </a-breadcrumb>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import type { RouteLocationMatched } from 'vue-router'
 import { findTree } from 'xe-utils'
 import { useRouteStore } from '@/stores'
@@ -25,7 +25,7 @@ let home: RouteLocationMatched | null = null
 const getHome = () => {
   if (!home) {
     const cloneRoutes = JSON.parse(JSON.stringify(routes)) as RouteLocationMatched[]
-    const obj = findTree(cloneRoutes, (i) => i.path === '/home')
+    const obj = findTree(cloneRoutes, (i) => i.path === '/dashboard/workplace')
     home = obj.item
   }
 }
@@ -58,7 +58,7 @@ function handleLink(item: RouteLocationMatched) {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .breadcrumb-item-title {
   transition: all 0.3s;
   cursor: pointer;

@@ -11,11 +11,10 @@ import {
   getUserInfo as getUserInfoApi,
   logout as logoutApi,
   phoneLogin as phoneLoginApi,
-  socialLogin as socialLoginApi
+  socialLogin as socialLoginApi,
 } from '@/apis'
 import { clearToken, getToken, setToken } from '@/utils/auth'
-import { resetHasRouteFlag } from '@/router/permission'
-import getAvatar from '@/utils/avatar'
+import { resetHasRouteFlag } from '@/router/guard'
 
 const storeSetup = () => {
   const userInfo = reactive<UserInfo>({
@@ -31,9 +30,10 @@ const storeSetup = () => {
     registrationDate: '',
     deptName: '',
     roles: [],
-    permissions: []
+    permissions: [],
   })
-  const name = computed(() => userInfo.nickname)
+  const nickname = computed(() => userInfo.nickname)
+  const username = computed(() => userInfo.username)
   const avatar = computed(() => userInfo.avatar)
 
   const token = ref(getToken() || '')
@@ -49,21 +49,21 @@ const storeSetup = () => {
   }
 
   // 登录
-  const accountLogin = async (req: any) => {
+  const accountLogin = async (req: AccountLoginReq) => {
     const res = await accountLoginApi(req)
-    setToken(res.data.Context.token)
-    token.value = res.data.Context.token
+    setToken(res.data.token)
+    token.value = res.data.token
   }
 
   // 邮箱登录
-  const emailLogin = async (req: any) => {
+  const emailLogin = async (req: EmailLoginReq) => {
     const res = await emailLoginApi(req)
     setToken(res.data.token)
     token.value = res.data.token
   }
 
   // 手机号登录
-  const phoneLogin = async (req: any) => {
+  const phoneLogin = async (req: PhoneLoginReq) => {
     const res = await phoneLoginApi(req)
     setToken(res.data.token)
     token.value = res.data.token
@@ -100,7 +100,7 @@ const storeSetup = () => {
   const getInfo = async () => {
     const res = await getUserInfoApi()
     Object.assign(userInfo, res.data)
-    userInfo.avatar = getAvatar(res.data.avatar, res.data.gender)
+    userInfo.avatar = res.data.avatar
     if (res.data.roles && res.data.roles.length) {
       roles.value = res.data.roles
       permissions.value = res.data.permissions
@@ -109,7 +109,8 @@ const storeSetup = () => {
 
   return {
     userInfo,
-    name,
+    nickname,
+    username,
     avatar,
     token,
     roles,
@@ -122,10 +123,10 @@ const storeSetup = () => {
     logout,
     logoutCallBack,
     getInfo,
-    resetToken
+    resetToken,
   }
 }
 
 export const useUserStore = defineStore('user', storeSetup, {
-  persist: { paths: ['token', 'roles', 'permissions', 'pwdExpiredShow'], storage: localStorage }
+  persist: { paths: ['token', 'roles', 'permissions', 'pwdExpiredShow'], storage: localStorage },
 })

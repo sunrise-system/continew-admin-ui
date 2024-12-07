@@ -6,16 +6,20 @@
         <a-space>
           <a-badge>
             <template #content>
-              <icon-check-circle-fill v-if="appStore.layout === 'left'" style="color: rgb(var(--success-6))"
-                :size="16"></icon-check-circle-fill>
+              <icon-check-circle-fill
+                v-if="appStore.layout === 'left'" style="color: rgb(var(--success-6))"
+                :size="16"
+              ></icon-check-circle-fill>
             </template>
             <LayoutItem mode="left" @click="appStore.layout = 'left'"></LayoutItem>
             <p class="layout-text">默认布局</p>
           </a-badge>
           <a-badge>
             <template #content>
-              <icon-check-circle-fill v-if="appStore.layout === 'mix'" :size="16"
-                style="color: rgb(var(--success-6))"></icon-check-circle-fill>
+              <icon-check-circle-fill
+                v-if="appStore.layout === 'mix'" :size="16"
+                style="color: rgb(var(--success-6))"
+              ></icon-check-circle-fill>
             </template>
             <LayoutItem mode="mix" @click="appStore.layout = 'mix'"></LayoutItem>
             <p class="layout-text">混合布局</p>
@@ -25,8 +29,10 @@
 
       <a-divider orientation="center">系统主题</a-divider>
       <a-row justify="center">
-        <ColorPicker theme="dark" :color="appStore.themeColor" :sucker-hide="true" :colors-default="defaultColorList"
-          @change-color="changeColor"></ColorPicker>
+        <ColorPicker
+          theme="dark" :color="appStore.themeColor" :sucker-hide="true" :colors-default="defaultColorList"
+          @change-color="changeColor"
+        ></ColorPicker>
       </a-row>
 
       <a-divider orientation="center">界面显示</a-divider>
@@ -36,16 +42,20 @@
           <a-switch v-model="appStore.tab" />
         </a-descriptions-item>
         <a-descriptions-item label="页签风格">
-          <a-select v-model="appStore.tabMode" placeholder="请选择" :options="tabModeList" :disabled="!appStore.tab"
-            :trigger-props="{ autoFitPopupMinWidth: true }" :style="{ width: '120px' }">
+          <a-select
+            v-model="appStore.tabMode" placeholder="请选择" :options="tabModeList" :disabled="!appStore.tab"
+            :trigger-props="{ autoFitPopupMinWidth: true }" :style="{ width: '120px' }"
+          >
           </a-select>
         </a-descriptions-item>
         <a-descriptions-item label="动画显示">
           <a-switch v-model="appStore.animate" />
         </a-descriptions-item>
         <a-descriptions-item label="动画显示">
-          <a-select v-model="appStore.animateMode" placeholder="请选择" :options="animateModeList"
-            :disabled="!appStore.animate" :style="{ width: '120px' }">
+          <a-select
+            v-model="appStore.animateMode" placeholder="请选择" :options="animateModeList"
+            :disabled="!appStore.animate" :style="{ width: '120px' }"
+          >
           </a-select>
         </a-descriptions-item>
         <a-descriptions-item label="深色菜单">
@@ -56,6 +66,12 @@
         </a-descriptions-item>
         <a-descriptions-item label="版权显示">
           <a-switch v-model="appStore.copyrightDisplay" />
+        </a-descriptions-item>
+        <a-descriptions-item label="水印">
+          <a-switch v-model="appStore.isOpenWatermark" />
+        </a-descriptions-item>
+        <a-descriptions-item v-if="appStore.isOpenWatermark" label="水印信息">
+          <a-input v-model="appStore.watermark" placeholder="留空则显示用户名" />
         </a-descriptions-item>
       </a-descriptions>
     </a-space>
@@ -75,7 +91,7 @@ const visible = ref(false)
 const tabModeList: App.TabItem[] = [
   { label: '卡片', value: 'card' },
   { label: '间隔卡片', value: 'card-gutter' },
-  { label: '圆角', value: 'rounded' }
+  { label: '圆角', value: 'rounded' },
 ]
 
 const animateModeList: App.AnimateItem[] = [
@@ -83,14 +99,12 @@ const animateModeList: App.AnimateItem[] = [
   { label: '滑动', value: 'fade-slide' },
   { label: '渐变', value: 'fade' },
   { label: '底部滑出', value: 'fade-bottom' },
-  { label: '缩放消退', value: 'fade-scale' }
+  { label: '缩放消退', value: 'fade-scale' },
 ]
 
 const open = () => {
   visible.value = true
 }
-
-defineExpose({ open })
 
 // 默认显示的主题色列表
 const defaultColorList = [
@@ -109,10 +123,10 @@ const defaultColorList = [
   '#43a047',
   '#e53935',
   '#f4511e',
-  '#6d4c41'
+  '#6d4c41',
 ]
 
-type ColorObj = {
+interface ColorObj {
   hex: string
   hsv: { h: number, s: number, v: number }
   rgba: { r: number, g: number, b: number, a: number }
@@ -123,9 +137,11 @@ const changeColor = (colorObj: ColorObj) => {
   if (!/^#[0-9A-Z]{6}/i.test(colorObj.hex)) return
   appStore.setThemeColor(colorObj.hex)
 }
+
+defineExpose({ open })
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 :deep(.arco-descriptions-item-label-block) {
   color: var(--color-text-1);
 }

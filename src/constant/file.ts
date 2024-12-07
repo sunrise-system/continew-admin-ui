@@ -11,7 +11,7 @@ export const FileTypeList: FileTypeListItem[] = [
   { name: '文档', value: 3, icon: 'file-txt' },
   { name: '视频', value: 4, icon: 'file-video-color' },
   { name: '音频', value: 5, icon: 'file-music' },
-  { name: '其他', value: 1, icon: 'file-other' }
+  { name: '其他', value: 1, icon: 'file-other' },
 ]
 
 export interface FileExtendNameIconMap {
@@ -34,11 +34,15 @@ export const FileIcon: FileExtendNameIconMap = {
   html: 'file-html',
   css: 'file-css',
   js: 'file-js',
-  other: 'file-other' // 未知文件
+  other: 'file-other', // 未知文件
 }
 
 /** 图片类型 */
 export const ImageTypes = ['jpg', 'png', 'gif', 'jpeg']
 
 /** WPS、Office文件类型 */
-export const OfficeTypes = ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx']
+export const OfficeTypes = ['ppt', 'pptx', 'doc', 'docx', 'xls', 'xlsx', 'pdf']
+
+export const WordTypes = ['doc', 'docx']
+
+export const ExcelTypes = ['xls', 'xlsx']

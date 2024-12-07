@@ -1,13 +1,13 @@
 {
+  "theme": "light",
+  "themeColor": "#165DFF",
+  "tab": true,
+  "tabMode": "card-gutter",
   "animate": false,
   "animateMode": "zoom-fade",
-  "copyrightDisplay": true,
-  "layout": "left",
-  "menuAccordion": true,
   "menuCollapse": true,
+  "menuAccordion": true,
   "menuDark": false,
-  "tab": true,
-  "tabMode": "card",
-  "theme": "light",
-  "themeColor": "#165DFF"
+  "copyrightDisplay": true,
+  "layout": "left"
 }

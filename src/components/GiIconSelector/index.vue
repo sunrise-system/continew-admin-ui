@@ -74,7 +74,7 @@ defineOptions({ name: 'GiIconSelector' })
 
 const props = withDefaults(defineProps<Props>(), {
   modelValue: '',
-  enableCopy: false
+  enableCopy: false,
 })
 
 const emit = defineEmits(['select', 'update:modelValue'])
@@ -122,7 +122,7 @@ const search = () => {
   if (searchValue.value) {
     const temp = searchValue.value.toLowerCase()
     searchList.value = iconList.filter((item) => {
-      return item.toLowerCase().startsWith((temp.startsWith('icon') ? '' : 'icon') + temp)
+      return item.toLowerCase().includes((temp))
     })
     total.value = searchList.value.length
     currentPageIconList.value = searchList.value.slice(0, pageSize)
@@ -149,7 +149,7 @@ const handleSelectedIcon = async (icon: string) => {
 }
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .container {
   width: 300px;
   overflow: hidden;

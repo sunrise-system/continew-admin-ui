@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http, { fnMotion } from '@/utils/http'
+import http from '@/utils/http'
 
 export type * from './type'
 
@@ -7,8 +7,7 @@ const BASE_URL = '/system/role'
 
 /** @desc 查询角色列表 */
 export function listRole(query: T.RolePageQuery) {
-  return fnMotion(`ADM08902A/list`, query)
-  //  return http.get<PageRes<System.RoleResp[]>>(`${BASE_URL}`, query)
+  return http.get<PageRes<T.RoleResp[]>>(`${BASE_URL}`, query)
 }
 
 /** @desc 查询角色详情 */
@@ -29,4 +28,14 @@ export function updateRole(data: any, id: string) {
 /** @desc 删除角色 */
 export function deleteRole(ids: string | Array<string>) {
   return http.del(`${BASE_URL}/${ids}`)
+}
+
+/** @desc 查询角色关联用户 */
+export function listRoleUsers(id: string) {
+  return http.get(`${BASE_URL}/${id}/user`)
+}
+
+/** @desc 分配角色给用户 */
+export function assignToUsers(id: string, userIds: Array<string>) {
+  return http.post(`${BASE_URL}/${id}/user`, userIds)
 }

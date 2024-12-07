@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import ArcoVue, { Card, Drawer, Modal } from '@arco-design/web-vue'
 import '@/styles/arco-ui/index.less'
-import 'md-editor-v3/lib/style.css'
 // import '@arco-themes/vue-gi-demo/index.less'
 // import '@arco-design/web-vue/dist/arco.css'
 
@@ -10,7 +9,7 @@ import ArcoVueIcon from '@arco-design/web-vue/es/icon'
 import App from './App.vue'
 import router from './router'
 
-import '@/router/permission'
+import '@/router/guard'
 
 // 使用动画库
 import 'animate.css/animate.min.css'

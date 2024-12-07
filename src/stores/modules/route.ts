@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import type { RouteRecordRaw } from 'vue-router'
 import { mapTree, toTreeArray } from 'xe-utils'
 import { cloneDeep, omit } from 'lodash-es'
-import { constantRoutes } from '@/router'
+import { constantRoutes, systemRoutes } from '@/router/route'
 import ParentView from '@/components/ParentView/index.vue'
 import { type RouteItem, getUserRoute } from '@/apis'
 import { transformPathToName } from '@/utils'
@@ -44,7 +44,6 @@ const transformComponentView = (component: string) => {
  */
 const formatAsyncRoutes = (menus: RouteItem[]) => {
   if (!menus.length) return []
-  menus.sort((a, b) => (a?.sort ?? 0) - (b?.sort ?? 0)) // 排序
   const pathMap = new Map()
   const routes = mapTree(menus, (item) => {
     pathMap.set(item.id, item.path)
@@ -52,8 +51,8 @@ const formatAsyncRoutes = (menus: RouteItem[]) => {
       item.children.sort((a, b) => (a?.sort ?? 0) - (b?.sort ?? 0)) // 排序
     }
     // 部分子菜单，例如：通知公告新增、查看详情，需要选中其父菜单
-    if (item.pid && item.type === 2 && item.permission) {
-      item.activeMenu = pathMap.get(item.pid)
+    if (item.parentId && item.type === 2 && item.permission) {
+      item.activeMenu = pathMap.get(item.parentId)
     }
     return {
       path: item.path,
@@ -66,8 +65,8 @@ const formatAsyncRoutes = (menus: RouteItem[]) => {
         keepAlive: item.isCache,
         icon: item.icon,
         showInTabs: item.showInTabs,
-        activeMenu: item.activeMenu
-      }
+        activeMenu: item.activeMenu,
+      },
     }
   })
   return routes as RouteRecordRaw[]
@@ -103,7 +102,9 @@ const storeSetup = () => {
 
   // 合并路由
   const setRoutes = (data: RouteRecordRaw[]) => {
-    routes.value = constantRoutes.concat(data)
+    // 合并路由并排序
+    routes.value = [...constantRoutes, ...systemRoutes].concat(data)
+      .sort((a, b) => (a.meta?.sort ?? 0) - (b.meta?.sort ?? 0))
     asyncRoutes.value = data
   }
 
@@ -112,7 +113,7 @@ const storeSetup = () => {
     return new Promise((resolve) => {
       // 向后端请求路由数据 这个接口已经根据用户角色过滤了没权限的路由(后端根据用户角色过滤路由显得比较安全些)
       getUserRoute().then((res) => {
-        const asyncRoutes = formatAsyncRoutes(res.data.Context)
+        const asyncRoutes = formatAsyncRoutes(res.data)
         setRoutes(asyncRoutes)
         const cloneRoutes = cloneDeep(asyncRoutes)
         const flatRoutes = flatMultiLevelRoutes(cloneRoutes as RouteRecordRaw[])
@@ -124,7 +125,7 @@ const storeSetup = () => {
   return {
     routes,
     asyncRoutes,
-    generateRoutes
+    generateRoutes,
   }
 }
 

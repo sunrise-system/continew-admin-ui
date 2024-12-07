@@ -48,10 +48,8 @@
       <a-dropdown trigger="hover">
         <a-row align="center" :wrap="false" class="user">
           <!-- 管理员头像 -->
-          <a-avatar :size="32">
-            <img :src="userStore.avatar" alt="avatar" />
-          </a-avatar>
-          <span class="username">{{ userStore.name }}</span>
+          <Avatar :src="userStore.avatar" :name="userStore.nickname" :size="32" />
+          <span class="username">{{ userStore.nickname }}</span>
           <icon-down />
         </a-row>
         <template #content>
@@ -137,12 +135,12 @@ const logout = () => {
     onBeforeOk: async () => {
       try {
         await userStore.logout()
-        router.replace('/login')
+        await router.replace('/login')
         return true
       } catch (error) {
         return false
       }
-    }
+    },
   })
 }
 
@@ -151,7 +149,7 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .arco-dropdown-open .arco-icon-down {
   transform: rotate(180deg);
 }

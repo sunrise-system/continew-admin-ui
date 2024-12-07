@@ -43,7 +43,8 @@ http.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     NProgress.start() // 进度条
     const token = getToken()
-    if (token) {
+//    debugger
+    if (token && token!='undefined') {
       if (!config.headers) {
         config.headers = {}
       }

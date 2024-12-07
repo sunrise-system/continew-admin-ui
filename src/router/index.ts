@@ -1,88 +1,11 @@
-import { type RouteRecordRaw, createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import { useRouteStore } from '@/stores'
-
-/** 默认布局 */
-const Layout = () => import('@/layout/index.vue')
-
-/** 静态路由 */
-export const constantRoutes: RouteRecordRaw[] = [
-  {
-    path: '/redirect',
-    component: Layout,
-    meta: { hidden: true },
-    children: [
-      {
-        path: '/redirect/:path(.*)',
-        component: () => import('@/views/default/redirect/index.vue')
-      }
-    ]
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('@/views/login/index.vue'),
-    meta: { hidden: true }
-  },
-  {
-    path: '/:pathMatch(.*)*',
-    component: () => import('@/views/default/error/404.vue'),
-    meta: { hidden: true }
-  },
-  {
-    path: '/403',
-    component: () => import('@/views/default/error/403.vue'),
-    meta: { hidden: true }
-  },
-  {
-    path: '/',
-    component: Layout,
-    redirect: '/home',
-    meta: { hidden: false },
-    children: [
-      {
-        path: '/home',
-        name: 'Home',
-        component: () => import('@/views/home/index.vue'),
-        meta: { title: '首页', icon: 'dashboard', affix: true, hidden: false }
-      }
-    ]
-  },
-  {
-    path: '/social/callback',
-    component: () => import('@/views/login/social/index.vue'),
-    meta: { hidden: true }
-  },
-  {
-    path: '/pwdExpired',
-    component: () => import('@/views/login/pwdExpired/index.vue'),
-    meta: { hidden: true }
-  },
-  {
-    path: '/setting',
-    name: 'Setting',
-    component: Layout,
-    meta: { hidden: true },
-    children: [
-      {
-        path: '/setting/profile',
-        name: 'SettingProfile',
-        component: () => import('@/views/setting/profile/index.vue'),
-        meta: { title: '个人中心', showInTabs: false }
-      },
-      {
-        path: '/setting/message',
-        name: 'SettingMessage',
-        component: () => import('@/views/setting/message/index.vue'),
-        meta: { title: '消息中心', showInTabs: false }
-      }
-    ]
-  }
-]
+import { constantRoutes, systemRoutes } from '@/router/route'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes: constantRoutes,
-  scrollBehavior: () => ({ left: 0, top: 0 })
+  routes: [...constantRoutes, ...systemRoutes],
+  scrollBehavior: () => ({ left: 0, top: 0 }),
 })
 
 /**
