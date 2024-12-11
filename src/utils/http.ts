@@ -179,7 +179,7 @@ const download = (url: string, params?: object, config?: AxiosRequestConfig): Pr
     ...config,
   })
 }
-const activity = '/activity'
+const activity = ''
 
 export function fnMotion(sUrl: string, data: any) {
   return http.post(`${activity}/${sUrl}`, data)

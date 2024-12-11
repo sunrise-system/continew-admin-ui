@@ -42,6 +42,7 @@ import { type FormInstance, Message } from '@arco-design/web-vue'
 import { useStorage } from '@vueuse/core'
 import { getImageCaptcha } from '@/apis/common'
 import { useTabsStore, useUserStore } from '@/stores'
+import { encryptByRsa } from '@/utils/encrypt'
 
 const loginConfig = useStorage('login-config', {
   rememberMe: true,
@@ -51,7 +52,7 @@ const loginConfig = useStorage('login-config', {
   // password: debug ? 'admin123' : '', // 演示默认值
 })
 // 是否启用验证码
-const isCaptchaEnabled = ref(true)
+const isCaptchaEnabled = ref(false)
 // 验证码图片
 const captchaImgBase64 = ref()
 

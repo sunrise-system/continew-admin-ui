@@ -4,7 +4,7 @@
 <img src="https://img.shields.io/badge/License-Apache--2.0-blue.svg" alt="License" />
 </a>
 <a href="https://github.com/Charles7c/continew-admin-ui" target="_blank">
-<img src="https://img.shields.io/badge/RELEASE-v3.4.0-%23ff3f59.svg" alt="Release" />
+<img src="https://img.shields.io/badge/RELEASE-v3.4.1-%23ff3f59.svg" alt="Release" />
 </a>
 <a href="https://github.com/Charles7c/continew-admin" target="_blank">
 <img src="https://img.shields.io/github/stars/Charles7c/continew-admin?style=social" alt="GitHub stars" />
@@ -19,10 +19,10 @@
 <img src="https://gitee.com/continew/continew-admin/badge/fork.svg?theme=white" alt="Gitee forks" />
 </a>
 <a href="https://github.com/Charles7c/continew-admin-ui" target="_blank">
-<img src="https://img.shields.io/badge/Vue-3.4.21-%236CB52D.svg" alt="Release" />
+<img src="https://img.shields.io/badge/Vue-3.5.4-%236CB52D.svg" alt="Release" />
 </a>
 <a href="https://github.com/Charles7c/continew-admin-ui" target="_blank">
-<img src="https://img.shields.io/badge/Arco Design Vue-2.55.0-%236CB52D.svg" alt="Release" />
+<img src="https://img.shields.io/badge/Arco Design Vue-2.56.0-%236CB52D.svg" alt="Release" />
 </a>
 <a href="https://github.com/Charles7c/continew-admin-ui" target="_blank">
 <img src="https://img.shields.io/badge/TypeScript-5.0.4-%236CB52D.svg" alt="Release" />
@@ -79,7 +79,7 @@ ContiNew Admin（Continue New Admin）持续迭代优化的前后端分离中后
 ```java
 @Tag(name = "部门管理 API")
 @RestController
-@CrudRequestMapping(value = "/system/dept", api = {Api.TREE, Api.GET, Api.ADD, Api.UPDATE, Api.DELETE, Api.EXPORT})
+@CrudRequestMapping(value = "/system/dept", api = {Api.TREE, Api.DETAIL, Api.ADD, Api.UPDATE, Api.DELETE, Api.EXPORT})
 public class DeptController extends BaseController<DeptService, DeptResp, DeptDetailResp, DeptQuery, DeptReq> {}
 ```
 
@@ -352,22 +352,11 @@ ContiNew Admin 的分支目前分为下个大版本的开发分支和上个大�
 
 ## 反馈交流
 
-欢迎各位小伙伴儿扫描下方二维码加好友，备注 `cnadmin`，拉你进群，探讨技术、提提需求~
-
-加入交流群后，你将会：
-
-- 第一时间收到框架动态
-- 第一时间收到框架更新通知
-- 第一时间收到框架 Bug 通知
-- 和众多大佬互相 (huá shuǐ) 交流 (mō yú)
+欢迎各位小伙伴儿扫描下方二维码加入项目交流群，与项目维护团队及其他大佬用户实时交流讨论。
 
 <div align="left">
-  <img src=".image/qrcode.jpg" alt="二维码" width="230px" />
+  <img src=".image/qrcode.jpg" alt="二维码" height="230px" />
 </div>
-<details>
-<summary>无加群意愿</summary>
-如无加群意愿，欢迎在 <a href="https://github.com/Charles7c/continew-admin-ui/issues" target="_blank">Issues</a> 中反馈交流~ 🍻
-</details>
 
 ## 鸣谢
 
