@@ -2,11 +2,11 @@ import { defineStore } from 'pinia'
 import { computed, reactive, toRefs } from 'vue'
 import { generate, getRgbStr } from '@arco-design/color'
 import { type BasicConfig, listSiteOptionDict } from '@/apis'
-import defaultSettings from '@/config/setting.json'
+import { getSettings } from '@/config/setting'
 
 const storeSetup = () => {
   // App配置
-  const settingConfig = reactive({ ...defaultSettings }) as App.SettingConfig
+  const settingConfig = reactive({ ...getSettings() }) as App.AppSettings
   // 页面切换动画类名
   const transitionName = computed(() => (settingConfig.animate ? settingConfig.animateMode : ''))
 
@@ -60,7 +60,7 @@ const storeSetup = () => {
   const initSiteConfig = () => {
     listSiteOptionDict().then((res) => {
       const resMap = new Map()
-      res.data?.Context?.list.forEach((item) => {
+      res.data.forEach((item) => {
         resMap.set(item.label, item.value)
       })
       siteConfig.SITE_FAVICON = resMap.get('SITE_FAVICON')
@@ -81,6 +81,27 @@ const storeSetup = () => {
     document.title = config.SITE_TITLE || ''
     document.querySelector('link[rel="shortcut icon"]')?.setAttribute('href', config.SITE_FAVICON || '/favicon.ico')
   }
+  // 监听 色弱模式 和 哀悼模式
+  watch([
+    () => settingConfig.enableMourningMode,
+    () => settingConfig.enableColorWeaknessMode,
+  ], ([mourningMode, colorWeaknessMode]) => {
+    const filters = [] as string[]
+    if (mourningMode) {
+      filters.push('grayscale(100%)')
+    }
+    if (colorWeaknessMode) {
+      filters.push('invert(80%)')
+    }
+    // 如果没有任何滤镜条件，移除 `filter` 样式
+    if (filters.length === 0) {
+      document.documentElement.style.removeProperty('filter')
+    } else {
+      document.documentElement.style.setProperty('filter', filters.join(' '))
+    }
+  }, {
+    immediate: true,
+  })
 
   const getFavicon = () => {
     return siteConfig.SITE_FAVICON

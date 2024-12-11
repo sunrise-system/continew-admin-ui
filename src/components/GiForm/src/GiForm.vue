@@ -109,49 +109,39 @@ const colVShow = (index: number) => {
 // 组件的默认props配置
 const getComponentBindProps = (item: ColumnsItem) => {
   const obj: Partial<ColumnsItem['props'] & { placeholder: string }> = {}
-  if (item.type === 'input') {
-    obj.allowClear = true
-    obj.placeholder = `请输入${item.label}`
-  }
-  if (item.type === 'input-password') {
-    obj.allowClear = true
-    obj.placeholder = `请输入${item.label}`
-  }
-  if (item.type === 'input-number') {
-    obj.allowClear = true
-    obj.placeholder = `请输入${item.label}`
-  }
-  if (item.type === 'textarea') {
-    obj.placeholder = `请输入${item.label}`
-    obj.maxLength = 200
-  }
-  if (item.type === 'select') {
-    obj.allowClear = true
-    obj.placeholder = `请选择${item.label}`
-    obj.options = dicData[item.field] || item.options
-  }
-  if (item.type === 'cascader') {
-    obj.allowClear = true
-    obj.placeholder = `请选择${item.label}`
-    obj.options = dicData[item.field] || item.options
-  }
-  if (item.type === 'tree-select') {
-    obj.allowClear = true
-    obj.placeholder = `请选择${item.label}`
-    obj.data = dicData[item.field] || item.data
-  }
-  if (item.type === 'radio-group') {
-    obj.options = dicData[item.field] || item.options
-  }
-  if (item.type === 'checkbox-group') {
-    obj.options = dicData[item.field] || item.options
-  }
-  if (item.type === 'date-picker') {
-    obj.placeholder = '请选择日期'
-  }
-  if (item.type === 'time-picker') {
-    obj.allowClear = true
-    obj.placeholder = `请选择时间`
+  switch (item.type) {
+    case 'input':
+    case 'input-password':
+    case 'input-number':
+      obj.allowClear = true
+      obj.placeholder = `请输入${item.label}`
+      break
+    case 'textarea':
+      obj.placeholder = `请输入${item.label}`
+      obj.maxLength = 200
+      break
+    case 'select':
+    case 'cascader':
+      obj.allowClear = true
+      obj.placeholder = `请选择${item.label}`
+      obj.options = dicData[item.field] || item.options
+      break
+    case 'tree-select':
+      obj.allowClear = true
+      obj.placeholder = `请选择${item.label}`
+      obj.data = dicData[item.field] || item.data
+      break
+    case 'radio-group':
+    case 'checkbox-group':
+      obj.options = dicData[item.field] || item.options
+      break
+    case 'date-picker':
+      obj.placeholder = '请选择日期'
+      break
+    case 'time-picker':
+      obj.allowClear = true
+      obj.placeholder = `请选择时间`
+      break
   }
   return { ...obj, ...item.props }
 }

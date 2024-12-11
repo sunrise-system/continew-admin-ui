@@ -1,4 +1,3 @@
-import type * as System from './type'
 import http from '@/utils/http'
 
 const BASE_URL = '/activity'

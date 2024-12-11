@@ -32,7 +32,7 @@ export function socialAuth(source: string) {
 
 /** @desc 退出登录 */
 export function logout() {
-  return fnMotion(`ADM08901A/logout`)  
+  return fnMotion(`ADM08901A/logout`)
 }
 
 /** @desc 获取用户信息 */

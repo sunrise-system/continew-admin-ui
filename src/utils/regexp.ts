@@ -20,7 +20,7 @@ export const Code_4 = /^\d{4}$/
 /** @desc 正则-url链接 */
 export const Url
   // eslint-disable-next-line regexp/no-useless-quantifier
-  = /(((^https?:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-]*)?\??[-+=&;%@.\w]*#?\w*)?)$/
+  = /(((^https?:(?:\/\/)?)(?:[-;:&=+$,\w]+@)?[A-Za-z0-9.-]+(?::\d+)?|(?:www.|[-;:&=+$,\w]+@)[A-Za-z0-9.-]+)((?:\/[+~%/.\w-]*)?\??[-+=&;%@.\w]*(?:#\w*)?)?)$/
 
 /** @desc 正则-16进颜色值 #333 #8c8c8c */
 export const ColorRegex = /^#?([a-f0-9]{6}|[a-f0-9]{3})$/i

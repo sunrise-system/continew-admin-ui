@@ -80,7 +80,6 @@ import { isMobile } from '@/utils'
 import { getToken } from '@/utils/auth'
 
 defineOptions({ name: 'HeaderRight' })
-
 let socket: WebSocket
 onBeforeUnmount(() => {
   if (socket) {

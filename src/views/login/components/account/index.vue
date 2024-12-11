@@ -42,12 +42,11 @@ import { type FormInstance, Message } from '@arco-design/web-vue'
 import { useStorage } from '@vueuse/core'
 import { getImageCaptcha } from '@/apis/common'
 import { useTabsStore, useUserStore } from '@/stores'
-import { encryptByRsa } from '@/utils/encrypt'
 
 const loginConfig = useStorage('login-config', {
   rememberMe: true,
   username: 'admin', // 演示默认值
-  password: 'admin123' // 演示默认值
+  password: 'admin123', // 演示默认值
   // username: debug ? 'admin' : '', // 演示默认值
   // password: debug ? 'admin123' : '', // 演示默认值
 })
@@ -62,12 +61,12 @@ const form = reactive({
   password: loginConfig.value.password,
   captcha: '',
   uuid: '',
-  expired: false
+  expired: false,
 })
 const rules: FormInstance['rules'] = {
   username: [{ required: true, message: '请输入用户名' }],
   password: [{ required: true, message: '请输入密码' }],
-  captcha: [{ required: isCaptchaEnabled.value, message: '请输入验证码' }]
+  captcha: [{ required: isCaptchaEnabled.value, message: '请输入验证码' }],
 }
 
 // 验证码过期定时器
@@ -95,10 +94,10 @@ onBeforeUnmount(() => {
 // 获取验证码
 const getCaptcha = () => {
   getImageCaptcha().then((res) => {
-    const { openCaptcha, uuid, img, expireTime } = res.data
-    form.uuid = uuid
+    const { uuid, img, expireTime, isEnabled } = res.data
+    isCaptchaEnabled.value = isEnabled
     captchaImgBase64.value = img
-    isCaptchaEnabled.value = openCaptcha
+    form.uuid = uuid
     form.expired = false
     startTimer(expireTime)
   })
@@ -119,15 +118,15 @@ const handleLogin = async () => {
       // password: encryptByRsa(form.password) || '',
       password: form.password || '',
       captcha: form.captcha,
-      uuid: form.uuid
+      uuid: form.uuid,
     })
     tabsStore.reset()
     const { redirect, ...othersQuery } = router.currentRoute.value.query
-    router.push({
+    await router.push({
       path: (redirect as string) || '/',
       query: {
-        ...othersQuery
-      }
+        ...othersQuery,
+      },
     })
     const { rememberMe } = loginConfig.value
     loginConfig.value.username = rememberMe ? form.username : ''
@@ -145,7 +144,7 @@ onMounted(() => {
 })
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .arco-input-wrapper,
 :deep(.arco-select-view-single) {
   height: 40px;
@@ -186,11 +185,6 @@ onMounted(() => {
   position: relative;
   display: inline-block;
   cursor: pointer;
-}
-
-.captcha-container {
-  position: relative;
-  display: inline-block;
 }
 
 .overlay {

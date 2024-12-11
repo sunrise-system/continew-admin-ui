@@ -33,29 +33,13 @@ export default defineConfig(({ command, mode }) => {
       open: true,
       // 本地跨域代理 -> 代理到服务器的接口地址
       proxy: {
-        '/api/activity': {
-          target: env.VITE_API_VOLTE_URL, // 后台服务器地址
-          changeOrigin: true, // 是否允许不同源
-          secure: false, // 支持https
-          rewrite: (path) => path.replace(/^\/api/, ''),
-          configure: (proxy, options) => {
-            // proxy 是 'http-proxy' 的实例
-            console.log(proxy)
-            console.log(options)
-          }
-        },
         '/api': {
-          target: env.VITE_API_VOLTE_URL, // 后台服务器地址
+          target: env.VITE_API_BASE_URL, // 后台服务器地址
           changeOrigin: true, // 是否允许不同源
           secure: false, // 支持https
-          rewrite: (path) => path.replace(/^\/api/, ''),
-          configure: (proxy, options) => {
-            // proxy 是 'http-proxy' 的实例
-            console.log(proxy)
-            console.log(options)
-          }
-        }
-      }
+          rewrite: (path) => path.replace(/^\/api/, '/report'),
+        },
+      },
     },
     plugins: createVitePlugins(env, command === 'build'),
     // 构建
@@ -67,22 +51,23 @@ export default defineConfig(({ command, mode }) => {
         compress: {
           keep_infinity: true, // 防止 Infinity 被压缩成 1/0，这可能会导致 Chrome 上的性能问题
           drop_console: true, // 生产环境去除 console
-          drop_debugger: true // 生产环境去除 debugger
+          drop_debugger: true, // 生产环境去除 debugger
         },
         format: {
-          comments: false // 删除注释
-        }
+          comments: false, // 删除注释
+        },
       },
       // 静态资源打包到dist下的不同目录
       rollupOptions: {
         output: {
           chunkFileNames: 'static/js/[name]-[hash].js',
           entryFileNames: 'static/js/[name]-[hash].js',
-          assetFileNames: 'static/[ext]/[name]-[hash].[ext]'
-        }
-      }
+          assetFileNames: 'static/[ext]/[name]-[hash].[ext]',
+        },
+      },
     },
+    logLevel: 'debug',
     // 以 envPrefix 开头的环境变量会通过 import.meta.env 暴露在你的客户端源码中。
-    envPrefix: ['VITE', 'FILE']
+    envPrefix: ['VITE', 'FILE'],
   }
 })

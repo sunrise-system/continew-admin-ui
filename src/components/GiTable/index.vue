@@ -29,8 +29,7 @@
           </a-tooltip>
           <template #content>
             <a-doption v-for="item in sizeList" :key="item.value" :value="item.value" :active="item.value === size">
-              {{
-                item.label }}
+              {{ item.label }}
             </a-doption>
           </template>
         </a-dropdown>
@@ -125,6 +124,10 @@ defineSlots<{
   'expand-row': (props: { record: T }) => void
   'expand-icon': (props: { record: T, expanded?: boolean }) => void
   'columns': () => void
+  'custom-title': () => void
+  'top': () => void
+  'toolbar-left': () => void
+  'toolbar-right': () => void
   [propsName: string]: (props: { key: string, record: T, column: TableColumnData, rowIndex: number }) => void
 }>()
 

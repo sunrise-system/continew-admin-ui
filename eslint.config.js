@@ -45,7 +45,7 @@ export default antfu(
       'no-process-env': 0,
       'style/arrow-parens': [2, 'always'], // 箭头函数参数需要括号
       'style/brace-style': [2, '1tbs', { allowSingleLine: true }], // 对块执行一致的大括号样式
-      'style/comma-dangle': [2, 'never'], // 要求或不允许尾随逗号
+      'style/comma-dangle': [0, 'never'], // 要求或不允许尾随逗号
       'ts/consistent-type-definitions': 0,
       'node/prefer-global/process': 0,
       'antfu/top-level-function': 0,
