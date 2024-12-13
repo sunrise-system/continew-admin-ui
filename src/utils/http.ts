@@ -38,7 +38,7 @@ const http: AxiosInstance = axios.create({
 http.interceptors.request.use(
   (config: AxiosRequestConfig) => {
     const token = getToken()
-    if (token) {
+    if (token && token !== 'undefined') {
       if (!config.headers) {
         config.headers = {}
       }
@@ -94,10 +94,10 @@ http.interceptors.response.use(
   (error) => {
     const response = Object.assign({}, error.response)
     response
-    && messageErrorWrapper({
-      content: StatusCodeMessage[response.status] || '服务器暂时未响应，请刷新页面并重试。若无法解决，请联系管理员',
-      duration: 5 * 1000,
-    })
+      && messageErrorWrapper({
+        content: StatusCodeMessage[response.status] || '服务器暂时未响应，请刷新页面并重试。若无法解决，请联系管理员',
+        duration: 5 * 1000,
+      })
     return Promise.reject(error)
   },
 )

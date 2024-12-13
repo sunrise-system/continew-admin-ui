@@ -15,9 +15,9 @@ function checkPermission(el: HTMLElement, binding: DirectiveBinding) {
     const hasPermission = userStore.permissions.some((perm) => {
       return all_permission === perm || permissionValues.includes(perm)
     })
-    if (!hasPermission) {
-      el.parentNode && el.parentNode.removeChild(el)
-    }
+    //if (!hasPermission) {
+    //  el.parentNode && el.parentNode.removeChild(el)
+    //}
   } else {
     throw new Error(`need permission! Like v-hasPerm="['home:btn:edit','home:btn:delete']"`)
   }

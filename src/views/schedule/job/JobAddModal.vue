@@ -172,7 +172,7 @@
       </fieldset>
     </a-form>
 
-    <CronGeneratorModal ref="genModal" @ok="(e) => form.triggerInterval = e" />
+    <CronModal ref="cronModal" @ok="(e) => form.triggerInterval = e" />
   </a-modal>
 </template>
 
@@ -198,7 +198,6 @@ const isUpdate = computed(() => !!dataId.value)
 const title = computed(() => (isUpdate.value ? '修改任务' : '新增任务'))
 const formRef = ref<FormInstance>()
 const groupList = ref<LabelValueState[]>([])
-const genModal = ref()
 const { job_trigger_type_enum, job_task_type_enum, job_route_strategy_enum, job_block_strategy_enum } = useDict(
   'job_trigger_type_enum',
   'job_task_type_enum',
@@ -262,9 +261,10 @@ const onDeleteArgs = (index) => {
   args.value.splice(index, 1)
 }
 
+const cronModal = ref()
 // 打开生成表达式
 const openGeneratorCron = (cron: string) => {
-  genModal.value.open(cron)
+  cronModal.value.open(cron)
 }
 
 // 保存

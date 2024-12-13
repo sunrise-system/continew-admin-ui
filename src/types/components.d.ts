@@ -12,6 +12,7 @@ declare module 'vue' {
     CellCopy: typeof import('./../components/CellCopy/index.vue')['default']
     Chart: typeof import('./../components/Chart/index.vue')['default']
     CronForm: typeof import('./../components/GenCron/CronForm/index.vue')['default']
+    CronModal: typeof import('./../components/GenCron/CronModal/index.vue')['default']
     CronModel: typeof import('./../components/GenCron/CronModel/index.vue')['default']
     DateRangePicker: typeof import('./../components/DateRangePicker/index.vue')['default']
     DayForm: typeof import('./../components/GenCron/CronForm/component/day-form.vue')['default']
