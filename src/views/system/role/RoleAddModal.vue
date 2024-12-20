@@ -15,18 +15,18 @@
     </a-steps>
     <a-form ref="formRef" :model="form" :rules="rules" size="large" auto-label-width>
       <fieldset v-show="current === 1">
-        <a-form-item label="名称" field="name">
-          <a-input v-model.trim="form.name" placeholder="请输入名称" />
+        <a-form-item label="名称" field="Name">
+          <a-input v-model.trim="form.Name" placeholder="请输入名称" />
         </a-form-item>
-        <a-form-item label="编码" field="code">
-          <a-input v-model.trim="form.code" placeholder="请输入编码" />
+        <a-form-item label="编码" field="Code">
+          <a-input v-model.trim="form.Code" placeholder="请输入编码" />
         </a-form-item>
-        <a-form-item label="排序" field="sort">
-          <a-input-number v-model="form.sort" placeholder="请输入排序" :min="1" mode="button" />
+        <a-form-item label="排序" field="Sequency">
+          <a-input-number v-model="form.Sequency" placeholder="请输入排序" :min="1" mode="button" />
         </a-form-item>
-        <a-form-item label="描述" field="description">
+        <a-form-item label="描述" field="Description">
           <a-textarea
-            v-model.trim="form.description"
+            v-model.trim="form.Description"
             placeholder="请输入描述"
             show-word-limit
             :max-length="200"
@@ -227,7 +227,9 @@ const save = async () => {
     if (isInvalid) return false
     form.menuIds = getMenuAllCheckedKeys()
     form.deptIds = getDeptAllCheckedKeys()
-    await addRole(form)
+    let data={}
+    data.data=form;
+    await addRole(data)
     Message.success('新增成功')
     emit('save-success')
     return true
