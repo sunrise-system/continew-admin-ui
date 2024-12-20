@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http from '@/utils/http'
+import http, { fnMotion } from '@/utils/http'
 
 export type * from './type'
 
