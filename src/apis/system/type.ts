@@ -43,21 +43,21 @@ export interface UserQuery {
   userIds?: Array<string>
 }
 
-export interface UserPageQuery extends UserQuery, PageQuery {}
+export interface UserPageQuery extends UserQuery, PageQuery { }
 
 /** 系统角色类型 */
 export interface RoleResp {
-  id: string
-  name: string
-  code: string
-  sort: number
-  description: string
+  Id: string
+  Name: string
+  Code: string
+  Sequency: number
+  Description: string
   dataScope: number
   isSystem: boolean
   createUserString: string
-  createTime: string
+  SysCreatedTime: number
   updateUserString: string
-  updateTime: string
+  SysLastModifiedTime: number
   disabled: boolean
 }
 
@@ -73,7 +73,7 @@ export interface RoleQuery {
   sort: Array<string>
 }
 
-export interface RolePageQuery extends RoleQuery, PageQuery {}
+export interface RolePageQuery extends RoleQuery, PageQuery { }
 
 /** 系统菜单类型 */
 export interface MenuResp {
