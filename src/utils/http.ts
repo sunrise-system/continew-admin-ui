@@ -181,7 +181,15 @@ const download = (url: string, params?: object, config?: AxiosRequestConfig): Pr
 }
 const activity = ''
 
-export function fnMotion(sUrl: string, data: any) {
+export function fnMotion(sUrl: string, formArray: any, id: string) {
+  let data = {}
+  data.data = formArray;
+  if (id) {
+    data.id = id;
+  } else if (formArray.id) {
+    data.id = formArray.id;
+  }
+
   return http.post(`${activity}/${sUrl}`, data)
 }
 

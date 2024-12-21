@@ -227,9 +227,7 @@ const save = async () => {
     if (isInvalid) return false
     form.menuIds = getMenuAllCheckedKeys()
     form.deptIds = getDeptAllCheckedKeys()
-    let data={}
-    data.data=form;
-    await addRole(data)
+    await addRole(form)
     Message.success('新增成功')
     emit('save-success')
     return true
