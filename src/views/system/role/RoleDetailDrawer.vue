@@ -67,7 +67,9 @@ const { menuList, getMenuList } = useMenu()
 
 // 查询详情
 const getDataDetail = async () => {
-  const { data } = await getDetail(dataId.value)
+  let formData={}
+  formData.Id=dataId.value
+  const { data } = await getDetail(formData)
   dataDetail.value = data
 }
 
