@@ -91,16 +91,16 @@ const columns: TableInstanceColumns[] = [
     align: 'center',
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
   },
-  { title: '名称', dataIndex: 'name', slotName: 'name', ellipsis: true, tooltip: true },
-  { title: '编码', dataIndex: 'code', ellipsis: true, tooltip: true },
+  { title: '名称', dataIndex: 'Name', slotName: 'Name', ellipsis: true, tooltip: true },
+  { title: '编码', dataIndex: 'Code', ellipsis: true, tooltip: true },
   { title: '数据权限', dataIndex: 'dataScope', slotName: 'dataScope', ellipsis: true, tooltip: true },
-  { title: '排序', dataIndex: 'sort', align: 'center', show: false },
+  { title: '排序', dataIndex: 'Sequency', align: 'center', show: false },
   { title: '系统内置', dataIndex: 'isSystem', slotName: 'isSystem', align: 'center', show: false },
-  { title: '描述', dataIndex: 'description', ellipsis: true, tooltip: true },
+  { title: '描述', dataIndex: 'Description', ellipsis: true, tooltip: true },
   { title: '创建人', dataIndex: 'createUserString', ellipsis: true, tooltip: true, show: false },
-  { title: '创建时间', dataIndex: 'createTime', width: 180 },
+  { title: '创建时间', dataIndex: 'SysCreatedTime', width: 180 },
   { title: '修改人', dataIndex: 'updateUserString', ellipsis: true, tooltip: true, show: false },
-  { title: '修改时间', dataIndex: 'updateTime', width: 180, show: false },
+  { title: '修改时间', dataIndex: 'SysLastModifiedTime', width: 180, show: false },
   {
     title: '操作',
     dataIndex: 'action',
@@ -125,8 +125,8 @@ const reset = () => {
 
 // 删除
 const onDelete = (record: RoleResp) => {
-  return handleDelete(() => deleteRole(record.id), {
-    content: `是否确定删除角色「${record.name}(${record.code})」？`,
+  return handleDelete(() => deleteRole(record), {
+    content: `是否确定删除角色「${record.Name}(${record.Code})」？`,
     showModal: true,
   })
 }
@@ -140,19 +140,22 @@ const onAdd = () => {
 const RoleUpdateDrawerRef = ref<InstanceType<typeof RoleUpdateDrawer>>()
 // 修改
 const onUpdate = (record: RoleResp) => {
-  RoleUpdateDrawerRef.value?.onOpen(record.id)
+  RoleUpdateDrawerRef.value?.onOpen(record.Id)
 }
-
+const fnDelete = (record: RoleResp) => {
+  deleteRole(record.Id)
+  search()
+}
 const RoleDetailDrawerRef = ref<InstanceType<typeof RoleDetailDrawer>>()
 // 详情
 const onDetail = (record: RoleResp) => {
-  RoleDetailDrawerRef.value?.onOpen(record.id)
+  RoleDetailDrawerRef.value?.onOpen(record.Id)
 }
 
 const RoleAssignModalRef = ref<InstanceType<typeof RoleAssignModal>>()
 // 分配
 const onAssign = (record: RoleResp) => {
-  RoleAssignModalRef.value?.onOpen(record.id)
+  RoleAssignModalRef.value?.onOpen(record.Id)
 }
 </script>
 
