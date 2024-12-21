@@ -11,18 +11,18 @@
     <a-form ref="formRef" :model="form" :rules="rules" size="large" auto-label-width>
       <fieldset>
         <legend>基础信息</legend>
-        <a-form-item label="名称" field="name">
-          <a-input v-model.trim="form.name" placeholder="请输入名称" />
+        <a-form-item label="名称" field="Name">
+          <a-input v-model.trim="form.Name" placeholder="请输入名称" />
         </a-form-item>
-        <a-form-item label="编码" field="code">
-          <a-input v-model.trim="form.code" placeholder="请输入编码" :disabled="true" />
+        <a-form-item label="编码" field="Code">
+          <a-input v-model.trim="form.Code" placeholder="请输入编码" :disabled="true" />
         </a-form-item>
-        <a-form-item label="排序" field="sort">
-          <a-input-number v-model="form.sort" placeholder="请输入排序" :min="1" mode="button" />
+        <a-form-item label="排序" field="Sequency">
+          <a-input-number v-model="form.Sequency" placeholder="请输入排序" :min="1" mode="button" />
         </a-form-item>
-        <a-form-item label="描述" field="description">
+        <a-form-item label="描述" field="Description">
           <a-textarea
-            v-model.trim="form.description"
+            v-model.trim="form.Description"
             placeholder="请输入描述"
             show-word-limit
             :max-length="200"
@@ -102,15 +102,15 @@ const { deptList, getDeptList } = useDept()
 const { menuList, getMenuList } = useMenu()
 
 const rules: FormInstance['rules'] = {
-  name: [{ required: true, message: '请输入名称' }],
-  code: [{ required: true, message: '请输入编码' }],
+  Name: [{ required: true, message: '请输入名称' }],
+  Code: [{ required: true, message: '请输入编码' }],
   dataScope: [{ required: true, message: '请选择数据权限' }],
 }
 
 const [form, resetForm] = useResetReactive({
   menuCheckStrictly: true,
   deptCheckStrictly: true,
-  sort: 999,
+  Sequency: 999,
   dataScope: 4,
 })
 
@@ -197,6 +197,8 @@ const save = async () => {
 
 // 打开
 const onOpen = async (id: string) => {
+  let formArray={}
+  formArray.id=id;
   reset()
   dataId.value = id
   if (!menuList.value.length) {
@@ -205,14 +207,15 @@ const onOpen = async (id: string) => {
   if (!deptList.value.length) {
     await getDeptList()
   }
-  const { data } = await getRole(id)
-  Object.assign(form, data)
-  data.menuIds?.forEach((node) => {
+  const { data } = await getRole(formArray)
+
+  Object.assign(form, data.data)
+  data.data.menuIds?.forEach((node) => {
     nextTick(() => {
       menuTreeRef.value?.checkNode(node, true, true)
     })
   })
-  data.deptIds?.forEach((node) => {
+  data.data.deptIds?.forEach((node) => {
     nextTick(() => {
       deptTreeRef.value?.checkNode(node, true, true)
     })
