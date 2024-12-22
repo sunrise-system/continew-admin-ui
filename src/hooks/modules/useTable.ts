@@ -25,13 +25,14 @@ export function useTable<T extends U, U = T>(api: Api<T>, options?: Options<T, U
       loading.value = true
       const res = await api({ page: pagination.current, size: pagination.pageSize })
       let data = []
-      debugger
       if (res.data) {
         if (Array.isArray(res.data)) {
           data = res.data;
-        } else if (Array.isArray(res.data.data)) {
+        } else if (res.data && Array.isArray(res.data.data)) {
           data = res.data.data;
-        } else if (Array.isArray(res.data.data.list)) {
+        } else if (res.data && Array.isArray(res.data.list)) {
+          data = res.data.list;
+        } else if (res.data && res.data.data && Array.isArray(res.data.data.list)) {
           data = res.data.data.list
         }
       }
@@ -81,7 +82,7 @@ export function useTable<T extends U, U = T>(api: Api<T>, options?: Options<T, U
     const onDelete = async () => {
       try {
         const res = await deleteApi()
-        if (res.success) {
+        if (res.success || res.data && res.data.sCode == "SUCCESS") {
           Message.success(options?.successTip || '删除成功')
           selectedKeys.value = []
           await getTableData()
