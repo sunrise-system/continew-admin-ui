@@ -5,6 +5,7 @@ interface ApiRes<T> {
   msg: string
   success: boolean
   timestamp: string
+  sCode: string
 }
 
 /** 分页响应数据格式 */
