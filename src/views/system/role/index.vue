@@ -125,7 +125,7 @@ const reset = () => {
 
 // 删除
 const onDelete = (record: RoleResp) => {
-  return handleDelete(() => deleteRole(record), {
+  return handleDelete(() => deleteRole(record.Id), {
     content: `是否确定删除角色「${record.Name}(${record.Code})」？`,
     showModal: true,
   })
