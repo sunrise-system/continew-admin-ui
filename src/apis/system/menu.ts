@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http from '@/utils/http'
+import http, { fnMotion } from '@/utils/http'
 
 export type * from './type'
 
@@ -12,20 +12,20 @@ export function listMenu(query: T.MenuQuery) {
 
 /** @desc 查询菜单详情 */
 export function getMenu(id: string) {
-  return http.get<T.MenuResp>(`${BASE_URL}/${id}`)
+  return fnMotion(`ADM08906A`, {}, id)
 }
 
 /** @desc 新增菜单 */
 export function addMenu(data: any) {
-  return http.post<boolean>(`${BASE_URL}`, data)
+  return fnMotion(`ADM08906A/savechanges`, data, null)
 }
 
 /** @desc 修改菜单 */
 export function updateMenu(data: any, id: string) {
-  return http.put(`${BASE_URL}/${id}`, data)
+  return fnMotion(`ADM08906A/savechanges`, data, id)
 }
 
 /** @desc 删除菜单 */
 export function deleteMenu(id: string) {
-  return http.del(`${BASE_URL}/${id}`)
+  return fnMotion(`ADM08902A/delete`, {}, id)
 }
