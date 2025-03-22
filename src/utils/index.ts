@@ -358,7 +358,6 @@ export function parseCron(cron: string) {
 }
 // 获取object数据
 export function parseData(data: any) {
-  debugger
   if (data && data.data && data.data.data) {
     return data.data.data
   } else if (data && data.data) {
