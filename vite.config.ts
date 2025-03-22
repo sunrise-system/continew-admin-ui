@@ -19,7 +19,7 @@ export default defineConfig(({ command, mode }) => {
     css: {
       preprocessorOptions: {
         scss: {
-          additionalData: `@import "@/styles/var.scss";`,
+          additionalData: `@use "@/styles/var.scss" as *;`,
           api: 'modern-compiler',
         },
       },
@@ -66,7 +66,6 @@ export default defineConfig(({ command, mode }) => {
         },
       },
     },
-    logLevel: 'debug',
     // 以 envPrefix 开头的环境变量会通过 import.meta.env 暴露在你的客户端源码中。
     envPrefix: ['VITE', 'FILE'],
   }

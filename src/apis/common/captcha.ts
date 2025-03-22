@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http, { fnMotion } from '@/utils/http'
+import http from '@/utils/http'
 
 export type * from './type'
 
@@ -7,7 +7,7 @@ const BASE_URL = '/captcha'
 
 /** @desc 获取图片验证码 */
 export function getImageCaptcha() {
-  return fnMotion(`ADM08904A`, {})
+  return http.get<T.ImageCaptchaResp>(`${BASE_URL}/image`)
 }
 
 /** @desc 获取短信验证码 */

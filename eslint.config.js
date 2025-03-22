@@ -41,7 +41,7 @@ export default antfu(
       'curly': [0, 'all'], // 对所有控制语句强制使用一致的大括号样式
       'dot-notation': 0, // 尽可能强制使用点表示法。 在 JavaScript 中，可以使用点表示法 (foo.bar) 或方括号表示法 (foo["bar"]) 访问属性
       'no-new': 0, // 不允许在赋值或比较之外使用 new 运算符
-      // 'no-console': 2, // 禁止使用 console
+      'no-console': 'off', // 禁止使用 console
       'no-process-env': 0,
       'style/arrow-parens': [2, 'always'], // 箭头函数参数需要括号
       'style/brace-style': [2, '1tbs', { allowSingleLine: true }], // 对块执行一致的大括号样式

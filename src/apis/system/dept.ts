@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http from '@/utils/http'
+import http, { fetchMotion, fnMotion } from '@/utils/http'
 
 export type * from './type'
 
@@ -7,7 +7,9 @@ const BASE_URL = '/system/dept'
 
 /** @desc 查询部门列表 */
 export function listDept(query: T.DeptQuery) {
-  return http.get<T.DeptResp[]>(`${BASE_URL}/tree`, query)
+  // return http.get<T.DeptResp[]>(`${BASE_URL}/tree`, query)
+  query.bTree = true
+  return fetchMotion(`ADM08907A/list`, query)
 }
 
 /** @desc 查询部门详情 */
@@ -32,5 +34,5 @@ export function deleteDept(id: string) {
 
 /** @desc 导出部门 */
 export function exportDept(query: T.DeptQuery) {
-  return http.download<any>(`${BASE_URL}/export`, query)
+  return http.download(`${BASE_URL}/export`, query)
 }

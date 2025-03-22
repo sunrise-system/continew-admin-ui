@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http, { fnMotion } from '@/utils/http'
+import http, { fetchMotion, fnMotion } from '@/utils/http'
 
 export type * from './type'
 
@@ -7,7 +7,13 @@ const BASE_URL = '/system/user'
 
 /** @desc 查询用户列表 */
 export function listUser(query: T.UserPageQuery) {
-  return http.get<PageRes<T.UserResp[]>>(`${BASE_URL}`, query)
+  // return fetchMotion(`ADM08907A/list`, query)
+
+  // params.defaultDepartment = props.defaultDepartment;
+  // let res = await employeeApi.queryEmployee(params);
+
+  return fetchMotion(`ADM08903A/list`, query)
+  //  return http.get<PageRes<T.UserResp[]>>(`${BASE_URL}`, query)
 }
 
 /** @desc 查询所有用户列表 */

@@ -1,8 +1,7 @@
 <template>
-  <div class="table-page">
+  <div class="gi_table_page">
     <GiTable
       v-model:selectedKeys="selectedKeys"
-      title="代码生成"
       row-key="tableName"
       :data="dataList"
       :columns="columns"
@@ -56,14 +55,15 @@
     </GiTable>
 
     <GenConfigDrawer ref="GenConfigDrawerRef" @save-success="search" />
-    <GenPreviewModal ref="GenPreviewModalRef" @generate="onGenerate" />
+    <GenPreviewModal ref="GenPreviewModalRef" @generate="onGenerate" @download="onDownload" />
   </div>
 </template>
 
 <script setup lang="ts">
+import type { TableInstance } from '@arco-design/web-vue'
+import { Message } from '@arco-design/web-vue'
 import GenConfigDrawer from './GenConfigDrawer.vue'
-import { generate, listGenConfig } from '@/apis/code/generator'
-import type { TableInstanceColumns } from '@/components/GiTable/type'
+import { downloadCode, generateCode, listGenConfig } from '@/apis/code/generator'
 import { useTable } from '@/hooks'
 import { isMobile } from '@/utils'
 
@@ -83,7 +83,7 @@ const {
   selectAll,
   search,
 } = useTable((page) => listGenConfig({ ...queryForm, ...page }), { immediate: true, formatResult: (data) => data.map((i) => ({ ...i, disabled: !i.createTime })) })
-const columns: TableInstanceColumns[] = [
+const columns: TableInstance['columns'] = [
   {
     title: '序号',
     width: 66,
@@ -125,8 +125,8 @@ const onPreview = (tableNames: Array<string>) => {
 }
 
 // 生成
-const onGenerate = async (tableNames: Array<string>) => {
-  const res = await generate(tableNames)
+const onDownload = async (tableNames: Array<string>) => {
+  const res = await downloadCode(tableNames)
   const contentDisposition = res.headers['content-disposition']
   const pattern = /filename=([^;]+\.[^.;]+);*/
   const result = pattern.exec(contentDisposition) || ''
@@ -147,6 +147,14 @@ const onGenerate = async (tableNames: Array<string>) => {
   document.body.removeChild(downloadElement)
   // 释放掉 blob 对象
   window.URL.revokeObjectURL(href)
+}
+
+// 生成
+const onGenerate = async (tableNames: Array<string>) => {
+  const res = await generateCode(tableNames)
+  if (res.code === 0) {
+    Message.success('代码生成成功')
+  }
 }
 </script>
 

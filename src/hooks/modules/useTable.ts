@@ -1,7 +1,8 @@
 import type { TableData, TableInstance } from '@arco-design/web-vue'
 import { Message, Modal } from '@arco-design/web-vue'
 import type { Options as paginationOptions } from './usePagination'
-import { usePagination } from '@/hooks'
+import { useBreakpoint, usePagination } from '@/hooks'
+import { isMobile, parseData } from '@/utils'
 
 interface Options<T, U> {
   formatResult?: (data: T[]) => U[]
@@ -24,21 +25,14 @@ export function useTable<T extends U, U = T>(api: Api<T>, options?: Options<T, U
     try {
       loading.value = true
       const res = await api({ page: pagination.current, size: pagination.pageSize })
-      let data = []
-      if (res.data) {
-        if (Array.isArray(res.data)) {
-          data = res.data;
-        } else if (res.data && Array.isArray(res.data.data)) {
-          data = res.data.data;
-        } else if (res.data && Array.isArray(res.data.list)) {
-          data = res.data.list;
-        } else if (res.data && res.data.data && Array.isArray(res.data.data.list)) {
-          data = res.data.data.list
-        }
-      }
+      debugger
+      const data = parseData(res.data)
 
-      tableData.value = formatResult ? formatResult(data) : data
-      const total = !Array.isArray(res.data) ? res.data.total : data.length
+      console.log(data.total)
+      console.log(data.list)
+      debugger
+      tableData.value = formatResult ? formatResult(data.list) : data.list
+      const total = data.total
       setTotal(total)
       onSuccess && onSuccess()
     } finally {
@@ -82,7 +76,7 @@ export function useTable<T extends U, U = T>(api: Api<T>, options?: Options<T, U
     const onDelete = async () => {
       try {
         const res = await deleteApi()
-        if (res.success || res.data && res.data.sCode == "SUCCESS") {
+        if (res.success) {
           Message.success(options?.successTip || '删除成功')
           selectedKeys.value = []
           await getTableData()
@@ -106,5 +100,32 @@ export function useTable<T extends U, U = T>(api: Api<T>, options?: Options<T, U
     })
   }
 
-  return { loading, tableData, getTableData, search, pagination, selectedKeys, select, selectAll, handleDelete, refresh }
+  const { breakpoint } = useBreakpoint()
+  // 表格操作列在小屏下不固定在右侧
+  const fixed = computed(() => !['xs', 'sm'].includes(breakpoint.value) ? 'right' : undefined)
+
+  return {
+    /** 表格加载状态 */
+    loading,
+    /** 表格数据 */
+    tableData,
+    /** 获取表格数据 */
+    getTableData,
+    /** 搜索，页码会重置为1 */
+    search,
+    /** 分页的传参 */
+    pagination,
+    /** 选择的行keys */
+    selectedKeys,
+    /** 选择行 */
+    select,
+    /** 全选行 */
+    selectAll,
+    /** 处理删除、批量删除 */
+    handleDelete,
+    /** 刷新表格数据，页码会缓存 */
+    refresh,
+    /** 操作列在小屏场景下不固定在右侧 */
+    fixed,
+  }
 }

@@ -72,11 +72,11 @@ const rules: FormInstance['rules'] = {
 
 // 验证码过期定时器
 let timer
-const startTimer = (expireTime: number) => {
+const startTimer = (expireTime: number, curTime = Date.now()) => {
   if (timer) {
     clearTimeout(timer)
   }
-  const remainingTime = expireTime - Date.now()
+  const remainingTime = expireTime - curTime
   if (remainingTime <= 0) {
     form.expired = true
     return
@@ -100,7 +100,7 @@ const getCaptcha = () => {
     captchaImgBase64.value = img
     form.uuid = uuid
     form.expired = false
-    startTimer(expireTime)
+    startTimer(expireTime, Number(res.timestamp))
   })
 }
 
@@ -115,24 +115,25 @@ const handleLogin = async () => {
     if (isInvalid) return
     loading.value = true
     await userStore.accountLogin({
-      username: form.username,
+      UserId: form.username,
       // password: encryptByRsa(form.password) || '',
-      password: form.password || '',
+      PasswdHash: form.password || '',
       captcha: form.captcha,
       uuid: form.uuid,
     })
     tabsStore.reset()
     const { redirect, ...othersQuery } = router.currentRoute.value.query
+    const { rememberMe } = loginConfig.value
+    loginConfig.value.username = rememberMe ? form.username : ''
     await router.push({
       path: (redirect as string) || '/',
       query: {
         ...othersQuery,
       },
     })
-    const { rememberMe } = loginConfig.value
-    loginConfig.value.username = rememberMe ? form.username : ''
     Message.success('欢迎使用')
   } catch (error) {
+    console.error(error)
     getCaptcha()
     form.captcha = ''
   } finally {

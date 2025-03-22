@@ -1,5 +1,5 @@
 <template>
-  <a-drawer v-model:visible="visible" title="应用详情" :width="width >= 600 ? 600 : '100%'" :footer="false">
+  <a-drawer v-model:visible="visible" title="应用详情" :width="width >= 500 ? 500 : '100%'" :footer="false">
     <a-descriptions :column="2" size="large" class="general-description">
       <a-descriptions-item label="ID">{{ dataDetail?.id }}</a-descriptions-item>
       <a-descriptions-item label="名称">{{ dataDetail?.name }}</a-descriptions-item>
@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import { useWindowSize } from '@vueuse/core'
-import { type AppResp, getApp as getData } from '@/apis/open/app'
+import { type AppResp, getApp as getDetail } from '@/apis/open/app'
 
 const { width } = useWindowSize()
 
@@ -27,7 +27,7 @@ const visible = ref(false)
 
 // 查询详情
 const getDataDetail = async () => {
-  const { data } = await getData(dataId.value)
+  const { data } = await getDetail(dataId.value)
   dataDetail.value = data
 }
 

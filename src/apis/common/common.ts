@@ -1,12 +1,15 @@
 import type { TreeNodeData } from '@arco-design/web-vue'
-import http from '@/utils/http'
+import http, { fetchMotion, fnMotion } from '@/utils/http'
+
 import type { LabelValueState } from '@/types/global'
 
 const BASE_URL = '/common'
 
 /** @desc 查询部门树 */
-export function listDeptTree(query: { description: string }) {
-  return http.get<TreeNodeData[]>(`${BASE_URL}/tree/dept`, query)
+export function listDeptTree(query: { description: string | unknown }) {
+  query.bTree = true
+  return fetchMotion(`ADM08907A/list`, query)
+  //  return http.get<TreeNodeData[]>(`${BASE_URL}/tree/dept`, query)
 }
 
 /** @desc 查询菜单树 */

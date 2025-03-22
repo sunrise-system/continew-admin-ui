@@ -5,10 +5,10 @@ function authPermission(permission: string) {
   const permissions = useUserStore().permissions
   if (permission && permission.length > 0) {
     return permissions.some((v) => {
-      return true || all_permission === v || v === permission
+      return all_permission === v || v === permission
     })
   } else {
-    return true
+    return false
   }
 }
 
@@ -31,7 +31,7 @@ export default {
   },
   /** 验证用户是否含有指定权限，只需包含其中一个 */
   hasPermOr(permissions: string[]) {
-    return true || permissions.some((item) => authPermission(item))
+    return permissions.some((item) => authPermission(item))
   },
   /** 验证用户是否含有指定权限，必须全部拥有 */
   hasPermAnd(permissions: string[]) {

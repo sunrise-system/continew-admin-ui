@@ -11,7 +11,11 @@ export function useDept(options?: { onSuccess?: () => void }) {
     try {
       loading.value = true
       const res = await listDeptTree({ description: name })
-      deptList.value = res.data
+      if (res.data && res.data.data) {
+        deptList.value = res.data.data.list
+      } else {
+        deptList.value = res.data.data
+      }
       options?.onSuccess && options.onSuccess()
     } finally {
       loading.value = false

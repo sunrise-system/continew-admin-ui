@@ -13,6 +13,10 @@
           show-line
           block-node
           default-expand-all
+          :field-names="{
+            key: 'Id',
+            title: 'Name',
+          }"
           :selected-keys="selectedKeys"
           @select="select"
         >
@@ -28,7 +32,7 @@
                 css: true,
               }"
             >
-              {{ node?.title }}
+              {{ node?.Name }}
             </a-typography-paragraph>
           </template>
         </a-tree>
@@ -62,6 +66,7 @@ const { deptList, getDeptList } = useDept({
   onSuccess: () => {
     nextTick(() => {
       treeRef.value?.expandAll(true)
+      debugger
       select([deptList.value[0]?.key])
     })
   },
@@ -73,7 +78,7 @@ const search = (keyword: string) => {
   const loop = (data: TreeNodeData[]) => {
     const result = [] as TreeNodeData[]
     data.forEach((item: TreeNodeData) => {
-      if (item.title?.toLowerCase().includes(keyword)) {
+      if (item.Name?.toLowerCase().includes(keyword)) {
         result.push({ ...item })
       } else if (item.children) {
         const filterData = loop(item.children)
@@ -150,7 +155,7 @@ onMounted(() => {
     background-color: var(--color-bg-1);
     position: relative;
     height: 100%;
-    margin-bottom:10px;
+/*    margin-bottom:10px;*/
     .tree {
       position: absolute;
       top: 0;

@@ -356,3 +356,25 @@ export function parseCron(cron: string) {
     return '表达式错误'
   }
 }
+// 获取object数据
+export function parseData(data: any) {
+  debugger
+  if (data && data.data && data.data.data) {
+    return data.data.data
+  } else if (data && data.data) {
+    return data.data
+  } else {
+    return data
+  }
+}
+
+// 获取array数据
+export function parseList(data: any) {
+  if (data && data.list && Array.isArray(data.list)) {
+    return data.list
+  } else if (data && data.data && data.data.list && Array.isArray(data.data.list)) {
+    return data.data.list
+  } else {
+    return []
+  }
+}

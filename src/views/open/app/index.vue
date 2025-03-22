@@ -1,7 +1,6 @@
 <template>
-  <div class="table-page">
+  <div class="gi_table_page">
     <GiTable
-      title="应用管理"
       row-key="id"
       :data="dataList"
       :columns="columns"
@@ -86,6 +85,7 @@
 </template>
 
 <script setup lang="ts">
+import type { TableInstance } from '@arco-design/web-vue'
 import { Message, Modal } from '@arco-design/web-vue'
 import AppAddModal from './AppAddModal.vue'
 import AppDetailDrawer from './AppDetailDrawer.vue'
@@ -98,7 +98,6 @@ import {
   listApp,
   resetAppSecret,
 } from '@/apis/open/app'
-import type { TableInstanceColumns } from '@/components/GiTable/type'
 import { useDownload, useTable } from '@/hooks'
 import { isMobile } from '@/utils'
 import has from '@/utils/has'
@@ -116,7 +115,7 @@ const {
   search,
   handleDelete,
 } = useTable((page) => listApp({ ...queryForm, ...page }), { immediate: true })
-const columns: TableInstanceColumns[] = [
+const columns: TableInstance['columns'] = [
   {
     title: '序号',
     width: 66,
@@ -124,7 +123,7 @@ const columns: TableInstanceColumns[] = [
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
     fixed: !isMobile() ? 'left' : undefined,
   },
-  { title: '名称', dataIndex: 'name', slotName: 'name', fixed: !isMobile() ? 'left' : undefined },
+  { title: '名称', dataIndex: 'name', slotName: 'name', ellipsis: true, tooltip: true, fixed: !isMobile() ? 'left' : undefined },
   { title: 'Access Key', dataIndex: 'accessKey', slotName: 'accessKey', width: 200 },
   { title: 'Secret Key', dataIndex: 'secretKey', slotName: 'secretKey', width: 200 },
   { title: '失效时间', dataIndex: 'expireTime', width: 180 },
