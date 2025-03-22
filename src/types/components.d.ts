@@ -20,6 +20,7 @@ declare module 'vue' {
     FilePreview: typeof import('./../components/FilePreview/index.vue')['default']
     GiCellAvatar: typeof import('./../components/GiCell/GiCellAvatar.vue')['default']
     GiCellBoolean: typeof import('./../components/GiCell/GiCellBoolean.vue')['default']
+    GiCellDateTime: typeof import('./../components/GiCell/GiCellDateTime.vue')['default']
     GiCellGender: typeof import('./../components/GiCell/GiCellGender.vue')['default']
     GiCellStatus: typeof import('./../components/GiCell/GiCellStatus.vue')['default']
     GiCellTag: typeof import('./../components/GiCell/GiCellTag.vue')['default']
