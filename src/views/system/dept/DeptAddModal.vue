@@ -58,29 +58,34 @@ const [form, resetForm] = useResetReactive({
 const columns: ColumnItem[] = reactive([
   {
     label: '上级部门',
-    field: 'parentId',
+    field: 'ParentId',
     type: 'tree-select',
     span: 24,
     props: {
       data: deptSelectTree,
       allowClear: true,
       allowSearch: true,
+      fieldNames: {
+        key: 'Id',
+        title: 'Name',
+        children: 'children'
+      },
       fallbackOption: false,
       filterTreeNode(searchKey, nodeData) {
-        if (nodeData.title) {
-          return nodeData.title.toLowerCase().includes(searchKey.toLowerCase())
+        if (nodeData.Name) {
+          return nodeData.Name.toLowerCase().includes(searchKey.toLowerCase())
         }
         return false
       },
     },
     rules: [{ required: true, message: '请选择上级部门' }],
     hide: (form) => {
-      return form.parentId === 0
+      return form.ParentId === '-'
     },
   },
   {
     label: '名称',
-    field: 'name',
+    field: 'Name',
     type: 'input',
     span: 24,
     props: {
@@ -100,13 +105,13 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '描述',
-    field: 'description',
+    field: 'Description',
     type: 'textarea',
     span: 24,
   },
   {
     label: '状态',
-    field: 'status',
+    field: 'IsActive',
     type: 'switch',
     span: 24,
     props: {
@@ -147,7 +152,7 @@ const save = async () => {
 // 新增
 const onAdd = (id?: string) => {
   reset()
-  form.parentId = id
+  form.ParentId = id
   dataId.value = ''
   visible.value = true
 }

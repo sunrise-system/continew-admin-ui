@@ -20,7 +20,7 @@
       </a-form-item>
       <a-form-item label="上级菜单" field="parentId">
         <a-tree-select
-          v-model="form.parentId"
+          v-model="form.ParentId"
           placeholder="请选择上级菜单"
           allow-clear
           allow-search

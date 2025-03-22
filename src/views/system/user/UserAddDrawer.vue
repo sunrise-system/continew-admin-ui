@@ -45,7 +45,7 @@ const [form, resetForm] = useResetReactive({
 const columns: ColumnItem[] = reactive([
   {
     label: '用户名',
-    field: 'username',
+    field: 'Name',
     type: 'input',
     span: 24,
     required: true,
@@ -55,7 +55,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '昵称',
-    field: 'nickname',
+    field: 'Nickname',
     type: 'input',
     span: 24,
     required: true,
@@ -77,7 +77,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '手机号码',
-    field: 'phone',
+    field: 'MobilePhone',
     type: 'input',
     span: 24,
     props: {
@@ -86,7 +86,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '邮箱',
-    field: 'email',
+    field: 'Email',
     type: 'input',
     span: 24,
     props: {
@@ -104,7 +104,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '所属部门',
-    field: 'deptId',
+    field: 'DefaultDepartment',
     type: 'tree-select',
     span: 24,
     required: true,
@@ -112,10 +112,15 @@ const columns: ColumnItem[] = reactive([
       data: deptList,
       allowClear: true,
       allowSearch: true,
+      fieldNames: {
+        key: 'Id',
+        title: 'Name',
+        children: 'children'
+      },
       fallbackOption: false,
       filterTreeNode(searchKey: string, nodeData: TreeNodeData) {
-        if (nodeData.title) {
-          return nodeData.title.toLowerCase().includes(searchKey.toLowerCase())
+        if (nodeData.Name) {
+          return nodeData.Name.toLowerCase().includes(searchKey.toLowerCase())
         }
         return false
       },
@@ -126,7 +131,7 @@ const columns: ColumnItem[] = reactive([
     field: 'roleIds',
     type: 'select',
     span: 24,
-    required: true,
+    required: false,
     props: {
       options: roleList,
       multiple: true,
@@ -135,14 +140,8 @@ const columns: ColumnItem[] = reactive([
     },
   },
   {
-    label: '描述',
-    field: 'description',
-    type: 'textarea',
-    span: 24,
-  },
-  {
     label: '状态',
-    field: 'status',
+    field: 'IsActive',
     type: 'switch',
     span: 24,
     props: {

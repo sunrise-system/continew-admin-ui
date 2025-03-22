@@ -91,37 +91,41 @@ const onExpanded = () => {
  * @param menus 菜单数据
  */
 const transformMenu = (menus: MenuResp[]) => {
-  return menus.map((item) => {
+  if (menus) {
+    return menus.map((item) => {
     // 如果当前项有子项，递归处理子项
-    if (item.children && item.children.length > 0) {
+      if (item.children && item.children.length > 0) {
       // 过滤出 type 为 3 的按钮权限
-      const permissions = item.children.filter((child) => child.type === 3 || child.permission).map((child) => ({
-        id: child.id,
-        title: child.title,
-        parentId: child.parentId,
-        permission: child.permission,
-      }))
+        const permissions = item.children.filter((child) => child.type === 3 || child.permission).map((child) => ({
+          id: child.id,
+          title: child.title,
+          parentId: child.parentId,
+          permission: child.permission,
+        }))
 
-      // 过滤出 type 不为 3 的子项
-      item.children = item.children.filter((child) => child.type !== 3 && !child.permission)
+        // 过滤出 type 不为 3 的子项
+        item.children = item.children.filter((child) => child.type !== 3 && !child.permission)
 
-      // 如果有权限，将其添加到当前项的 permissions 属性中
-      if (permissions.length > 0) {
-        item.permissions = permissions
-        item.checkedPermissions = permissions.filter((permission) => permission.isChecked)
+        // 如果有权限，将其添加到当前项的 permissions 属性中
+        if (permissions.length > 0) {
+          item.permissions = permissions
+          item.checkedPermissions = permissions.filter((permission) => permission.isChecked)
+        }
+
+        // 递归处理剩余的子项
+        item.children = transformMenu(item.children)
+
+        // 如果 children 为空数组，移除 children 属性
+        if (item.children.length === 0) {
+          delete item.children
+        }
       }
 
-      // 递归处理剩余的子项
-      item.children = transformMenu(item.children)
-
-      // 如果 children 为空数组，移除 children 属性
-      if (item.children.length === 0) {
-        delete item.children
-      }
-    }
-
-    return item
-  })
+      return item
+    })
+  } else {
+    return []
+  }
 }
 
 // 更新表格数据的选中状态

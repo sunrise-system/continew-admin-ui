@@ -43,8 +43,8 @@
               <a-alert v-bind="item.props">{{ item.label }}</a-alert>
             </slot>
             <template v-for="(slotValue, slotKey) in item?.formItemSlots" :key="slotKey" #[slotKey]>
-              <template v-if="typeof slotValue === 'string'">{{ slotValue }}</template>
-              <component :is="slotValue" v-else></component>
+              <template v-if="typeof slotValue === 'string'">{{ slotValue }}222222222</template>
+              <component :is="slotValue" v-else>.............</component>
             </template>
           </a-form-item>
         </a-grid-item>

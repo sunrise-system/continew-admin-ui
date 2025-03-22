@@ -66,7 +66,6 @@ const { deptList, getDeptList } = useDept({
   onSuccess: () => {
     nextTick(() => {
       treeRef.value?.expandAll(true)
-      debugger
       select([deptList.value[0]?.key])
     })
   },

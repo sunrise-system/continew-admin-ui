@@ -52,6 +52,7 @@ import RoleAddDrawer from '../RoleAddDrawer.vue'
 import RightMenu from './RightMenu.vue'
 import { type RoleResp, deleteRole, listRole } from '@/apis/system/role'
 import has from '@/utils/has'
+import { parseData, parseList } from '@/utils'
 
 const emit = defineEmits<{
   (e: 'node-click', keys: Array<any>): void
@@ -77,7 +78,8 @@ const getTreeData = async () => {
   try {
     loading.value = true
     const { data } = await listRole({ sort: ['sort,asc'] })
-    dataList.value = mapTree(data, (i) => ({
+
+    dataList.value = mapTree(parseList(data), (i) => ({
       ...i,
       popupVisible: false,
       icon: () => {

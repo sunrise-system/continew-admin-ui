@@ -47,9 +47,8 @@
           <template #status="{ record }">
             <GiCellStatus :status="record.status" />
           </template>
-          <template #isSystem="{ record }">
-            <a-tag v-if="record.isSystem" color="red" size="small">是</a-tag>
-            <a-tag v-else color="arcoblue" size="small">否</a-tag>
+          <template #IsActive="{ record }">
+            <GiCellBoolean :is-active="record.IsActive" />
           </template>
           <template #action="{ record }">
             <a-space>
@@ -158,6 +157,7 @@ const columns: TableInstance['columns'] = [
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
     fixed: !isMobile() ? 'left' : undefined,
   },
+  { title: '工号', dataIndex: 'Code' },
   {
     title: '昵称',
     dataIndex: 'Nickname',
@@ -168,18 +168,11 @@ const columns: TableInstance['columns'] = [
     fixed: !isMobile() ? 'left' : undefined,
   },
   { title: '用户名', dataIndex: 'Name', slotName: 'Name', minWidth: 140, ellipsis: true, tooltip: true },
-  { title: '状态', dataIndex: 'status', slotName: 'status', align: 'center' },
+  { title: '状态', dataIndex: 'IsActive', slotName: 'IsActive', align: 'center' },
   { title: '性别', dataIndex: 'gender', slotName: 'gender', align: 'center' },
-  { title: '所属部门', dataIndex: 'deptName', minWidth: 180, ellipsis: true, tooltip: true },
-  { title: '角色', dataIndex: 'roleNames', slotName: 'roleNames', minWidth: 165 },
-  { title: '手机号', dataIndex: 'phone', minWidth: 170, ellipsis: true, tooltip: true },
-  { title: '邮箱', dataIndex: 'email', minWidth: 170, ellipsis: true, tooltip: true },
-  { title: '系统内置', dataIndex: 'isSystem', slotName: 'isSystem', width: 100, align: 'center', show: false },
-  { title: '描述', dataIndex: 'description', minWidth: 130, ellipsis: true, tooltip: true },
-  { title: '创建人', dataIndex: 'createUserString', width: 140, ellipsis: true, tooltip: true, show: false },
-  { title: '创建时间', dataIndex: 'createTime', width: 180 },
-  { title: '修改人', dataIndex: 'updateUserString', width: 140, ellipsis: true, tooltip: true, show: false },
-  { title: '修改时间', dataIndex: 'updateTime', width: 180, show: false },
+  { title: '默认部门', dataIndex: 'DefaultDepartment', minWidth: 180, ellipsis: true, tooltip: true },
+  { title: '手机号', dataIndex: 'MobilePhone', minWidth: 170, ellipsis: true, tooltip: true },
+  { title: '邮箱', dataIndex: 'Email', minWidth: 170, ellipsis: true, tooltip: true },
   {
     title: '操作',
     dataIndex: 'action',
