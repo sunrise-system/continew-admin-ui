@@ -156,12 +156,7 @@ const columns: TableInstance['columns'] = [
   { title: '名称', dataIndex: 'Name', minWidth: 170, ellipsis: true, tooltip: true },
   { title: '状态', dataIndex: 'IsActive', slotName: 'IsActive', align: 'center' },
   { title: '排序', dataIndex: 'sort', align: 'center', show: false },
-  { title: '系统内置', dataIndex: 'isSystem', slotName: 'isSystem', align: 'center', show: false },
   { title: '描述', dataIndex: 'Description', ellipsis: true, tooltip: true },
-  { title: '创建人', dataIndex: 'createUserString', ellipsis: true, tooltip: true, show: false },
-  { title: '创建时间', dataIndex: 'createTime', width: 180 },
-  { title: '修改人', dataIndex: 'updateUserString', ellipsis: true, tooltip: true, show: false },
-  { title: '修改时间', dataIndex: 'updateTime', width: 180, show: false },
   {
     title: '操作',
     dataIndex: 'action',

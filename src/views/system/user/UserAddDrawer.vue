@@ -22,6 +22,7 @@ import { GenderList } from '@/constant/common'
 import { useResetReactive } from '@/hooks'
 import { useDept, useRole } from '@/hooks/app'
 import { encryptByRsa } from '@/utils/encrypt'
+import { parseData } from '@/utils'
 
 const emit = defineEmits<{
   (e: 'save-success'): void
@@ -208,7 +209,7 @@ const onUpdate = async (id: string) => {
     await getRoleList()
   }
   const { data } = await getUser(id)
-  Object.assign(form, data)
+  Object.assign(form, parseData(data))
   visible.value = true
 }
 

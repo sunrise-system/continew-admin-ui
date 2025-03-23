@@ -31,6 +31,7 @@
 <script setup lang="ts">
 import { useWindowSize } from '@vueuse/core'
 import { type UserDetailResp, getUser as getDetail } from '@/apis/system/user'
+import { parseData } from '@/utils'
 
 const { width } = useWindowSize()
 
@@ -41,13 +42,13 @@ const visible = ref(false)
 // 查询详情
 const getDataDetail = async () => {
   const { data } = await getDetail(dataId.value)
-  dataDetail.value = data
+
+  dataDetail.value = parseData(data)
 }
 
 // 打开
 const onOpen = async (id: string) => {
   dataId.value = id
-  debugger
   await getDataDetail()
   visible.value = true
 }
