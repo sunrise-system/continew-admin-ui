@@ -31,13 +31,13 @@
       </a-form-item>
       <a-row>
         <a-col v-bind="colProps">
-          <a-form-item label="菜单标题" field="title">
-            <a-input v-model.trim="form.title" placeholder="请输入菜单标题" :max-length="30" show-word-limit allow-clear />
+          <a-form-item label="菜单标题" field="Name">
+            <a-input v-model.trim="form.Name" placeholder="请输入菜单标题" :max-length="30" show-word-limit allow-clear />
           </a-form-item>
         </a-col>
         <a-col v-bind="colProps">
-          <a-form-item v-if="[1, 2].includes(form.type)" label="菜单图标" field="icon">
-            <GiIconSelector v-model="form.icon" />
+          <a-form-item v-if="['d', 'm'].includes(form.Type)" label="菜单图标" field="Icon">
+            <GiIconSelector v-model="form.Icon" />
           </a-form-item>
           <a-form-item v-else label="权限标识" field="permission">
             <a-input v-model.trim="form.permission" placeholder="system:user:add" allow-clear />
@@ -46,21 +46,21 @@
       </a-row>
       <a-row>
         <a-col v-bind="colProps">
-          <a-form-item v-if="[1, 2].includes(form.type)" label="路由地址" field="path">
-            <a-input v-model.trim="form.path" placeholder="请输入路由地址" allow-clear />
+          <a-form-item v-if="['d', 'm'].includes(form.Type)" label="路由地址" field="Path">
+            <a-input v-model.trim="form.Path" placeholder="请输入路由地址" allow-clear />
           </a-form-item>
         </a-col>
         <a-col v-bind="colProps">
           <a-form-item v-if="form.type === 1 || (form.type === 2 && !form.isExternal)" label="重定向" field="redirect">
             <a-input v-model.trim="form.redirect" placeholder="请输入重定向地址" allow-clear />
           </a-form-item>
-          <a-form-item v-if="form.type === 2 && form.isExternal" label="组件路径" field="component">
-            <a-input v-model.trim="form.component" placeholder="请输入组件路径" allow-clear />
+          <a-form-item v-if="form.type === 'm' && form.isExternal" label="组件路径" field="Component">
+            <a-input v-model.trim="form.Component" placeholder="请输入组件路径" allow-clear />
           </a-form-item>
         </a-col>
       </a-row>
-      <a-form-item v-if="form.type === 2 && !form.isExternal" label="组件路径" field="component">
-        <a-select v-model="form.component" placeholder="请输入或选择组件路径" allow-clear allow-create :options="componentOptions">
+      <a-form-item v-if="form.type === 'm' && !form.isExternal" label="组件路径" field="Component">
+        <a-select v-model="form.Component" placeholder="请输入或选择组件路径" allow-clear allow-create :options="componentOptions">
           <template #label="{ data }">
             {{ data?.value }}
           </template>
@@ -84,7 +84,7 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row v-if="[1, 2].includes(form.type)" :gutter="16">
+      <a-row v-if="['d', 'm'].includes(form.Type)" :gutter="16">
         <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
           <a-form-item label="是否隐藏" field="hidden">
             <a-switch
@@ -110,7 +110,7 @@
           </a-form-item>
         </a-col>
         <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
-          <a-form-item v-if="form.type === 2" label="是否外链" field="isExternalUrl">
+          <a-form-item v-if="form.Type === 'm'" label="是否外链" field="isExternalUrl">
             <a-switch
               v-model="form.isExternal"
               :checked-value="true"
@@ -122,15 +122,15 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-form-item label="菜单排序" field="sort">
-        <a-input-number v-model="form.sort" placeholder="请输入菜单排序" :min="1" mode="button" style="width: 150px" />
+      <a-form-item label="菜单排序" field="sequency">
+        <a-input-number v-model="form.Sequency" placeholder="请输入菜单排序" :min="1" mode="button" style="width: 150px" />
       </a-form-item>
-      <a-form-item label="状态" field="status">
+      <a-form-item label="状态" field="IsActive">
         <a-switch
-          v-model="form.status"
+          v-model="form.IsActive"
           type="round"
-          :checked-value="1"
-          :unchecked-value="2"
+          :checked-value="true"
+          :unchecked-value="false"
           checked-text="启用"
           unchecked-text="禁用"
         />
@@ -183,22 +183,22 @@ const componentName = computed(() => transformPathToName(form.path))
 const { componentOptions } = useComponentPaths()
 
 const rules: FormInstance['rules'] = {
-  parentId: [{ required: true, message: '请选择上级菜单' }],
+  ParentId: [{ required: true, message: '请选择上级菜单' }],
   title: [{ required: true, message: '请输入菜单标题' }],
-  path: [{ required: true, message: '请输入路由地址' }],
-  name: [{ required: true, message: '请输入组件名称' }],
-  component: [{ required: true, message: '请输入组件路径' }],
+  Path: [{ required: true, message: '请输入路由地址' }],
+  Name: [{ required: true, message: '请输入组件名称' }],
+  Component: [{ required: true, message: '请输入组件路径' }],
   permission: [{ required: true, message: '请输入权限标识' }],
 }
 // eslint-disable-next-line vue/return-in-computed-property
 const formRules = computed(() => {
-  if ([1, 2].includes(form.type)) {
-    const { title, name, path } = rules
-    return { title, name, path } as FormInstance['rules']
+  if (['d', 'm'].includes(form.Type)) {
+    const { title, Name, Path } = rules
+    return { title, Name, Path } as FormInstance['rules']
   }
   if (form.type === 3) {
-    const { parentId, title, permission } = rules
-    return { parentId, title, permission } as FormInstance['rules']
+    const { ParentId, title, permission } = rules
+    return { ParentId, title, permission } as FormInstance['rules']
   }
 })
 
@@ -210,7 +210,7 @@ const reset = () => {
 
 // 设置建议组件名
 const inputComponentName = () => {
-  form.name = componentName.value
+  form.Name = componentName.value
 }
 
 // 切换类型清除校验
@@ -221,18 +221,18 @@ const onChangeType = () => {
 // 转换为菜单树
 const menuSelectTree = computed(() => {
   const menus = JSON.parse(JSON.stringify(props.menus)) as MenuResp[]
-  const data = filterTree(menus, (i) => [1, 2].includes(i.type))
+  const data = filterTree(menus, (i) => ['d', 'm'].includes(i.Type))
   return mapTree(data, (i) => ({
-    key: i.id,
-    title: i.title,
+    key: i.Id,
+    title: i.Name,
     children: i.children,
   }))
 })
 
 // 过滤树
 const filterOptions = (searchKey: string, nodeData: TreeNodeData) => {
-  if (nodeData.title) {
-    return nodeData.title.toLowerCase().includes(searchKey.toLowerCase())
+  if (nodeData.Name) {
+    return nodeData.Name.toLowerCase().includes(searchKey.toLowerCase())
   }
   return false
 }
@@ -259,7 +259,7 @@ const save = async () => {
 // 新增
 const onAdd = (id?: string) => {
   reset()
-  form.parentId = id
+  form.ParentId = id
   dataId.value = ''
   visible.value = true
 }

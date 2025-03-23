@@ -41,29 +41,20 @@
           <template #default>导出</template>
         </a-button>
       </template>
-      <template #status="{ record }">
-        <GiCellStatus :status="record.IsActive" />
-      </template>
       <template #IsActive="{ record }">
         <GiCellBoolean :is-active="record.IsActive" />
       </template>
-      <template #isSystem="{ record }">
-        <a-tag v-if="record.isSystem" color="red" size="small">是</a-tag>
-        <a-tag v-else color="arcoblue" size="small">否</a-tag>
-      </template>
       <template #action="{ record }">
         <a-space>
-          <a-link v-permission="['system:dept:update']" title="修改" @click="onUpdate(record)">修改</a-link>
+          <a-link v-xpermission="['system:dept:update']" title="修改" @click="onUpdate(record)">修改</a-link>
           <a-link
-            v-permission="['system:dept:delete']"
+            v-xpermission="['system:dept:delete']"
             status="danger"
-            :disabled="record.isSystem"
-            :title="record.isSystem ? '系统内置数据不能删除' : '删除'"
             @click="onDelete(record)"
           >
             删除
           </a-link>
-          <a-link v-permission="['system:dept:add']" title="新增" @click="onAdd(record.id)">新增</a-link>
+          <a-link v-xpermission="['system:dept:add']" title="新增" @click="onAdd(record.Id)">新增</a-link>
         </a-space>
       </template>
     </GiTable>
@@ -189,8 +180,8 @@ const reset = () => {
 
 // 删除
 const onDelete = (record: DeptResp) => {
-  return handleDelete(() => deleteDept(record.id), {
-    content: `是否确定删除部门「${record.name}」？`,
+  return handleDelete(() => deleteDept(record.Id), {
+    content: `是否确定删除部门「${record.Name}」？`,
     showModal: true,
   })
 }
@@ -210,7 +201,7 @@ const handleAdd = (record: DeptResp) => {
 }
 // 修改
 const onUpdate = (record: DeptResp) => {
-  DeptAddModalRef.value?.onUpdate(record.id)
+  DeptAddModalRef.value?.onUpdate(record.Id)
 }
 </script>
 

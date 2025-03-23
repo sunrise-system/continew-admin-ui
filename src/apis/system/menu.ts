@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http, { fnMotion } from '@/utils/http'
+import http, { fetchMotion, fnMotion } from '@/utils/http'
 
 export type * from './type'
 
@@ -7,12 +7,17 @@ const BASE_URL = '/system/menu'
 
 /** @desc 查询菜单列表 */
 export function listMenu(query: T.MenuQuery) {
-  return http.get<T.MenuResp[]>(`${BASE_URL}/tree`, query)
+  query.bTree = true
+  return fetchMotion(`ADM08906A/list`, query)
+
+  //  return http.get<T.MenuResp[]>(`${BASE_URL}/tree`, query)
 }
 
 /** @desc 查询菜单详情 */
 export function getMenu(id: string) {
-  return fnMotion(`ADM08906A`, {}, id)
+  const formArray: any = {}
+  formArray.Id = id
+  return fetchMotion(`ADM08906A`, formArray)
 }
 
 /** @desc 新增菜单 */

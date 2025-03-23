@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http from '@/utils/http'
+import http, { fetchMotion, fnMotion } from '@/utils/http'
 
 export type * from './type'
 
@@ -7,6 +7,8 @@ const BASE_URL = '/system/role'
 
 /** @desc 查询角色列表 */
 export function listRole(query: T.RoleQuery) {
+  return fetchMotion(`ADM08902A/list`, query)
+
   return http.get<T.RoleResp[]>(`${BASE_URL}/list`, query)
 }
 

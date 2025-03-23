@@ -14,22 +14,33 @@ export function listDept(query: T.DeptQuery) {
 
 /** @desc 查询部门详情 */
 export function getDept(id: string) {
-  return http.get<T.DeptResp>(`${BASE_URL}/${id}`)
+  const formArray = {}
+  formArray.Id = id
+  return fetchMotion(`ADM08907A`, formArray)
+
+  //  return http.get<T.DeptResp>(`${BASE_URL}/${id}`)
 }
 
 /** @desc 新增部门 */
 export function addDept(data: any) {
-  return http.post<boolean>(`${BASE_URL}`, data)
+  const formArray: any = {}
+  formArray.data = data
+  return fetchMotion(`ADM08907A/savechanges`, formArray)
 }
 
 /** @desc 修改部门 */
 export function updateDept(data: any, id: string) {
-  return http.put(`${BASE_URL}/${id}`, data)
+  const formArray: any = {}
+  formArray.data = data
+  formArray.Id = id
+  return fetchMotion(`ADM08907A/savechanges`, formArray)
 }
 
 /** @desc 删除部门 */
 export function deleteDept(id: string) {
-  return http.del(`${BASE_URL}/${id}`)
+  const formArray: any = {}
+  formArray.Id = id
+  return fetchMotion(`ADM08907A/delete`, formArray)
 }
 
 /** @desc 导出部门 */

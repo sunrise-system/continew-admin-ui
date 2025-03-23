@@ -44,17 +44,17 @@
           </template>
         </a-button>
       </template>
-      <template #title="{ record }">
-        <GiSvgIcon :name="record.icon" :size="15" />
-        <span style="margin-left: 5px; vertical-align: middle">{{ record.title }}</span>
+      <template #Name="{ record }">
+        <GiSvgIcon :name="record.Icon" :size="15" />
+        <span style="margin-left: 5px; vertical-align: middle">{{ record.Name }}</span>
       </template>
       <template #type="{ record }">
-        <a-tag v-if="record.type === 1" color="arcoblue">目录</a-tag>
-        <a-tag v-if="record.type === 2" color="green">菜单</a-tag>
-        <a-tag v-if="record.type === 3">按钮</a-tag>
+        <a-tag v-if="record.type === 'd'" color="arcoblue">目录</a-tag>
+        <a-tag v-if="record.type === 'm'" color="green">菜单</a-tag>
+        <a-tag v-if="record.type === 'b'">按钮</a-tag>
       </template>
-      <template #status="{ record }">
-        <GiCellStatus :status="record.status" />
+      <template #IsActive="{ record }">
+        <GiCellBoolean :is-active="record.IsActive" />
       </template>
       <template #isExternal="{ record }">
         <a-tag v-if="record.isExternal" color="arcoblue" size="small">是</a-tag>
@@ -114,7 +114,7 @@ const searchData = (title: string) => {
   const loop = (data: MenuResp[]) => {
     const result = [] as MenuResp[]
     data.forEach((item: MenuResp) => {
-      if (item.title?.toLowerCase().includes(title.toLowerCase())) {
+      if (item.Name?.toLowerCase().includes(title.toLowerCase())) {
         result.push({ ...item })
       } else if (item.children) {
         const filterData = loop(item.children)
@@ -138,21 +138,16 @@ const dataList = computed(() => {
 })
 
 const columns: TableInstance['columns'] = [
-  { title: '菜单标题', dataIndex: 'title', slotName: 'title', width: 170, fixed: !isMobile() ? 'left' : undefined },
+  { title: '菜单标题', dataIndex: 'Name', slotName: 'Name', width: 170, fixed: !isMobile() ? 'left' : undefined },
   { title: '类型', dataIndex: 'type', slotName: 'type', align: 'center' },
-  { title: '状态', dataIndex: 'status', slotName: 'status', align: 'center' },
-  { title: '排序', dataIndex: 'sort', align: 'center', show: false },
-  { title: '路由地址', dataIndex: 'path', ellipsis: true, tooltip: true },
-  { title: '组件名称', dataIndex: 'name', ellipsis: true, tooltip: true },
-  { title: '组件路径', dataIndex: 'component', minWidth: 180, ellipsis: true, tooltip: true },
+  { title: '状态', dataIndex: 'IsActive', slotName: 'IsActive', align: 'center' },
+  { title: '排序', dataIndex: 'Sequency', align: 'center', show: false },
+  { title: '路由地址', dataIndex: 'Path', ellipsis: true, tooltip: true },
+  { title: '组件路径', dataIndex: 'Component', minWidth: 180, ellipsis: true, tooltip: true },
   { title: '权限标识', dataIndex: 'permission', minWidth: 180, ellipsis: true, tooltip: true },
-  { title: '外链', dataIndex: 'isExternal', slotName: 'isExternal', align: 'center' },
-  { title: '隐藏', dataIndex: 'isHidden', slotName: 'isHidden', align: 'center' },
-  { title: '缓存', dataIndex: 'isCache', slotName: 'isCache', align: 'center' },
-  { title: '创建人', dataIndex: 'createUserString', ellipsis: true, tooltip: true, show: false },
-  { title: '创建时间', dataIndex: 'createTime', width: 180 },
-  { title: '修改人', dataIndex: 'updateUserString', ellipsis: true, tooltip: true, show: false },
-  { title: '修改时间', dataIndex: 'updateTime', width: 180, show: false },
+  { title: '外链', dataIndex: 'IsExternal', slotName: 'isExternal', align: 'center' },
+  { title: '隐藏', dataIndex: 'IsHidden', slotName: 'isHidden', align: 'center' },
+  { title: '缓存', dataIndex: 'IsCache', slotName: 'isCache', align: 'center' },
   {
     title: '操作',
     dataIndex: 'action',
@@ -172,7 +167,7 @@ const reset = () => {
 // 删除
 const onDelete = (record: MenuResp) => {
   return handleDelete(() => deleteMenu(record.id), {
-    content: `是否确定菜单「${record.title}」？`,
+    content: `是否确定菜单「${record.Name}」？`,
     showModal: true,
   })
 }
@@ -207,7 +202,7 @@ const onAdd = (parentId?: string) => {
 
 // 修改
 const onUpdate = (record: MenuResp) => {
-  MenuAddModalRef.value?.onUpdate(record.id)
+  MenuAddModalRef.value?.onUpdate(record.Id)
 }
 </script>
 

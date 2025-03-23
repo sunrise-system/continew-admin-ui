@@ -20,6 +20,7 @@ import { mapTree } from 'xe-utils'
 import { type DeptResp, addDept, getDept, updateDept } from '@/apis/system/dept'
 import { type ColumnItem, GiForm } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
+import { parseData } from '@/utils'
 
 interface Props {
   depts: DeptResp[]
@@ -42,12 +43,7 @@ const formRef = ref<InstanceType<typeof GiForm>>()
 
 // 转换为部门树
 const deptSelectTree = computed(() => {
-  const data = JSON.parse(JSON.stringify(props.depts)) as DeptResp[]
-  return mapTree(data, (i) => ({
-    key: i.id,
-    title: i.name,
-    children: i.children,
-  }))
+  return JSON.parse(JSON.stringify(props.depts)) as DeptResp[]
 })
 
 const [form, resetForm] = useResetReactive({
@@ -73,7 +69,7 @@ const columns: ColumnItem[] = reactive([
       fallbackOption: false,
       filterTreeNode(searchKey, nodeData) {
         if (nodeData.Name) {
-          return nodeData.Name.toLowerCase().includes(searchKey.toLowerCase())
+          return nodeData.Name?.toLowerCase().includes(searchKey.toLowerCase())
         }
         return false
       },
@@ -116,8 +112,8 @@ const columns: ColumnItem[] = reactive([
     span: 24,
     props: {
       type: 'round',
-      checkedValue: 1,
-      uncheckedValue: 2,
+      checkedValue: true,
+      uncheckedValue: false,
       checkedText: '启用',
       uncheckedText: '禁用',
     },
@@ -153,6 +149,7 @@ const save = async () => {
 const onAdd = (id?: string) => {
   reset()
   form.ParentId = id
+  form.IsActive = true
   dataId.value = ''
   visible.value = true
 }
@@ -162,7 +159,7 @@ const onUpdate = async (id: string) => {
   reset()
   dataId.value = id
   const { data } = await getDept(id)
-  Object.assign(form, data)
+  Object.assign(form, parseData(data))
   visible.value = true
 }
 
