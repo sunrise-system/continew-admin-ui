@@ -11,11 +11,11 @@
     @close="reset"
   >
     <a-form ref="formRef" :model="form" :rules="formRules" auto-label-width :layout="width >= 700 ? 'horizontal' : 'vertical'">
-      <a-form-item label="菜单类型" field="type">
-        <a-radio-group v-model="form.type" type="button" :disabled="isUpdate" @change="onChangeType">
-          <a-radio :value="1">目录</a-radio>
-          <a-radio :value="2">菜单</a-radio>
-          <a-radio :value="3">按钮</a-radio>
+      <a-form-item label="菜单类型" field="Type">
+        <a-radio-group v-model="form.Type" type="button" :disabled="isUpdate" @change="onChangeType">
+          <a-radio value="d">目录</a-radio>
+          <a-radio value="m">菜单</a-radio>
+          <a-radio value="b">按钮</a-radio>
         </a-radio-group>
       </a-form-item>
       <a-form-item label="上级菜单" field="parentId">
@@ -59,7 +59,7 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-form-item v-if="form.type === 'm' && !form.isExternal" label="组件路径" field="Component">
+      <a-form-item v-if="form.Type === 'm' && !form.isExternal" label="组件路径" field="Component">
         <a-select v-model="form.Component" placeholder="请输入或选择组件路径" allow-clear allow-create :options="componentOptions">
           <template #label="{ data }">
             {{ data?.value }}
@@ -68,8 +68,8 @@
       </a-form-item>
       <a-row>
         <a-col v-bind="colProps">
-          <a-form-item v-if="form.type === 1 || (form.type === 2 && !form.isExternal)" label="组件名称" field="name">
-            <a-input v-model.trim="form.name" placeholder="请输入组件名称" :max-length="50" show-word-limit allow-clear />
+          <a-form-item v-if="form.Type === 'd' || (form.Type === 'm' && !form.IsExternal)" label="组件名称" field="Name">
+            <a-input v-model.trim="form.Name" placeholder="请输入组件名称" :max-length="50" show-word-limit allow-clear />
             <template #extra>
               <div v-if="componentName">
                 <span>建议组件名称：</span>
@@ -86,9 +86,9 @@
       </a-row>
       <a-row v-if="['d', 'm'].includes(form.Type)" :gutter="16">
         <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
-          <a-form-item label="是否隐藏" field="hidden">
+          <a-form-item label="是否隐藏" field="IsHidden">
             <a-switch
-              v-model="form.isHidden"
+              v-model="form.IsHidden"
               :checked-value="true"
               :unchecked-value="false"
               checked-text="是"
@@ -100,7 +100,7 @@
         <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
           <a-form-item label="是否缓存" field="keepAlive">
             <a-switch
-              v-model="form.isCache"
+              v-model="form.IsCache"
               :checked-value="true"
               :unchecked-value="false"
               checked-text="是"
@@ -112,7 +112,7 @@
         <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
           <a-form-item v-if="form.Type === 'm'" label="是否外链" field="isExternalUrl">
             <a-switch
-              v-model="form.isExternal"
+              v-model="form.IsExternal"
               :checked-value="true"
               :unchecked-value="false"
               checked-text="是"
@@ -122,7 +122,7 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-form-item label="菜单排序" field="sequency">
+      <a-form-item label="菜单排序" field="Sequency">
         <a-input-number v-model="form.Sequency" placeholder="请输入菜单排序" :min="1" mode="button" style="width: 150px" />
       </a-form-item>
       <a-form-item label="状态" field="IsActive">
@@ -145,7 +145,7 @@ import { useWindowSize } from '@vueuse/core'
 import { mapTree } from 'xe-utils'
 import { type MenuResp, addMenu, getMenu, updateMenu } from '@/apis/system/menu'
 import { useResetReactive } from '@/hooks'
-import { filterTree, transformPathToName } from '@/utils'
+import { filterTree, parseData, transformPathToName } from '@/utils'
 import { useComponentPaths } from '@/hooks/modules/useComponentPaths'
 
 interface Props {
@@ -170,15 +170,15 @@ const title = computed(() => (isUpdate.value ? '修改菜单' : '新增菜单'))
 const formRef = ref<FormInstance>()
 
 const [form, resetForm] = useResetReactive({
-  type: 1,
-  sort: 999,
-  isExternal: false,
-  isCache: false,
-  isHidden: false,
-  status: 1,
+  Type: 'd',
+  Sequency: 999,
+  IsExternal: false,
+  IsCache: false,
+  IsHidden: false,
+  IsActive: true,
 })
 
-const componentName = computed(() => transformPathToName(form.path))
+const componentName = computed(() => transformPathToName(form.Path))
 
 const { componentOptions } = useComponentPaths()
 
@@ -269,7 +269,7 @@ const onUpdate = async (id: string) => {
   reset()
   dataId.value = id
   const { data } = await getMenu(id)
-  Object.assign(form, data)
+  Object.assign(form, parseData(data))
   visible.value = true
 }
 

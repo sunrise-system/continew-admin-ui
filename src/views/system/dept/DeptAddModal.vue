@@ -102,7 +102,7 @@ const columns: ColumnItem[] = reactive([
   {
     label: '描述',
     field: 'Description',
-    type: 'textarea',
+    type: 'input',
     span: 24,
   },
   {

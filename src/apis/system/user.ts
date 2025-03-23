@@ -23,7 +23,9 @@ export function listAllUser(query: Partial<T.UserPageQuery>) {
 
 /** @desc 查询用户详情 */
 export function getUser(id: string) {
-  return http.get<T.UserDetailResp>(`${BASE_URL}/${id}`)
+  const formArray: any = {}
+  formArray.Id = id
+  return fetchMotion(`ADM08903A`, formArray)
 }
 
 /** @desc 新增用户 */

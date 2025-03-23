@@ -198,8 +198,8 @@ const reset = () => {
 
 // 删除
 const onDelete = (record: UserResp) => {
-  return handleDelete(() => deleteUser(record.id), {
-    content: `是否确定删除用户「${record.nickname}(${record.username})」？`,
+  return handleDelete(() => deleteUser(record.Id), {
+    content: `是否确定删除用户「${record.Nickname}(${record.Name})」？`,
     showModal: true,
   })
 }
@@ -229,25 +229,26 @@ const onAdd = () => {
 
 // 修改
 const onUpdate = (record: UserResp) => {
-  UserAddDrawerRef.value?.onUpdate(record.id)
+  debugger
+  UserAddDrawerRef.value?.onUpdate(record.Id)
 }
 
 const UserDetailDrawerRef = ref<InstanceType<typeof UserDetailDrawer>>()
 // 详情
 const onDetail = (record: UserResp) => {
-  UserDetailDrawerRef.value?.onOpen(record.id)
+  UserDetailDrawerRef.value?.onOpen(record.Id)
 }
 
 const UserResetPwdModalRef = ref<InstanceType<typeof UserResetPwdModal>>()
 // 重置密码
 const onResetPwd = (record: UserResp) => {
-  UserResetPwdModalRef.value?.onOpen(record.id)
+  UserResetPwdModalRef.value?.onOpen(record.Id)
 }
 
 const UserUpdateRoleModalRef = ref<InstanceType<typeof UserUpdateRoleModal>>()
 // 分配角色
 const onUpdateRole = (record: UserResp) => {
-  UserUpdateRoleModalRef.value?.onOpen(record.id)
+  UserUpdateRoleModalRef.value?.onOpen(record.Id)
 }
 </script>
 
