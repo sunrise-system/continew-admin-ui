@@ -20,6 +20,7 @@ import { type ColumnItem, GiForm } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
 import { useDict } from '@/hooks/app'
 import { encryptByRsa } from '@/utils/encrypt'
+import { parseData } from '@/utils'
 
 const emit = defineEmits<{
   (e: 'save-success'): void
@@ -81,7 +82,7 @@ const columns: ColumnItem[] = reactive([
     show: () => form.type === 2,
   },
   {
-    label: 'Endpoint',
+    label: 'endpoint',
     field: 'endPoint',
     type: 'input',
     span: 24,
@@ -143,8 +144,8 @@ const columns: ColumnItem[] = reactive([
     span: 24,
     props: {
       type: 'round',
-      checkedValue: 1,
-      uncheckedValue: 2,
+      checkedValue: true,
+      uncheckedValue: false,
       checkedText: '启用',
       uncheckedText: '禁用',
     },
@@ -165,13 +166,13 @@ const save = async () => {
     if (isUpdate.value) {
       await updateStorage({
         ...form,
-        AppSecret: form.Type === 2 && !form.AppSecret.includes('*') ? encryptByRsa(form.AppSecret) || '' : null,
+        appSecret: form.type === 2 && !form.appSecret.includes('*') ? encryptByRsa(form.appSecret) || '' : null,
       }, dataId.value)
       Message.success('修改成功')
     } else {
       await addStorage({
         ...form,
-        AppSecret: form.Type === 2 ? encryptByRsa(form.AppSecret) || '' : form.AppSecret,
+        appSecret: form.type === 2 ? encryptByRsa(form.appSecret) || '' : form.appSecret,
       })
       Message.success('新增成功')
     }
@@ -186,7 +187,7 @@ const save = async () => {
 const onAdd = (type: number) => {
   reset()
   dataId.value = ''
-  form.Type = type
+  form.type = type
   storageType.value = storage_type_enum.value.find((item) => item.value === type)?.label || '本地存储'
   visible.value = true
 }
@@ -196,8 +197,8 @@ const onUpdate = async (id: string) => {
   reset()
   dataId.value = id
   const { data } = await getStorage(id)
-  Object.assign(form, data)
-  storageType.value = storage_type_enum.value.find((item) => item.value === form.Type)?.label || '本地存储'
+  Object.assign(form, parseData(data))
+  storageType.value = storage_type_enum.value.find((item) => item.value === form.type)?.label || '本地存储'
   visible.value = true
 }
 

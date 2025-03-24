@@ -8,13 +8,14 @@ const BASE_URL = '/system/storage'
 /** @desc 查询存储列表 */
 export function listStorage(query: T.StorageQuery) {
   return fetchMotion(`ADM08914A/list`, query)
-
-  //  return http.get<T.StorageResp[]>(`${BASE_URL}/list`, query)
 }
 
 /** @desc 查询存储详情 */
 export function getStorage(id: string) {
-  return http.get<T.StorageResp>(`${BASE_URL}/${id}`)
+  const formArray: any = {}
+  formArray.id = id
+
+  return fetchMotion(`ADM08914A`, formArray)
 }
 
 /** @desc 新增存储 */

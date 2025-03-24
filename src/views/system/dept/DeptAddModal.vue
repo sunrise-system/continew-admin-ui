@@ -101,7 +101,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '描述',
-    field: 'Description',
+    field: 'description',
     type: 'input',
     span: 24,
   },

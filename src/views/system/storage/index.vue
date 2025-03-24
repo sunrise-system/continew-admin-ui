@@ -20,7 +20,7 @@
       </a-tab-pane>
       <template #extra>
         <a-input-search
-          v-model="queryForm.Description"
+          v-model="queryForm.description"
           placeholder="搜索名称/编码"
           style="width: 240px;"
           allow-clear
@@ -51,7 +51,7 @@ const getDataList = async () => {
   try {
     loading.value = true
     const { data } = await listStorage(queryForm)
-    dataMap.value = groupBy(parseList(data), 'Type')
+    dataMap.value = groupBy(parseList(data), 'type')
   } finally {
     loading.value = false
   }

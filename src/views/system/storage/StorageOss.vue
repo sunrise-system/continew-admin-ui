@@ -37,10 +37,10 @@
               <a-skeleton-line :widths="['60%']" :rows="3" />
             </a-skeleton>
             <a-descriptions v-else :column="1">
-              <a-descriptions-item label="Access Key"><CellCopy :content="item.AppKey" /></a-descriptions-item>
-              <a-descriptions-item label="Endpoint">{{ item.Endpoint }}</a-descriptions-item>
-              <a-descriptions-item label="Bucket">{{ item.BucketName }}</a-descriptions-item>
-              <a-descriptions-item label="自定义域名">{{ item.Domain }}</a-descriptions-item>
+              <a-descriptions-item label="Access Key"><CellCopy :content="item.appKey" /></a-descriptions-item>
+              <a-descriptions-item label="endpoint">{{ item.endpoint }}</a-descriptions-item>
+              <a-descriptions-item label="Bucket">{{ item.bucketName }}</a-descriptions-item>
+              <a-descriptions-item label="自定义域名">{{ item.domain }}</a-descriptions-item>
             </a-descriptions>
           </template>
         </CardBlock>

@@ -66,8 +66,8 @@
         :disabled="!has.hasPermOr(['system:storage:updateStatus']) || data.isDefault"
         :title="data.isDefault ? '不允许禁用默认存储' : ''"
         :loading="switchLoading"
-        :checked-value="1"
-        :unchecked-value="2"
+        :checked-value=true
+        :unchecked-value=false
         :before-change="onUpdateStatus"
       />
     </div>
