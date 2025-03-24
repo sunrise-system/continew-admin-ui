@@ -11,7 +11,7 @@
     </template>
     <template v-else #title>
       <div class="title">
-        {{ data.name }} ({{ data.code }})
+        {{ data.name }} *** ({{ data.code }})
         <div v-if="data.isDefault" class="status">
           <a-tag size="small" color="arcoblue">
             <template #icon>
@@ -53,7 +53,7 @@
       </div>
       <div class="time">{{ data.createTime }}</div>
     </template>
-    <div :class="data.type === 1 ? 'content' : 'content-large'">
+    <div :class="data.type === 'local' ? 'content' : 'content-large'">
       <slot name="content"></slot>
     </div>
     <div class="extra">
@@ -62,12 +62,12 @@
       </a-skeleton>
       <a-switch
         v-else
-        v-model="status"
+        v-model="isActive"
         :disabled="!has.hasPermOr(['system:storage:updateStatus']) || data.isDefault"
         :title="data.isDefault ? '不允许禁用默认存储' : ''"
         :loading="switchLoading"
-        :checked-value=true
-        :unchecked-value=false
+        :checked-value="true"
+        :unchecked-value="false"
         :before-change="onUpdateStatus"
       />
     </div>
@@ -103,11 +103,11 @@ const storageType = computed(() => {
   return storage_type_enum.value.find((item) => item.value === props.data.type)?.label || '本地存储'
 })
 
-const status = ref(props.data.status)
+const isActive = ref(props.data.isActive)
 const switchLoading = ref(false)
 // 更新状态
-const onUpdateStatus = async (newValue: number) => {
-  const tip = newValue === 1 ? '启用' : '禁用'
+const onUpdateStatus = async (newValue: boolean) => {
+  const tip = newValue ? '启用' : '禁用'
   switchLoading.value = true
   Modal.warning({
     title: '提示',
@@ -116,12 +116,12 @@ const onUpdateStatus = async (newValue: number) => {
     maskClosable: false,
     onCancel: async () => {
       switchLoading.value = false
-      status.value = newValue === 1 ? 2 : 1
+      isActive.value = newValue
     },
     onBeforeOk: async () => {
       try {
         const res = await updateStorageStatus({
-          status: newValue,
+          isActive: newValue,
         }, props.data.id)
         if (res.success) {
           Message.success(`${tip}成功`)
@@ -129,7 +129,7 @@ const onUpdateStatus = async (newValue: number) => {
         }
         return res.success
       } catch (error) {
-        status.value = newValue === 1 ? 2 : 1
+        isActive.value = newValue
         return false
       } finally {
         switchLoading.value = false

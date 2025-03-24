@@ -8,6 +8,7 @@
     @before-ok="save"
     @close="reset"
   >
+ type=[{{ form }}]
     <GiForm ref="formRef" v-model="form" :columns="columns" />
   </a-modal>
 </template>
@@ -37,23 +38,14 @@ const formRef = ref<InstanceType<typeof GiForm>>()
 const { storage_type_enum } = useDict('storage_type_enum')
 
 const [form, resetForm] = useResetReactive({
-  type: 2,
+  type: 'oss',
   isDefault: false,
   sort: 999,
-  status: 2,
+  appSecret: '',
+  isActive: false,
 })
 
 const columns: ColumnItem[] = reactive([
-  {
-    label: '名称',
-    field: 'name',
-    type: 'input',
-    span: 24,
-    props: {
-      maxLength: 100,
-    },
-    required: true,
-  },
   {
     label: '编码',
     field: 'code',
@@ -66,12 +58,22 @@ const columns: ColumnItem[] = reactive([
     disabled: () => isUpdate.value,
   },
   {
+    label: '名称',
+    field: 'name',
+    type: 'input',
+    span: 24,
+    props: {
+      maxLength: 100,
+    },
+    required: true,
+  },
+  {
     label: 'Access Key',
     field: 'appKey',
     type: 'input',
     span: 24,
     required: true,
-    show: () => form.type === 2,
+    show: () => form.type === 'oss',
   },
   {
     label: 'Secret Key',
@@ -79,7 +81,7 @@ const columns: ColumnItem[] = reactive([
     type: 'input',
     span: 24,
     required: true,
-    show: () => form.type === 2,
+    show: () => form.type === 'oss',
   },
   {
     label: 'endpoint',
@@ -87,7 +89,7 @@ const columns: ColumnItem[] = reactive([
     type: 'input',
     span: 24,
     required: true,
-    show: () => form.type === 2,
+    show: () => form.type === 'oss',
   },
   {
     label: 'Bucket',
@@ -95,7 +97,7 @@ const columns: ColumnItem[] = reactive([
     type: 'input',
     span: 24,
     required: true,
-    show: () => form.type === 2,
+    show: () => form.type === 'oss',
   },
   {
     label: '域名',
@@ -103,7 +105,7 @@ const columns: ColumnItem[] = reactive([
     type: 'input',
     span: 24,
     required: true,
-    show: () => form.type === 2,
+    show: () => form.type === 'oss',
   },
   {
     label: '存储路径',
@@ -111,7 +113,7 @@ const columns: ColumnItem[] = reactive([
     type: 'input',
     span: 24,
     required: true,
-    show: () => form.type === 1,
+    show: () => form.type === 'local',
   },
   {
     label: '访问路径',
@@ -119,7 +121,7 @@ const columns: ColumnItem[] = reactive([
     type: 'input',
     span: 24,
     required: true,
-    show: () => form.type === 1,
+    show: () => form.type === 'local',
   },
   {
     label: '排序',
@@ -166,13 +168,13 @@ const save = async () => {
     if (isUpdate.value) {
       await updateStorage({
         ...form,
-        appSecret: form.type === 2 && !form.appSecret.includes('*') ? encryptByRsa(form.appSecret) || '' : null,
+        appSecret: form.type === 'oss' && !form.appSecret.includes('*') ? encryptByRsa(form.appSecret) || '' : null,
       }, dataId.value)
       Message.success('修改成功')
     } else {
       await addStorage({
         ...form,
-        appSecret: form.type === 2 ? encryptByRsa(form.appSecret) || '' : form.appSecret,
+        appSecret: form.type === 'oss' ? encryptByRsa(form.appSecret) || '' : form.appSecret,
       })
       Message.success('新增成功')
     }
@@ -184,7 +186,7 @@ const save = async () => {
 }
 
 // 新增
-const onAdd = (type: number) => {
+const onAdd = (type: string) => {
   reset()
   dataId.value = ''
   form.type = type

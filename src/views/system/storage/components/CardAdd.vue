@@ -3,14 +3,14 @@
     :bordered="true"
     size="small"
     class="card-block add-card"
-    :class="{ 'card-large': type === 2 }"
+    :class="{ 'card-large': type === 'oss' }"
     @click="onAdd"
   >
     <div class="content">
       <div class="add-icon">
         <icon-plus />
       </div>
-      <div class="description">点击创建{{ type === 1 ? '本地存储' : '对象存储' }}</div>
+      <div class="description">点击创建{{ type === "local" ? '本地存储' : '对象存储' }} - {{ typeof type }}->{{ type }} -> {{ type === 'local' }}</div>
     </div>
   </a-card>
 
@@ -22,8 +22,8 @@ import StorageAddModal from '../StorageAddModal.vue'
 
 const props = defineProps({
   type: {
-    type: Number,
-    default: 1,
+    type: String,
+    default: 'local',
   },
 })
 
@@ -38,7 +38,7 @@ const search = () => {
 const StorageAddModalRef = ref<InstanceType<typeof StorageAddModal>>()
 // 新增
 const onAdd = () => {
-  StorageAddModalRef.value?.onAdd(props.Type)
+  StorageAddModalRef.value?.onAdd(props.type)
 }
 </script>
 

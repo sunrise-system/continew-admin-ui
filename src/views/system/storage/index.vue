@@ -4,19 +4,19 @@
       <a-tab-pane key="all">
         <template #title>全部</template>
         <a-card title="本地存储" :bordered="false" class="gi_card_title">
-          <StorageLocal :data="dataMap['1']" :loading="loading" @save-success="getDataList" />
+          <StorageLocal :data="dataMap.local" :loading="loading" @save-success="getDataList" />
         </a-card>
         <a-card title="对象存储" :bordered="false" class="gi_card_title">
-          <StorageOss :data="dataMap['2']" :loading="loading" @save-success="getDataList" />
+          <StorageOss :data="dataMap.oss" :loading="loading" @save-success="getDataList" />
         </a-card>
       </a-tab-pane>
-      <a-tab-pane key="1">
+      <a-tab-pane key="local">
         <template #title>本地存储</template>
-        <StorageLocal :data="dataMap['1']" :loading="loading" @save-success="getDataList" />
+        <StorageLocal :data="dataMap.local" :loading="loading" @save-success="getDataList" />
       </a-tab-pane>
-      <a-tab-pane key="2">
+      <a-tab-pane key="oss">
         <template #title>对象存储</template>
-        <StorageOss :data="dataMap['2']" :loading="loading" @save-success="getDataList" />
+        <StorageOss :data="dataMap.oss" :loading="loading" @save-success="getDataList" />
       </a-tab-pane>
       <template #extra>
         <a-input-search
