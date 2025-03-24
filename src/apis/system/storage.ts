@@ -30,7 +30,9 @@ export function updateStorage(data: any, id: string) {
 
 /** @desc 删除存储 */
 export function deleteStorage(id: string) {
-  return http.del(`${BASE_URL}/${id}`)
+  const formArray: any = {}
+  formArray.id = id
+  return fetchMotion(`ADM08914A/delete`, formArray)
 }
 
 /** @desc 修改存储状态 */

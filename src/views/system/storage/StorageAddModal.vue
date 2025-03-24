@@ -8,7 +8,6 @@
     @before-ok="save"
     @close="reset"
   >
- type=[{{ form }}]
     <GiForm ref="formRef" v-model="form" :columns="columns" />
   </a-modal>
 </template>

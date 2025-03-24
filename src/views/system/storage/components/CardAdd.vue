@@ -10,7 +10,7 @@
       <div class="add-icon">
         <icon-plus />
       </div>
-      <div class="description">点击创建{{ type === "local" ? '本地存储' : '对象存储' }} - {{ typeof type }}->{{ type }} -> {{ type === 'local' }}</div>
+      <div class="description">点击创建{{ type === "local" ? '本地存储' : '对象存储' }} </div>
     </div>
   </a-card>
 
