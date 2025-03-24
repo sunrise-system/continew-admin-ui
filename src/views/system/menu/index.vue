@@ -44,17 +44,17 @@
           </template>
         </a-button>
       </template>
-      <template #Name="{ record }">
+      <template #name="{ record }">
         <GiSvgIcon :name="record.Icon" :size="15" />
-        <span style="margin-left: 5px; vertical-align: middle">{{ record.Name }}</span>
+        <span style="margin-left: 5px; vertical-align: middle">{{ record.name }}</span>
       </template>
-      <template #Type="{ record }">
-        <a-tag v-if="record.Type === 'd'" color="arcoblue">目录</a-tag>
-        <a-tag v-if="record.Type === 'm'" color="green">菜单</a-tag>
-        <a-tag v-if="record.Type === 'b'">按钮</a-tag>
+      <template #type="{ record }">
+        <a-tag v-if="record.type === 'd'" color="arcoblue">目录</a-tag>
+        <a-tag v-if="record.type === 'm'" color="green">菜单</a-tag>
+        <a-tag v-if="record.type === 'b'">按钮</a-tag>
       </template>
-      <template #IsActive="{ record }">
-        <GiCellBoolean :is-active="record.IsActive" />
+      <template #isActive="{ record }">
+        <GiCellBoolean :is-active="record.isActive" />
       </template>
       <template #IsExternal="{ record }">
         <a-tag v-if="record.IsExternal" color="arcoblue" size="small">是</a-tag>
@@ -114,7 +114,7 @@ const searchData = (title: string) => {
   const loop = (data: MenuResp[]) => {
     const result = [] as MenuResp[]
     data.forEach((item: MenuResp) => {
-      if (item.Name?.toLowerCase().includes(title.toLowerCase())) {
+      if (item.name?.toLowerCase().includes(title.toLowerCase())) {
         result.push({ ...item })
       } else if (item.children) {
         const filterData = loop(item.children)
@@ -138,9 +138,9 @@ const dataList = computed(() => {
 })
 
 const columns: TableInstance['columns'] = [
-  { title: '菜单标题', dataIndex: 'Name', slotName: 'Name', width: 170, fixed: !isMobile() ? 'left' : undefined },
-  { title: '类型', dataIndex: 'Type', slotName: 'Type', align: 'center' },
-  { title: '状态', dataIndex: 'IsActive', slotName: 'IsActive', align: 'center' },
+  { title: '菜单标题', dataIndex: 'name', slotName: 'name', width: 170, fixed: !isMobile() ? 'left' : undefined },
+  { title: '类型', dataIndex: 'type', slotName: 'type', align: 'center' },
+  { title: '状态', dataIndex: 'isActive', slotName: 'isActive', align: 'center' },
   { title: '排序', dataIndex: 'Sequency', align: 'center', show: false },
   { title: '路由地址', dataIndex: 'Path', ellipsis: true, tooltip: true },
   { title: '组件路径', dataIndex: 'Component', minWidth: 180, ellipsis: true, tooltip: true },
@@ -162,8 +162,8 @@ const reset = () => {
 
 // 删除
 const onDelete = (record: MenuResp) => {
-  return handleDelete(() => deleteMenu(record.Id), {
-    content: `是否确定菜单「${record.Name}」？`,
+  return handleDelete(() => deleteMenu(record.id), {
+    content: `是否确定菜单「${record.name}」？`,
     showModal: true,
   })
 }
@@ -198,7 +198,7 @@ const onAdd = (parentId?: string) => {
 
 // 修改
 const onUpdate = (record: MenuResp) => {
-  MenuAddModalRef.value?.onUpdate(record.Id)
+  MenuAddModalRef.value?.onUpdate(record.id)
 }
 </script>
 

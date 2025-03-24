@@ -77,7 +77,7 @@ const columns: ColumnItem[] = reactive([
     span: 24,
     rules: [
       { required: true, message: '请输入邮箱' },
-      { match: Regexp.Email, message: '请输入正确的邮箱' },
+      { match: Regexp.email, message: '请输入正确的邮箱' },
     ],
     hide: () => {
       return verifyType.value !== 'email'

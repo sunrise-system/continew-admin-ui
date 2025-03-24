@@ -20,7 +20,7 @@
       </a-form-item>
       <a-form-item label="上级菜单" field="parentId">
         <a-tree-select
-          v-model="form.ParentId"
+          v-model="form.parentId"
           placeholder="请选择上级菜单"
           allow-clear
           allow-search
@@ -32,7 +32,7 @@
       <a-row>
         <a-col v-bind="colProps">
           <a-form-item label="菜单标题" field="Name">
-            <a-input v-model.trim="form.Name" placeholder="请输入菜单标题" :max-length="30" show-word-limit allow-clear />
+            <a-input v-model.trim="form.name" placeholder="请输入菜单标题" :max-length="30" show-word-limit allow-clear />
           </a-form-item>
         </a-col>
         <a-col v-bind="colProps">
@@ -69,7 +69,7 @@
       <a-row>
         <a-col v-bind="colProps">
           <a-form-item v-if="form.Type === 'd' || (form.Type === 'm' && !form.IsExternal)" label="组件名称" field="Name">
-            <a-input v-model.trim="form.Name" placeholder="请输入组件名称" :max-length="50" show-word-limit allow-clear />
+            <a-input v-model.trim="form.name" placeholder="请输入组件名称" :max-length="50" show-word-limit allow-clear />
             <template #extra>
               <div v-if="componentName">
                 <span>建议组件名称：</span>
@@ -125,9 +125,9 @@
       <a-form-item label="菜单排序" field="Sequency">
         <a-input-number v-model="form.Sequency" placeholder="请输入菜单排序" :min="1" mode="button" style="width: 150px" />
       </a-form-item>
-      <a-form-item label="状态" field="IsActive">
+      <a-form-item label="状态" field="isActive">
         <a-switch
-          v-model="form.IsActive"
+          v-model="form.isActive"
           type="round"
           :checked-value="true"
           :unchecked-value="false"
@@ -175,7 +175,7 @@ const [form, resetForm] = useResetReactive({
   IsExternal: false,
   IsCache: false,
   IsHidden: false,
-  IsActive: true,
+  isActive: true,
 })
 
 const componentName = computed(() => transformPathToName(form.Path))
@@ -183,7 +183,7 @@ const componentName = computed(() => transformPathToName(form.Path))
 const { componentOptions } = useComponentPaths()
 
 const rules: FormInstance['rules'] = {
-  ParentId: [{ required: true, message: '请选择上级菜单' }],
+  parentId: [{ required: true, message: '请选择上级菜单' }],
   title: [{ required: true, message: '请输入菜单标题' }],
   Path: [{ required: true, message: '请输入路由地址' }],
   Name: [{ required: true, message: '请输入组件名称' }],
@@ -197,8 +197,8 @@ const formRules = computed(() => {
     return { title, Name, Path } as FormInstance['rules']
   }
   if (form.type === 3) {
-    const { ParentId, title, permission } = rules
-    return { ParentId, title, permission } as FormInstance['rules']
+    const { parentId, title, permission } = rules
+    return { parentId, title, permission } as FormInstance['rules']
   }
 })
 
@@ -210,7 +210,7 @@ const reset = () => {
 
 // 设置建议组件名
 const inputComponentName = () => {
-  form.Name = componentName.value
+  form.name = componentName.value
 }
 
 // 切换类型清除校验
@@ -223,16 +223,16 @@ const menuSelectTree = computed(() => {
   const menus = JSON.parse(JSON.stringify(props.menus)) as MenuResp[]
   const data = filterTree(menus, (i) => ['d', 'm'].includes(i.Type))
   return mapTree(data, (i) => ({
-    key: i.Id,
-    title: i.Name,
+    key: i.id,
+    title: i.name,
     children: i.children,
   }))
 })
 
 // 过滤树
 const filterOptions = (searchKey: string, nodeData: TreeNodeData) => {
-  if (nodeData.Name) {
-    return nodeData.Name.toLowerCase().includes(searchKey.toLowerCase())
+  if (nodeData.name) {
+    return nodeData.name.toLowerCase().includes(searchKey.toLowerCase())
   }
   return false
 }
@@ -259,7 +259,7 @@ const save = async () => {
 // 新增
 const onAdd = (id?: string) => {
   reset()
-  form.ParentId = id
+  form.parentId = id
   dataId.value = ''
   visible.value = true
 }

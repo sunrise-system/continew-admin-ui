@@ -14,7 +14,9 @@ export function listRole(query: T.RoleQuery) {
 
 /** @desc 查询角色详情 */
 export function getRole(id: string) {
-  return http.get<T.RoleDetailResp>(`${BASE_URL}/${id}`)
+  const formArray: any = {}
+  formArray.id = id
+  return fetchMotion(`ADM08902A`, formArray)
 }
 
 /** @desc 新增角色 */

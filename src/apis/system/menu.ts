@@ -16,7 +16,7 @@ export function listMenu(query: T.MenuQuery) {
 /** @desc 查询菜单详情 */
 export function getMenu(id: string) {
   const formArray: any = {}
-  formArray.Id = id
+  formArray.id = id
   return fetchMotion(`ADM08906A`, formArray)
 }
 

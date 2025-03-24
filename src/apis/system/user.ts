@@ -24,7 +24,7 @@ export function listAllUser(query: Partial<T.UserPageQuery>) {
 /** @desc 查询用户详情 */
 export function getUser(id: string) {
   const formArray: any = {}
-  formArray.Id = id
+  formArray.id = id
   return fetchMotion(`ADM08903A`, formArray)
 }
 

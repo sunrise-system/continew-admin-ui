@@ -37,8 +37,8 @@
               <a-skeleton-line :widths="['60%']" :rows="2" />
             </a-skeleton>
             <a-descriptions v-else :column="1">
-              <a-descriptions-item label="存储路径">{{ item.bucketName }}</a-descriptions-item>
-              <a-descriptions-item label="访问路径">{{ item.domain }}</a-descriptions-item>
+              <a-descriptions-item label="存储路径">{{ item.BucketName }}</a-descriptions-item>
+              <a-descriptions-item label="访问路径">{{ item.Domain }}</a-descriptions-item>
             </a-descriptions>
           </template>
         </CardBlock>

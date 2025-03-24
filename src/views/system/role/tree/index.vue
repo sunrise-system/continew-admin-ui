@@ -12,7 +12,7 @@
       <div class="tree">
         <a-tree
           :data="(treeData as unknown as TreeNodeData[])"
-          :field-names="{ key: 'Id' }"
+          :field-names="{ key: 'id' }"
           block-node
           :selected-keys="selectedKeys"
           @select="select"
@@ -25,7 +25,7 @@
                 css: true,
               }"
             >
-              {{ node.Name }} ({{ node.Code }})
+              {{ node.name }} ({{ node.code }})
             </a-typography-paragraph>
           </template>
           <template #extra="node">
@@ -87,7 +87,7 @@ const getTreeData = async () => {
       },
     }))
     await nextTick(() => {
-      select([dataList.value[0]?.Id])
+      select([dataList.value[0]?.id])
     })
   } finally {
     loading.value = false
@@ -100,7 +100,7 @@ const search = (keyword: string) => {
   const loop = (data: TreeItem[]) => {
     const result = [] as TreeItem[]
     data.forEach((item: TreeItem) => {
-      if (item.Name?.toLowerCase().includes(keyword) || item.Code?.toLowerCase().includes(keyword)) {
+      if (item.name?.toLowerCase().includes(keyword) || item.code?.toLowerCase().includes(keyword)) {
         result.push({ ...item })
       }
     })
@@ -123,16 +123,16 @@ const onAdd = () => {
 // 点击菜单项
 const onMenuItemClick = (mode: string, node: RoleResp) => {
   if (mode === 'update') {
-    RoleAddDrawerRef.value?.onUpdate(node.Id)
+    RoleAddDrawerRef.value?.onUpdate(node.id)
   } else if (mode === 'delete') {
     Modal.warning({
       title: '提示',
-      content: `是否确定删除角色「${node.Name}」？`,
+      content: `是否确定删除角色「${node.name}」？`,
       hideCancel: false,
       okButtonProps: { status: 'danger' },
       onBeforeOk: async () => {
         try {
-          const res = await deleteRole(node.Id)
+          const res = await deleteRole(node.id)
           if (res.success) {
             Message.success('删除成功')
             await getTreeData()

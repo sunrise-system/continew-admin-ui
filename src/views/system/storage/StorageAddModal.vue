@@ -66,7 +66,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: 'Access Key',
-    field: 'accessKey',
+    field: 'appKey',
     type: 'input',
     span: 24,
     required: true,
@@ -74,7 +74,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: 'Secret Key',
-    field: 'secretKey',
+    field: 'appSecret',
     type: 'input',
     span: 24,
     required: true,
@@ -82,7 +82,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: 'Endpoint',
-    field: 'endpoint',
+    field: 'endPoint',
     type: 'input',
     span: 24,
     required: true,
@@ -133,12 +133,12 @@ const columns: ColumnItem[] = reactive([
   {
     label: '描述',
     field: 'description',
-    type: 'textarea',
+    type: 'input',
     span: 24,
   },
   {
     label: '状态',
-    field: 'status',
+    field: 'isActive',
     type: 'switch',
     span: 24,
     props: {
@@ -165,13 +165,13 @@ const save = async () => {
     if (isUpdate.value) {
       await updateStorage({
         ...form,
-        secretKey: form.type === 2 && !form.secretKey.includes('*') ? encryptByRsa(form.secretKey) || '' : null,
+        AppSecret: form.Type === 2 && !form.AppSecret.includes('*') ? encryptByRsa(form.AppSecret) || '' : null,
       }, dataId.value)
       Message.success('修改成功')
     } else {
       await addStorage({
         ...form,
-        secretKey: form.type === 2 ? encryptByRsa(form.secretKey) || '' : form.secretKey,
+        AppSecret: form.Type === 2 ? encryptByRsa(form.AppSecret) || '' : form.AppSecret,
       })
       Message.success('新增成功')
     }
@@ -186,7 +186,7 @@ const save = async () => {
 const onAdd = (type: number) => {
   reset()
   dataId.value = ''
-  form.type = type
+  form.Type = type
   storageType.value = storage_type_enum.value.find((item) => item.value === type)?.label || '本地存储'
   visible.value = true
 }
@@ -197,7 +197,7 @@ const onUpdate = async (id: string) => {
   dataId.value = id
   const { data } = await getStorage(id)
   Object.assign(form, data)
-  storageType.value = storage_type_enum.value.find((item) => item.value === form.type)?.label || '本地存储'
+  storageType.value = storage_type_enum.value.find((item) => item.value === form.Type)?.label || '本地存储'
   visible.value = true
 }
 

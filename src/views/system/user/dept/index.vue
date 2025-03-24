@@ -14,8 +14,8 @@
           block-node
           default-expand-all
           :field-names="{
-            key: 'Id',
-            title: 'Name',
+            key: 'id',
+            title: 'name',
           }"
           :selected-keys="selectedKeys"
           @select="select"
@@ -32,7 +32,7 @@
                 css: true,
               }"
             >
-              {{ node?.Name }}
+              {{ node?.name }}
             </a-typography-paragraph>
           </template>
         </a-tree>
@@ -77,7 +77,7 @@ const search = (keyword: string) => {
   const loop = (data: TreeNodeData[]) => {
     const result = [] as TreeNodeData[]
     data.forEach((item: TreeNodeData) => {
-      if (item.Name?.toLowerCase().includes(keyword)) {
+      if (item.name?.toLowerCase().includes(keyword)) {
         result.push({ ...item })
       } else if (item.children) {
         const filterData = loop(item.children)

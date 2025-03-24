@@ -47,8 +47,8 @@
           <template #status="{ record }">
             <GiCellStatus :status="record.status" />
           </template>
-          <template #IsActive="{ record }">
-            <GiCellBoolean :is-active="record.IsActive" />
+          <template #isActive="{ record }">
+            <GiCellBoolean :is-active="record.isActive" />
           </template>
           <template #action="{ record }">
             <a-space>
@@ -157,22 +157,22 @@ const columns: TableInstance['columns'] = [
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
     fixed: !isMobile() ? 'left' : undefined,
   },
-  { title: '工号', dataIndex: 'Code' },
+  { title: '工号', dataIndex: 'code' },
   {
     title: '昵称',
-    dataIndex: 'Nickname',
-    slotName: 'Nickname',
+    dataIndex: 'nickname',
+    slotName: 'nickname',
     minWidth: 140,
     ellipsis: true,
     tooltip: true,
     fixed: !isMobile() ? 'left' : undefined,
   },
-  { title: '用户名', dataIndex: 'Name', slotName: 'Name', minWidth: 140, ellipsis: true, tooltip: true },
-  { title: '状态', dataIndex: 'IsActive', slotName: 'IsActive', align: 'center' },
+  { title: '用户名', dataIndex: 'name', slotName: 'name', minWidth: 140, ellipsis: true, tooltip: true },
+  { title: '状态', dataIndex: 'isActive', slotName: 'isActive', align: 'center' },
   { title: '性别', dataIndex: 'gender', slotName: 'gender', align: 'center' },
-  { title: '默认部门', dataIndex: 'DefaultDepartment', minWidth: 180, ellipsis: true, tooltip: true },
-  { title: '手机号', dataIndex: 'MobilePhone', minWidth: 170, ellipsis: true, tooltip: true },
-  { title: '邮箱', dataIndex: 'Email', minWidth: 170, ellipsis: true, tooltip: true },
+  { title: '默认部门', dataIndex: 'defaultDepartment', minWidth: 180, ellipsis: true, tooltip: true },
+  { title: '手机号', dataIndex: 'mobilePhone', minWidth: 170, ellipsis: true, tooltip: true },
+  { title: '邮箱', dataIndex: 'email', minWidth: 170, ellipsis: true, tooltip: true },
   {
     title: '操作',
     dataIndex: 'action',
@@ -198,8 +198,8 @@ const reset = () => {
 
 // 删除
 const onDelete = (record: UserResp) => {
-  return handleDelete(() => deleteUser(record.Id), {
-    content: `是否确定删除用户「${record.Nickname}(${record.Name})」？`,
+  return handleDelete(() => deleteUser(record.id), {
+    content: `是否确定删除用户「${record.nickname}(${record.name})」？`,
     showModal: true,
   })
 }
@@ -230,25 +230,25 @@ const onAdd = () => {
 // 修改
 const onUpdate = (record: UserResp) => {
   debugger
-  UserAddDrawerRef.value?.onUpdate(record.Id)
+  UserAddDrawerRef.value?.onUpdate(record.id)
 }
 
 const UserDetailDrawerRef = ref<InstanceType<typeof UserDetailDrawer>>()
 // 详情
 const onDetail = (record: UserResp) => {
-  UserDetailDrawerRef.value?.onOpen(record.Id)
+  UserDetailDrawerRef.value?.onOpen(record.id)
 }
 
 const UserResetPwdModalRef = ref<InstanceType<typeof UserResetPwdModal>>()
 // 重置密码
 const onResetPwd = (record: UserResp) => {
-  UserResetPwdModalRef.value?.onOpen(record.Id)
+  UserResetPwdModalRef.value?.onOpen(record.id)
 }
 
 const UserUpdateRoleModalRef = ref<InstanceType<typeof UserUpdateRoleModal>>()
 // 分配角色
 const onUpdateRole = (record: UserResp) => {
-  UserUpdateRoleModalRef.value?.onOpen(record.Id)
+  UserUpdateRoleModalRef.value?.onOpen(record.id)
 }
 </script>
 

@@ -54,7 +54,7 @@ const [form, resetForm] = useResetReactive({
 const columns: ColumnItem[] = reactive([
   {
     label: '上级部门',
-    field: 'ParentId',
+    field: 'parentId',
     type: 'tree-select',
     span: 24,
     props: {
@@ -62,26 +62,26 @@ const columns: ColumnItem[] = reactive([
       allowClear: true,
       allowSearch: true,
       fieldNames: {
-        key: 'Id',
-        title: 'Name',
+        key: 'id',
+        title: 'name',
         children: 'children'
       },
       fallbackOption: false,
       filterTreeNode(searchKey, nodeData) {
-        if (nodeData.Name) {
-          return nodeData.Name?.toLowerCase().includes(searchKey.toLowerCase())
+        if (nodeData.name) {
+          return nodeData.name?.toLowerCase().includes(searchKey.toLowerCase())
         }
         return false
       },
     },
     rules: [{ required: true, message: '请选择上级部门' }],
     hide: (form) => {
-      return form.ParentId === '-'
+      return form.parentId === '-'
     },
   },
   {
     label: '名称',
-    field: 'Name',
+    field: 'name',
     type: 'input',
     span: 24,
     props: {
@@ -107,7 +107,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '状态',
-    field: 'IsActive',
+    field: 'isActive',
     type: 'switch',
     span: 24,
     props: {
@@ -148,8 +148,8 @@ const save = async () => {
 // 新增
 const onAdd = (id?: string) => {
   reset()
-  form.ParentId = id
-  form.IsActive = true
+  form.parentId = id
+  form.isActive = true
   dataId.value = ''
   visible.value = true
 }

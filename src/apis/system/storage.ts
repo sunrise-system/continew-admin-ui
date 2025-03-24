@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http from '@/utils/http'
+import http, { fetchMotion, fnMotion } from '@/utils/http'
 
 export type * from './type'
 
@@ -7,7 +7,9 @@ const BASE_URL = '/system/storage'
 
 /** @desc 查询存储列表 */
 export function listStorage(query: T.StorageQuery) {
-  return http.get<T.StorageResp[]>(`${BASE_URL}/list`, query)
+  return fetchMotion(`ADM08914A/list`, query)
+
+  //  return http.get<T.StorageResp[]>(`${BASE_URL}/list`, query)
 }
 
 /** @desc 查询存储详情 */
@@ -17,12 +19,12 @@ export function getStorage(id: string) {
 
 /** @desc 新增存储 */
 export function addStorage(data: any) {
-  return http.post(`${BASE_URL}`, data)
+  return fnMotion(`ADM08914A/savechanges`, data, '')
 }
 
 /** @desc 修改存储 */
 export function updateStorage(data: any, id: string) {
-  return http.put(`${BASE_URL}/${id}`, data)
+  return fnMotion(`ADM08914A/savechanges`, data, id)
 }
 
 /** @desc 删除存储 */

@@ -46,7 +46,7 @@ const [form, resetForm] = useResetReactive({
 const columns: ColumnItem[] = reactive([
   {
     label: '用户名',
-    field: 'Name',
+    field: 'name',
     type: 'input',
     span: 24,
     required: true,
@@ -56,7 +56,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '昵称',
-    field: 'Nickname',
+    field: 'nickname',
     type: 'input',
     span: 24,
     required: true,
@@ -78,7 +78,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '手机号码',
-    field: 'MobilePhone',
+    field: 'mobilePhone',
     type: 'input',
     span: 24,
     props: {
@@ -87,7 +87,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '邮箱',
-    field: 'Email',
+    field: 'email',
     type: 'input',
     span: 24,
     props: {
@@ -105,7 +105,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '所属部门',
-    field: 'DefaultDepartment',
+    field: 'defaultDepartment',
     type: 'tree-select',
     span: 24,
     required: true,
@@ -114,14 +114,14 @@ const columns: ColumnItem[] = reactive([
       allowClear: true,
       allowSearch: true,
       fieldNames: {
-        key: 'Id',
-        title: 'Name',
+        key: 'id',
+        title: 'name',
         children: 'children'
       },
       fallbackOption: false,
       filterTreeNode(searchKey: string, nodeData: TreeNodeData) {
-        if (nodeData.Name) {
-          return nodeData.Name.toLowerCase().includes(searchKey.toLowerCase())
+        if (nodeData.name) {
+          return nodeData.name.toLowerCase().includes(searchKey.toLowerCase())
         }
         return false
       },
@@ -142,13 +142,13 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '状态',
-    field: 'IsActive',
+    field: 'isActive',
     type: 'switch',
     span: 24,
     props: {
       type: 'round',
-      checkedValue: 1,
-      uncheckedValue: 2,
+      checkedValue: true,
+      uncheckedValue: false,
       checkedText: '启用',
       uncheckedText: '禁用',
     },

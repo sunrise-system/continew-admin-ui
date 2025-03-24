@@ -38,7 +38,7 @@ const search = () => {
 const StorageAddModalRef = ref<InstanceType<typeof StorageAddModal>>()
 // 新增
 const onAdd = () => {
-  StorageAddModalRef.value?.onAdd(props.type)
+  StorageAddModalRef.value?.onAdd(props.Type)
 }
 </script>
 

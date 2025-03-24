@@ -54,7 +54,7 @@ const form = reactive({
 const rules: FormInstance['rules'] = {
   email: [
     { required: true, message: '请输入邮箱' },
-    { match: Regexp.Email, message: '请输入正确的邮箱' },
+    { match: Regexp.email, message: '请输入正确的邮箱' },
   ],
   captcha: [{ required: true, message: '请输入验证码' }],
 }

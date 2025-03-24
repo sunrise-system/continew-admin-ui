@@ -11,23 +11,17 @@
     <a-form ref="formRef" :model="form" :rules="rules" size="large" auto-label-width>
       <fieldset>
         <legend>基础信息</legend>
-        <a-form-item label="名称" field="name">
+        <a-form-item label="名称" field="Name">
           <a-input v-model.trim="form.name" placeholder="请输入名称" :max-length="30" show-word-limit />
         </a-form-item>
-        <a-form-item label="编码" field="code">
+        <a-form-item label="编码" field="Code">
           <a-input v-model.trim="form.code" placeholder="请输入编码" :max-length="30" show-word-limit :disabled="isUpdate" />
         </a-form-item>
-        <a-form-item label="排序" field="sort">
-          <a-input-number v-model="form.sort" placeholder="请输入排序" :min="1" mode="button" />
+        <a-form-item label="请输入描述" field="Description">
+          <a-input v-model.trim="form.Description" placeholder="请输入请输入描述" :max-length="30" show-word-limit />
         </a-form-item>
-        <a-form-item label="描述" field="description">
-          <a-textarea
-            v-model.trim="form.description"
-            placeholder="请输入描述"
-            show-word-limit
-            :max-length="200"
-            :auto-size="{ minRows: 3, maxRows: 5 }"
-          />
+        <a-form-item label="排序" field="Sequency">
+          <a-input-number v-model="form.Sequency" placeholder="请输入排序" :min="1" mode="button" />
         </a-form-item>
       </fieldset>
       <fieldset>
@@ -69,6 +63,7 @@ import type { GiForm } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
 import { useDept, useDict } from '@/hooks/app'
 import { addRole, getRole, updateRole } from '@/apis'
+import { isMobile, parseData } from '@/utils'
 
 const emit = defineEmits<{
   (e: 'save-success'): void
@@ -85,8 +80,8 @@ const { data_scope_enum } = useDict('data_scope_enum')
 const { deptList, getDeptList } = useDept()
 
 const rules: FormInstance['rules'] = {
-  name: [{ required: true, message: '请输入名称' }],
-  code: [{ required: true, message: '请输入编码' }],
+  Name: [{ required: true, message: '请输入名称' }],
+  Code: [{ required: true, message: '请输入编码' }],
   dataScope: [{ required: true, message: '请选择数据权限' }],
 }
 
@@ -172,7 +167,7 @@ const onUpdate = async (id: string) => {
   }
   dataId.value = id
   const { data } = await getRole(id)
-  Object.assign(form, data)
+  Object.assign(form, parseData(data))
   data.deptIds?.forEach((node) => {
     nextTick(() => {
       deptTreeRef.value?.checkNode(node, true, true)

@@ -2,7 +2,7 @@
 export const Phone = /^1[3-9]\d{9}$/
 
 /** @desc 正则-邮箱 */
-export const Email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+export const email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
 
 /** @desc 正则-密码(密码为8-18位数字/字符/符号的组合) */
 // export const Password =

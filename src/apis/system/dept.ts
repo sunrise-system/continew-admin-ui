@@ -15,7 +15,7 @@ export function listDept(query: T.DeptQuery) {
 /** @desc 查询部门详情 */
 export function getDept(id: string) {
   const formArray = {}
-  formArray.Id = id
+  formArray.id = id
   return fetchMotion(`ADM08907A`, formArray)
 
   //  return http.get<T.DeptResp>(`${BASE_URL}/${id}`)
@@ -32,14 +32,14 @@ export function addDept(data: any) {
 export function updateDept(data: any, id: string) {
   const formArray: any = {}
   formArray.data = data
-  formArray.Id = id
+  formArray.id = id
   return fetchMotion(`ADM08907A/savechanges`, formArray)
 }
 
 /** @desc 删除部门 */
 export function deleteDept(id: string) {
   const formArray: any = {}
-  formArray.Id = id
+  formArray.id = id
   return fetchMotion(`ADM08907A/delete`, formArray)
 }
 

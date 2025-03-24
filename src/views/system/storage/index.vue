@@ -20,7 +20,7 @@
       </a-tab-pane>
       <template #extra>
         <a-input-search
-          v-model="queryForm.description"
+          v-model="queryForm.Description"
           placeholder="搜索名称/编码"
           style="width: 240px;"
           allow-clear
@@ -36,6 +36,7 @@ import { groupBy } from 'xe-utils'
 import StorageLocal from './StorageLocal.vue'
 import StorageOss from './StorageOss.vue'
 import { type StorageQuery, type StorageResp, listStorage } from '@/apis'
+import { parseData, parseList } from '@/utils'
 
 defineOptions({ name: 'SystemStorage' })
 
@@ -50,7 +51,7 @@ const getDataList = async () => {
   try {
     loading.value = true
     const { data } = await listStorage(queryForm)
-    dataMap.value = groupBy(data, 'type')
+    dataMap.value = groupBy(parseList(data), 'Type')
   } finally {
     loading.value = false
   }

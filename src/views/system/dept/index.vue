@@ -41,8 +41,8 @@
           <template #default>导出</template>
         </a-button>
       </template>
-      <template #IsActive="{ record }">
-        <GiCellBoolean :is-active="record.IsActive" />
+      <template #isActive="{ record }">
+        <GiCellBoolean :is-active="record.isActive" />
       </template>
       <template #action="{ record }">
         <a-space>
@@ -54,7 +54,7 @@
           >
             删除
           </a-link>
-          <a-link v-xpermission="['system:dept:add']" title="新增" @click="onAdd(record.Id)">新增</a-link>
+          <a-link v-xpermission="['system:dept:add']" title="新增" @click="onAdd(record.id)">新增</a-link>
         </a-space>
       </template>
     </GiTable>
@@ -70,7 +70,7 @@
             :define-menus="menus"
             :expand-all="true"
             :default-expand-level="999"
-            :props="{ id: 'Id', parentId: 'ParentId', label: 'Name', children: 'children' }"
+            :props="{ id: 'id', parentId: 'parentId', label: 'name', children: 'children' }"
             center
             :node-add="handleAdd"
             :node-delete="onDelete"
@@ -153,10 +153,10 @@ const dataList = computed(() => {
 })
 
 const columns: TableInstance['columns'] = [
-  { title: '名称', dataIndex: 'Name', minWidth: 170, ellipsis: true, tooltip: true },
-  { title: '状态', dataIndex: 'IsActive', slotName: 'IsActive', align: 'center' },
+  { title: '名称', dataIndex: 'name', minWidth: 170, ellipsis: true, tooltip: true },
+  { title: '状态', dataIndex: 'isActive', slotName: 'isActive', align: 'center' },
   { title: '排序', dataIndex: 'sort', align: 'center', show: false },
-  { title: '描述', dataIndex: 'Description', ellipsis: true, tooltip: true },
+  { title: '描述', dataIndex: 'description', ellipsis: true, tooltip: true },
   {
     title: '操作',
     dataIndex: 'action',
@@ -175,8 +175,8 @@ const reset = () => {
 
 // 删除
 const onDelete = (record: DeptResp) => {
-  return handleDelete(() => deleteDept(record.Id), {
-    content: `是否确定删除部门「${record.Name}」？`,
+  return handleDelete(() => deleteDept(record.id), {
+    content: `是否确定删除部门「${record.name}」？`,
     showModal: true,
   })
 }
@@ -196,7 +196,7 @@ const handleAdd = (record: DeptResp) => {
 }
 // 修改
 const onUpdate = (record: DeptResp) => {
-  DeptAddModalRef.value?.onUpdate(record.Id)
+  DeptAddModalRef.value?.onUpdate(record.id)
 }
 </script>
 
