@@ -20,8 +20,8 @@
         <a-form-item label="请输入描述" field="description">
           <a-input v-model.trim="form.description" placeholder="请输入请输入描述" :max-length="30" show-word-limit />
         </a-form-item>
-        <a-form-item label="排序" field="Sequency">
-          <a-input-number v-model="form.Sequency" placeholder="请输入排序" :min="1" mode="button" />
+        <a-form-item label="排序" field="sequency">
+          <a-input-number v-model="form.sequency" placeholder="请输入排序" :min="1" mode="button" />
         </a-form-item>
       </fieldset>
       <fieldset>
@@ -87,7 +87,10 @@ const rules: FormInstance['rules'] = {
 
 const [form, resetForm] = useResetReactive({
   deptCheckStrictly: true,
-  sort: 999,
+  sequency: 999,
+  code: '',
+  name: '',
+  description: '',
   dataScope: 4,
 })
 

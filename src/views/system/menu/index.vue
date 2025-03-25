@@ -45,7 +45,7 @@
         </a-button>
       </template>
       <template #name="{ record }">
-        <GiSvgIcon :name="record.Icon" :size="15" />
+        <GiSvgIcon :name="record.icon" :size="15" />
         <span style="margin-left: 5px; vertical-align: middle">{{ record.name }}</span>
       </template>
       <template #type="{ record }">
@@ -56,16 +56,16 @@
       <template #isActive="{ record }">
         <GiCellBoolean :is-active="record.isActive" />
       </template>
-      <template #IsExternal="{ record }">
-        <a-tag v-if="record.IsExternal" color="arcoblue" size="small">是</a-tag>
+      <template #isExternal="{ record }">
+        <a-tag v-if="record.isExternal" color="arcoblue" size="small">是</a-tag>
         <a-tag v-else color="red" size="small">否</a-tag>
       </template>
-      <template #IsHidden="{ record }">
-        <a-tag v-if="record.IsHidden" color="arcoblue" size="small">是</a-tag>
+      <template #isHidden="{ record }">
+        <a-tag v-if="record.isHidden" color="arcoblue" size="small">是</a-tag>
         <a-tag v-else color="red" size="small">否</a-tag>
       </template>
-      <template #IsCache="{ record }">
-        <a-tag v-if="record.IsCache" color="arcoblue" size="small">是</a-tag>
+      <template #isCache="{ record }">
+        <a-tag v-if="record.isCache" color="arcoblue" size="small">是</a-tag>
         <a-tag v-else color="red" size="small">否</a-tag>
       </template>
       <template #action="{ record }">
@@ -141,9 +141,9 @@ const columns: TableInstance['columns'] = [
   { title: '菜单标题', dataIndex: 'name', slotName: 'name', width: 170, fixed: !isMobile() ? 'left' : undefined },
   { title: '类型', dataIndex: 'type', slotName: 'type', align: 'center' },
   { title: '状态', dataIndex: 'isActive', slotName: 'isActive', align: 'center' },
-  { title: '排序', dataIndex: 'Sequency', align: 'center', show: false },
-  { title: '路由地址', dataIndex: 'Path', ellipsis: true, tooltip: true },
-  { title: '组件路径', dataIndex: 'Component', minWidth: 180, ellipsis: true, tooltip: true },
+  { title: '排序', dataIndex: 'sequency', align: 'center', show: false },
+  { title: '路由地址', dataIndex: 'path', ellipsis: true, tooltip: true },
+  { title: '组件路径', dataIndex: 'component', minWidth: 180, ellipsis: true, tooltip: true },
   {
     title: '操作',
     dataIndex: 'action',

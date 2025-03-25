@@ -11,8 +11,8 @@
     @close="reset"
   >
     <a-form ref="formRef" :model="form" :rules="formRules" auto-label-width :layout="width >= 700 ? 'horizontal' : 'vertical'">
-      <a-form-item label="菜单类型" field="Type">
-        <a-radio-group v-model="form.Type" type="button" :disabled="isUpdate" @change="onChangeType">
+      <a-form-item label="菜单类型" field="type">
+        <a-radio-group v-model="form.type" type="button" :disabled="isUpdate" @change="onChangeType">
           <a-radio value="d">目录</a-radio>
           <a-radio value="m">菜单</a-radio>
           <a-radio value="b">按钮</a-radio>
@@ -31,13 +31,13 @@
       </a-form-item>
       <a-row>
         <a-col v-bind="colProps">
-          <a-form-item label="菜单标题" field="Name">
+          <a-form-item label="菜单标题" field="name">
             <a-input v-model.trim="form.name" placeholder="请输入菜单标题" :max-length="30" show-word-limit allow-clear />
           </a-form-item>
         </a-col>
         <a-col v-bind="colProps">
-          <a-form-item v-if="['d', 'm'].includes(form.Type)" label="菜单图标" field="Icon">
-            <GiIconSelector v-model="form.Icon" />
+          <a-form-item v-if="['d', 'm'].includes(form.type)" label="菜单图标" field="icon">
+            <GiIconSelector v-model="form.icon" />
           </a-form-item>
           <a-form-item v-else label="权限标识" field="permission">
             <a-input v-model.trim="form.permission" placeholder="system:user:add" allow-clear />
@@ -46,21 +46,21 @@
       </a-row>
       <a-row>
         <a-col v-bind="colProps">
-          <a-form-item v-if="['d', 'm'].includes(form.Type)" label="路由地址" field="Path">
-            <a-input v-model.trim="form.Path" placeholder="请输入路由地址" allow-clear />
+          <a-form-item v-if="['d', 'm'].includes(form.type)" label="路由地址" field="path">
+            <a-input v-model.trim="form.path" placeholder="请输入路由地址" allow-clear />
           </a-form-item>
         </a-col>
         <a-col v-bind="colProps">
-          <a-form-item v-if="form.type === 1 || (form.type === 2 && !form.isExternal)" label="重定向" field="redirect">
+          <a-form-item v-if="form.type === 'd' || (form.type === '2' && !form.isExternal)" label="重定向" field="redirect">
             <a-input v-model.trim="form.redirect" placeholder="请输入重定向地址" allow-clear />
           </a-form-item>
-          <a-form-item v-if="form.type === 'm' && form.isExternal" label="组件路径" field="Component">
-            <a-input v-model.trim="form.Component" placeholder="请输入组件路径" allow-clear />
+          <a-form-item v-if="form.type === 'm' && form.isExternal" label="组件路径" field="component">
+            <a-input v-model.trim="form.component" placeholder="请输入组件路径" allow-clear />
           </a-form-item>
         </a-col>
       </a-row>
-      <a-form-item v-if="form.Type === 'm' && !form.isExternal" label="组件路径" field="Component">
-        <a-select v-model="form.Component" placeholder="请输入或选择组件路径" allow-clear allow-create :options="componentOptions">
+      <a-form-item v-if="form.type === 'm' && !form.isExternal" label="组件路径" field="component">
+        <a-select v-model="form.component" placeholder="请输入或选择组件路径" allow-clear allow-create :options="componentOptions">
           <template #label="{ data }">
             {{ data?.value }}
           </template>
@@ -68,7 +68,7 @@
       </a-form-item>
       <a-row>
         <a-col v-bind="colProps">
-          <a-form-item v-if="form.Type === 'd' || (form.Type === 'm' && !form.IsExternal)" label="组件名称" field="Name">
+          <a-form-item v-if="form.type === 'd' || (form.type === 'm' && !form.isExternal)" label="组件名称" field="name">
             <a-input v-model.trim="form.name" placeholder="请输入组件名称" :max-length="50" show-word-limit allow-clear />
             <template #extra>
               <div v-if="componentName">
@@ -79,16 +79,16 @@
           </a-form-item>
         </a-col>
         <a-col v-bind="colProps">
-          <a-form-item v-if="form.type === 2" label="权限标识" field="permission">
+          <a-form-item v-if="form.type === 'm'" label="权限标识" field="permission">
             <a-input v-model.trim="form.permission" placeholder="system:user:add" allow-clear />
           </a-form-item>
         </a-col>
       </a-row>
-      <a-row v-if="['d', 'm'].includes(form.Type)" :gutter="16">
+      <a-row v-if="['d', 'm'].includes(form.type)" :gutter="16">
         <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
-          <a-form-item label="是否隐藏" field="IsHidden">
+          <a-form-item label="是否隐藏" field="isHidden">
             <a-switch
-              v-model="form.IsHidden"
+              v-model="form.isHidden"
               :checked-value="true"
               :unchecked-value="false"
               checked-text="是"
@@ -100,7 +100,7 @@
         <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
           <a-form-item label="是否缓存" field="keepAlive">
             <a-switch
-              v-model="form.IsCache"
+              v-model="form.isCache"
               :checked-value="true"
               :unchecked-value="false"
               checked-text="是"
@@ -110,9 +110,9 @@
           </a-form-item>
         </a-col>
         <a-col :xs="12" :sm="12" :md="8" :lg="8" :xl="8" :xxl="8">
-          <a-form-item v-if="form.Type === 'm'" label="是否外链" field="isExternalUrl">
+          <a-form-item v-if="form.type === 'm'" label="是否外链" field="isExternalUrl">
             <a-switch
-              v-model="form.IsExternal"
+              v-model="form.isExternal"
               :checked-value="true"
               :unchecked-value="false"
               checked-text="是"
@@ -122,8 +122,8 @@
           </a-form-item>
         </a-col>
       </a-row>
-      <a-form-item label="菜单排序" field="Sequency">
-        <a-input-number v-model="form.Sequency" placeholder="请输入菜单排序" :min="1" mode="button" style="width: 150px" />
+      <a-form-item label="菜单排序" field="sequency">
+        <a-input-number v-model="form.sequency" placeholder="请输入菜单排序" :min="1" mode="button" style="width: 150px" />
       </a-form-item>
       <a-form-item label="状态" field="isActive">
         <a-switch
@@ -170,33 +170,34 @@ const title = computed(() => (isUpdate.value ? '修改菜单' : '新增菜单'))
 const formRef = ref<FormInstance>()
 
 const [form, resetForm] = useResetReactive({
-  Type: 'd',
-  Sequency: 999,
-  IsExternal: false,
-  IsCache: false,
-  IsHidden: false,
+  type: 'd',
+  parentId: '',
+  sequency: 999,
+  isExternal: false,
+  isCache: false,
+  isHidden: false,
   isActive: true,
 })
 
-const componentName = computed(() => transformPathToName(form.Path))
+const componentName = computed(() => transformPathToName(form.path))
 
 const { componentOptions } = useComponentPaths()
 
 const rules: FormInstance['rules'] = {
   parentId: [{ required: true, message: '请选择上级菜单' }],
   title: [{ required: true, message: '请输入菜单标题' }],
-  Path: [{ required: true, message: '请输入路由地址' }],
-  Name: [{ required: true, message: '请输入组件名称' }],
-  Component: [{ required: true, message: '请输入组件路径' }],
+  path: [{ required: true, message: '请输入路由地址' }],
+  name: [{ required: true, message: '请输入组件名称' }],
+  component: [{ required: true, message: '请输入组件路径' }],
   permission: [{ required: true, message: '请输入权限标识' }],
 }
 // eslint-disable-next-line vue/return-in-computed-property
 const formRules = computed(() => {
-  if (['d', 'm'].includes(form.Type)) {
-    const { title, Name, Path } = rules
-    return { title, Name, Path } as FormInstance['rules']
+  if (['d', 'm'].includes(form.type)) {
+    const { title, name, path } = rules
+    return { title, name, path } as FormInstance['rules']
   }
-  if (form.type === 3) {
+  if (form.type === '3') {
     const { parentId, title, permission } = rules
     return { parentId, title, permission } as FormInstance['rules']
   }
@@ -221,7 +222,7 @@ const onChangeType = () => {
 // 转换为菜单树
 const menuSelectTree = computed(() => {
   const menus = JSON.parse(JSON.stringify(props.menus)) as MenuResp[]
-  const data = filterTree(menus, (i) => ['d', 'm'].includes(i.Type))
+  const data = filterTree(menus, (i) => ['d', 'm'].includes(i.type))
   return mapTree(data, (i) => ({
     key: i.id,
     title: i.name,
