@@ -6,7 +6,7 @@
       :data="dataList"
       :columns="columns"
       :loading="loading"
-      :scroll="{ x: '100%', y: '100%', minWidth: 1700 }"
+      :scroll="{ x: '100%', y: '100%', minWidth: 900 }"
       :pagination="false"
       :disabled-column-keys="['title']"
       @refresh="search"
@@ -138,12 +138,9 @@ const dataList = computed(() => {
 })
 
 const columns: TableInstance['columns'] = [
-  { title: '菜单标题', dataIndex: 'name', slotName: 'name', width: 170, fixed: !isMobile() ? 'left' : undefined },
-  { title: '类型', dataIndex: 'type', slotName: 'type', align: 'center' },
-  { title: '状态', dataIndex: 'isActive', slotName: 'isActive', align: 'center' },
-  { title: '排序', dataIndex: 'sequency', align: 'center', show: false },
-  { title: '路由地址', dataIndex: 'path', ellipsis: true, tooltip: true },
-  { title: '组件路径', dataIndex: 'component', minWidth: 180, ellipsis: true, tooltip: true },
+  { title: '菜单标题', dataIndex: 'name', slotName: 'name', fixed: !isMobile() ? 'left' : undefined },
+  { title: '类型', dataIndex: 'type', slotName: 'type', width: 110, align: 'center' },
+  { title: '状态', dataIndex: 'isActive', slotName: 'isActive', width: 110, align: 'center' },
   {
     title: '操作',
     dataIndex: 'action',

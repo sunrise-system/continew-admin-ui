@@ -47,8 +47,9 @@ const deptSelectTree = computed(() => {
 })
 
 const [form, resetForm] = useResetReactive({
-  sort: 999,
-  status: 1,
+  sequency: 999,
+  parentId: '',
+  isActive: false,
 })
 
 const columns: ColumnItem[] = reactive([
@@ -90,20 +91,30 @@ const columns: ColumnItem[] = reactive([
     rules: [{ required: true, message: '请输入名称' }],
   },
   {
-    label: '排序',
-    field: 'sort',
-    type: 'input-number',
+    label: '编码',
+    field: 'code',
+    type: 'input',
     span: 24,
     props: {
-      min: 1,
-      mode: 'button',
+      maxLength: 30,
     },
+    rules: [{ required: true, message: '请输入编码' }],
   },
   {
     label: '描述',
     field: 'description',
     type: 'input',
     span: 24,
+  },
+  {
+    label: '排序',
+    field: 'sequency',
+    type: 'input-number',
+    span: 24,
+    props: {
+      min: 1,
+      mode: 'button',
+    },
   },
   {
     label: '状态',

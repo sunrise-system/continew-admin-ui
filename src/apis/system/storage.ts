@@ -37,10 +37,15 @@ export function deleteStorage(id: string) {
 
 /** @desc 修改存储状态 */
 export function updateStorageStatus(data: any, id: string) {
-  return http.put(`${BASE_URL}/${id}/status`, data)
+  const formArray: any = {}
+  formArray.id = id
+  formArray.data = data
+  return fetchMotion(`ADM08914A/status`, formArray)
 }
 
 /** @desc 设置默认存储 */
 export function setDefaultStorage(id: string) {
-  return http.put(`${BASE_URL}/${id}/default`)
+  const formArray: any = {}
+  formArray.id = id
+  return fetchMotion(`ADM08914A/default`, formArray)
 }
