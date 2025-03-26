@@ -50,7 +50,7 @@
           </a-dropdown>
         </div>
       </div>
-      <div class="time">{{ data.createTime }}</div>
+      <div class="time">{{ data.sysCreatedTime }}</div>
     </template>
     <div :class="data.type === 'local' ? 'content' : 'content-large'">
       <slot name="content"></slot>
