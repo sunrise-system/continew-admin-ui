@@ -114,7 +114,7 @@ const searchData = (title: string) => {
   const loop = (data: MenuResp[]) => {
     const result = [] as MenuResp[]
     data.forEach((item: MenuResp) => {
-      if (item.name?.toLowerCase().includes(title.toLowerCase())) {
+      if (item.title?.toLowerCase().includes(title.toLowerCase())) {
         result.push({ ...item })
       } else if (item.children) {
         const filterData = loop(item.children)
@@ -138,7 +138,7 @@ const dataList = computed(() => {
 })
 
 const columns: TableInstance['columns'] = [
-  { title: '菜单标题', dataIndex: 'name', slotName: 'name', fixed: !isMobile() ? 'left' : undefined },
+  { title: '菜单标题', dataIndex: 'title', slotName: 'title', fixed: !isMobile() ? 'left' : undefined },
   { title: '类型', dataIndex: 'type', slotName: 'type', width: 110, align: 'center' },
   { title: '状态', dataIndex: 'isActive', slotName: 'isActive', width: 110, align: 'center' },
   {
