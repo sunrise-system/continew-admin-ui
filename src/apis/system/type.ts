@@ -244,8 +244,8 @@ export interface StorageResp {
   name: string
   code: string
   type: string
-  accessKey: string
-  secretKey: string
+  appKey: string
+  appSecret: string
   endpoint: string
   bucketName: string
   domain: string
@@ -253,10 +253,10 @@ export interface StorageResp {
   isDefault: boolean
   sequency: number
   isActive: boolean
-  createUserString: string
-  createTime: string
-  updateUserString: string
-  updateTime: string
+  sysCreatedBy: string
+  sysCreatedTime: string
+  sysLastModifiedBy: string
+  sysLastModifiedTime: string
 }
 export interface StorageQuery {
   description?: string

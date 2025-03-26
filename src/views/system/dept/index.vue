@@ -66,7 +66,7 @@
             v-if="dataList.length"
             :data="dataList[0]"
             :collapsable="true"
-            :horizontal="false"
+            :horizontal="true"
             :define-menus="menus"
             :expand-all="true"
             :default-expand-level="999"

@@ -11,7 +11,6 @@
     </template>
     <template v-else #title>
       <div class="title">
-        {{ data.name }} *** ({{ data.code }})
         <div v-if="data.isDefault" class="status">
           <a-tag size="small" color="arcoblue">
             <template #icon>
