@@ -5,7 +5,7 @@ import { mapTree, toTreeArray } from 'xe-utils'
 import { cloneDeep, omit } from 'lodash-es'
 import { constantRoutes, systemRoutes } from '@/router/route'
 import { type RouteItem, getUserRoute } from '@/apis'
-import { transformPathToName } from '@/utils'
+import { parseData, parseList, transformPathToName } from '@/utils'
 import { asyncRouteModules } from '@/router/asyncModules'
 
 const layoutComponentMap = {
@@ -32,11 +32,11 @@ const formatAsyncRoutes = (menus: RouteItem[]) => {
     pathMap.set(item.id, item.path)
 
     if (item.children?.length) {
-      item.children.sort((a, b) => (a?.sort ?? 0) - (b?.sort ?? 0))
+      item.children.sort((a, b) => (a?.sequency ?? 0) - (b?.sequency ?? 0))
     }
 
     // 部分子菜单，例如：通知公告新增、查看详情，需要选中其父菜单
-    if (item.parentId && item.type === 2 && item.permission) {
+    if (item.parentId !== '-' && item.type === 'm' && item.permission) {
       item.activeMenu = pathMap.get(item.parentId)
     }
 
@@ -91,7 +91,9 @@ const storeSetup = () => {
   // 生成路由
   const generateRoutes = async (): Promise<RouteRecordRaw[]> => {
     const { data } = await getUserRoute()
-    const asyncRoutes = formatAsyncRoutes(data?.data)
+
+    const asyncRoutes = formatAsyncRoutes(parseList(data))
+
     const flatRoutes = flatMultiLevelRoutes(cloneDeep(asyncRoutes))
     setRoutes(asyncRoutes)
     return flatRoutes
