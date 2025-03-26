@@ -41,7 +41,8 @@ import { parseData, parseList } from '@/utils'
 defineOptions({ name: 'SystemStorage' })
 
 const queryForm = reactive<StorageQuery>({
-  sort: ['createTime,desc'],
+  sort: ['sysCreatedTime,desc'],
+  type: ''
 })
 
 const loading = ref(false)
