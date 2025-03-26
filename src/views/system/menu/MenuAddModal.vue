@@ -31,8 +31,8 @@
       </a-form-item>
       <a-row>
         <a-col v-bind="colProps">
-          <a-form-item label="菜单标题" field="name">
-            <a-input v-model.trim="form.name" placeholder="请输入菜单标题" :max-length="30" show-word-limit allow-clear />
+          <a-form-item label="菜单标题" field="title">
+            <a-input v-model.trim="form.title" placeholder="请输入菜单标题" :max-length="30" show-word-limit allow-clear />
           </a-form-item>
         </a-col>
         <a-col v-bind="colProps">
@@ -225,7 +225,7 @@ const menuSelectTree = computed(() => {
   const data = filterTree(menus, (i) => ['d', 'm'].includes(i.type))
   return mapTree(data, (i) => ({
     key: i.id,
-    title: i.name,
+    title: i.title,
     children: i.children,
   }))
 })
