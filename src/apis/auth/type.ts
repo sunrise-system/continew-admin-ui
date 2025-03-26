@@ -20,7 +20,7 @@ export interface RouteItem {
   id: string
   title: string
   parentId: string
-  type: 1 | 2 | 3
+  type: 'd' | 'm' | 'b' | 1 | 2 | 3
   path: string
   name: string
   component: string
@@ -31,7 +31,7 @@ export interface RouteItem {
   isCache: boolean
   permission: string
   roles: string[]
-  sort: number
+  sequency: number
   status: 0 | 1
   children: RouteItem[]
   activeMenu: string
