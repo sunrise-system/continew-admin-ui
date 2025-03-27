@@ -135,6 +135,10 @@ const columns: ColumnItem[] = reactive([
     required: false,
     props: {
       options: roleList,
+      fieldNames: {
+        value: 'id',
+        label: 'name',
+      },
       multiple: true,
       allowClear: true,
       allowSearch: true,

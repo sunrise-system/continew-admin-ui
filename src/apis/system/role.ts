@@ -9,7 +9,7 @@ const BASE_URL = '/system/role'
 export function listRole(query: T.RoleQuery) {
   return fetchMotion(`ADM08902A/list`, query)
 
-  return http.get<T.RoleResp[]>(`${BASE_URL}/list`, query)
+  // return http.get<T.RoleResp[]>(`${BASE_URL}/list`, query)
 }
 
 /** @desc 查询角色详情 */
@@ -26,7 +26,10 @@ export function addRole(data: any) {
 
 /** @desc 修改角色 */
 export function updateRole(data: any, id: string) {
-  return http.put(`${BASE_URL}/${id}`, data)
+  const formArray: any = {}
+  formArray.data = data
+  formArray.id = id
+  return fetchMotion(`ADM08902A/savechanges`, formArray)
 }
 
 /** @desc 删除角色 */

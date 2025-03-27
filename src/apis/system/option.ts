@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http from '@/utils/http'
+import http, { fetchMotion } from '@/utils/http'
 
 export type * from './type'
 
@@ -7,7 +7,8 @@ const BASE_URL = '/system/option'
 
 /** @desc 查询参数列表 */
 export function listOption(query: T.OptionQuery) {
-  return http.get<T.OptionResp[]>(`${BASE_URL}`, query)
+  return fetchMotion(`ADM08906A/list`, query)
+  // return http.get<T.OptionResp[]>(`${BASE_URL}`, query)
 }
 
 /** @desc 修改参数 */

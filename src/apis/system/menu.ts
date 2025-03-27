@@ -32,7 +32,7 @@ export function updateMenu(data: any, id: string) {
 
 /** @desc 删除菜单 */
 export function deleteMenu(id: string) {
-  return fnMotion(`ADM08902A/delete`, {}, id)
+  return fnMotion(`ADM08906A/delete`, {}, id)
 }
 
 /** @desc 清除菜单缓存 */

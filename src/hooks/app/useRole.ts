@@ -1,6 +1,7 @@
 import { ref } from 'vue'
 import { listRoleDict } from '@/apis'
 import type { LabelValueState } from '@/types/global'
+import { parseList } from '@/utils'
 
 /** 角色模块 */
 export function useRole(options?: { onSuccess?: () => void }) {
@@ -11,7 +12,7 @@ export function useRole(options?: { onSuccess?: () => void }) {
     try {
       loading.value = true
       const res = await listRoleDict()
-      roleList.value = res.data
+      roleList.value = parseList(res.data)
       options?.onSuccess && options.onSuccess()
     } finally {
       loading.value = false

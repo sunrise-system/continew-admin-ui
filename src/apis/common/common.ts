@@ -24,7 +24,8 @@ export function listUserDict(query?: { status: number }) {
 
 /** @desc 查询角色列表 */
 export function listRoleDict(query?: { name: string, status: number }) {
-  return http.get<LabelValueState[]>(`${BASE_URL}/dict/role`, query)
+  return fetchMotion(`ADM08902A/list`, query)
+  // return http.get<LabelValueState[]>(`${BASE_URL}/dict/role`, query)
 }
 
 /** @desc 查询字典列表 */

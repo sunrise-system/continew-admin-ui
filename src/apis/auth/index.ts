@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http, { fnMotion } from '@/utils/http'
+import http, { fetchMotion, fnMotion } from '@/utils/http'
 
 export type * from './type'
 
@@ -42,5 +42,8 @@ export const getUserInfo = () => {
 
 /** @desc 获取路由信息 */
 export const getUserRoute = () => {
-  return fnMotion(`ADM08906A_mock`, {})
+  const formArray: any = {}
+  formArray.bTree = true
+  formArray.type = 'd,m'
+  return fetchMotion(`ADM08906A/list`, formArray)
 }

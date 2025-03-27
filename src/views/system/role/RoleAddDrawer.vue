@@ -11,11 +11,11 @@
     <a-form ref="formRef" :model="form" :rules="rules" size="large" auto-label-width>
       <fieldset>
         <legend>基础信息</legend>
-        <a-form-item label="名称" field="Name">
-          <a-input v-model.trim="form.name" placeholder="请输入名称" :max-length="30" show-word-limit />
-        </a-form-item>
-        <a-form-item label="编码" field="Code">
+        <a-form-item label="编码" field="code">
           <a-input v-model.trim="form.code" placeholder="请输入编码" :max-length="30" show-word-limit :disabled="isUpdate" />
+        </a-form-item>
+        <a-form-item label="名称" field="name">
+          <a-input v-model.trim="form.name" placeholder="请输入名称" :max-length="30" show-word-limit />
         </a-form-item>
         <a-form-item label="请输入描述" field="description">
           <a-input v-model.trim="form.description" placeholder="请输入请输入描述" :max-length="30" show-word-limit />
@@ -80,8 +80,8 @@ const { data_scope_enum } = useDict('data_scope_enum')
 const { deptList, getDeptList } = useDept()
 
 const rules: FormInstance['rules'] = {
-  Name: [{ required: true, message: '请输入名称' }],
-  Code: [{ required: true, message: '请输入编码' }],
+  name: [{ required: true, message: '请输入名称' }],
+  code: [{ required: true, message: '请输入编码' }],
   dataScope: [{ required: true, message: '请选择数据权限' }],
 }
 

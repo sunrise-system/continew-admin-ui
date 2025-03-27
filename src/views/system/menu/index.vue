@@ -160,7 +160,7 @@ const reset = () => {
 // 删除
 const onDelete = (record: MenuResp) => {
   return handleDelete(() => deleteMenu(record.id), {
-    content: `是否确定菜单「${record.name}」？`,
+    content: `是否确定菜单「${record.title}」？`,
     showModal: true,
   })
 }
