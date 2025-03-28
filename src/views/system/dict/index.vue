@@ -26,7 +26,7 @@
                 </a-button>
               </template>
               <template #toolbar-right>
-                <a-button v-permission="['system:dict:item:add']" type="primary" @click="onAdd">
+                <a-button v-permission="['system:dict:item:create']" type="primary" @click="onAdd">
                   <template #icon><icon-plus /></template>
                   <template #default>新增</template>
                 </a-button>
@@ -36,7 +36,11 @@
                 </a-button>
               </template>
               <template #label="{ record }">
-                <a-tag :color="record.color">{{ record.label }}</a-tag>
+                ·                <a-tag v-if="record.color === 'primary'" color="arcoblue">{{ record.label }}</a-tag>
+                <a-tag v-else-if="record.color === 'success'" color="green">{{ record.label }}</a-tag>
+                <a-tag v-else-if="record.color === 'warning'" color="orangered">{{ record.label }}</a-tag>
+                <a-tag v-else-if="record.color === 'error'" color="red">{{ record.label }}</a-tag>
+                <a-tag v-else-if="record.color === 'default'" color="gray">{{ record.label }}</a-tag>
               </template>
               <template #status="{ record }">
                 <GiCellStatus :status="record.status" />

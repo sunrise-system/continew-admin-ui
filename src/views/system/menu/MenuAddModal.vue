@@ -40,7 +40,7 @@
             <GiIconSelector v-model="form.icon" />
           </a-form-item>
           <a-form-item v-else label="权限标识" field="permission">
-            <a-input v-model.trim="form.permission" placeholder="system:user:add" allow-clear />
+            <a-input v-model.trim="form.permission" placeholder="system:user:add" :max-length="100" show-word-limit allow-clear />
           </a-form-item>
         </a-col>
       </a-row>
@@ -197,7 +197,7 @@ const formRules = computed(() => {
     const { title, name, path } = rules
     return { title, name, path } as FormInstance['rules']
   }
-  if (form.type === '3') {
+  if (form.type === 'b') {
     const { parentId, title, permission } = rules
     return { parentId, title, permission } as FormInstance['rules']
   }
@@ -232,8 +232,8 @@ const menuSelectTree = computed(() => {
 
 // 过滤树
 const filterOptions = (searchKey: string, nodeData: TreeNodeData) => {
-  if (nodeData.name) {
-    return nodeData.name.toLowerCase().includes(searchKey.toLowerCase())
+  if (nodeData.title) {
+    return nodeData.title.toLowerCase().includes(searchKey.toLowerCase())
   }
   return false
 }

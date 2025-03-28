@@ -30,7 +30,7 @@
 
       <!-- 列拖拽排序区域 -->
       <div class="gi-table__draggable">
-        <VueDraggable v-model="localColumns" @end="handleDragEnd">
+        <VueDraggable v-model="localColumns" :animation="150" @end="handleDragEnd">
           <div
             v-for="item in localColumns"
             :key="item.key"
