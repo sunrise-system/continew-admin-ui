@@ -37,12 +37,17 @@ export function addUser(data: any) {
 
 /** @desc 修改用户 */
 export function updateUser(data: any, id: string) {
-  return http.put(`${BASE_URL}/${id}`, data)
+  const formArray: any = {}
+  formArray.data = data
+  formArray.id = id
+  return fetchMotion(`ADM08903A/savechanges`, formArray)
 }
 
 /** @desc 删除用户 */
 export function deleteUser(ids: string | Array<string>) {
-  return http.del(`${BASE_URL}/${ids}`)
+  const formArray: any = {}
+  formArray.id = ids
+  return fetchMotion(`ADM08903A/delete`, formArray)
 }
 
 /** @desc 导出用户 */
