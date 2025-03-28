@@ -40,7 +40,8 @@ const { deptList, getDeptList } = useDept()
 
 const [form, resetForm] = useResetReactive({
   gender: 1 as Gender,
-  status: 1 as Status,
+  isActive: true,
+  defaultDepartment: ''
 })
 
 const columns: ColumnItem[] = reactive([
@@ -190,7 +191,7 @@ const save = async () => {
 }
 
 // 新增
-const onAdd = async () => {
+const onAdd = async (defaultDepartment: string) => {
   reset()
   if (!deptList.value.length) {
     await getDeptList()
@@ -199,6 +200,7 @@ const onAdd = async () => {
     await getRoleList()
   }
   dataId.value = ''
+  form.defaultDepartment = defaultDepartment
   visible.value = true
 }
 
