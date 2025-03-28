@@ -105,8 +105,11 @@ import type { ColumnItem } from '@/components/GiForm'
 
 defineOptions({ name: 'SystemUser' })
 
+const defaultDepartment = ref('')
+
 const [queryForm, resetForm] = useResetReactive({
   sort: ['t1.id,desc'],
+  defaultDepartment: ''
 })
 const queryFormColumns: ColumnItem[] = reactive([
   {
@@ -211,7 +214,9 @@ const onExport = () => {
 
 // 根据选中部门查询
 const handleSelectDept = (keys: Array<any>) => {
-  queryForm.defaultDepartment = keys.length === 1 ? keys[0] : undefined
+  const currentId = keys.length === 1 ? keys[0] : undefined
+  queryForm.defaultDepartment = currentId
+  defaultDepartment.value = currentId
   search()
 }
 
@@ -224,7 +229,7 @@ const onImport = () => {
 const UserAddDrawerRef = ref<InstanceType<typeof UserAddDrawer>>()
 // 新增
 const onAdd = () => {
-  UserAddDrawerRef.value?.onAdd()
+  UserAddDrawerRef.value?.onAdd(defaultDepartment)
 }
 
 // 修改
