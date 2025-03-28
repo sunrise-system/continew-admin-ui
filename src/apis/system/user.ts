@@ -30,7 +30,9 @@ export function getUser(id: string) {
 
 /** @desc 新增用户 */
 export function addUser(data: any) {
-  return http.post(`${BASE_URL}`, data)
+  const formArray: any = {}
+  formArray.data = data
+  return fetchMotion(`ADM08903A/savechanges`, formArray)
 }
 
 /** @desc 修改用户 */
