@@ -44,7 +44,9 @@
             <a-trigger trigger="click" align-point animation-name="slide-dynamic-origin" auto-fit-transform-origin position="bl" scroll-to-close>
               <icon-more v-if="has.hasPermOr(['system:role:update', 'system:role:delete'])" class="action" />
               <template #content>
-                <RightMenu :data="node" @on-menu-item-click="onMenuItemClick" />
+                <RightMenu v-if="node.groupId" :data="node" @on-menu-item-click="onRoleMenuItemClick" />
+
+                <RightMenu v-else :data="node" @on-menu-item-click="onRoleGroupMenuItemClick" />
               </template>
             </a-trigger>
           </template>
@@ -77,10 +79,16 @@ const treeRef = ref<TreeInstance>()
 const selectedKeys = ref()
 const selectedGroupId = ref('')
 // 选中节点
-const select = (keys: Array<any>) => {
+const select = (keys: Array<any>, event: any) => {
   if (selectedKeys.value && selectedKeys.value[0] === keys[0]) {
     return
   }
+  if (event.node) {
+    if (!event.node.groupId) {
+      return
+    }
+  }
+
   selectedKeys.value = keys
   if (keys.length >= 1) {
     selectedGroupId.value = keys[0]
@@ -142,7 +150,7 @@ const RoleAddDrawerRef = ref<InstanceType<typeof RoleAddDrawer>>()
 const RoleGroupAddDrawerRef = ref<InstanceType<typeof RoleGroupAddDrawer>>()
 // 新增
 const onAdd = () => {
-  RoleAddDrawerRef.value?.onAdd(selectedGroupId)
+  RoleAddDrawerRef.value?.onAdd(selectedGroupId.value)
 }
 
 // 新增
@@ -151,13 +159,38 @@ const onAddGroup = () => {
 }
 
 // 点击菜单项
-const onMenuItemClick = (mode: string, node: RoleResp) => {
+const onRoleMenuItemClick = (mode: string, node: RoleResp) => {
   if (mode === 'update') {
     RoleAddDrawerRef.value?.onUpdate(node.id)
   } else if (mode === 'delete') {
     Modal.warning({
       title: '提示',
       content: `是否确定删除角色「${node.name}」？`,
+      hideCancel: false,
+      okButtonProps: { status: 'danger' },
+      onBeforeOk: async () => {
+        try {
+          const res = await deleteRole(node.id)
+          if (res.success) {
+            Message.success('删除成功')
+            await getTreeData()
+          }
+          return res.success
+        } catch (error) {
+          return false
+        }
+      },
+    })
+  }
+}
+
+const onRoleGroupMenuItemClick = (mode: string, node: RoleResp) => {
+  if (mode === 'update') {
+    RoleGroupAddDrawerRef.value?.onUpdate(node.id)
+  } else if (mode === 'delete') {
+    Modal.warning({
+      title: '提示',
+      content: `是否确定删除角色组「${node.name}」？`,
       hideCancel: false,
       okButtonProps: { status: 'danger' },
       onBeforeOk: async () => {
