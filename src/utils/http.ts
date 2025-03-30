@@ -83,6 +83,7 @@ http.interceptors.response.use(
     }
     // 成功
     if (success || sCode === 'SUCCESS') {
+      response.success = true
       return response
     }
 
