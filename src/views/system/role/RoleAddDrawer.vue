@@ -23,10 +23,12 @@
         <a-form-item label="排序" field="sequency">
           <a-input-number v-model="form.sequency" placeholder="请输入排序" :min="1" mode="button" />
         </a-form-item>
-        <a-form-item hide-label field="dataScope">
+        <a-form-item label="角色组" field="groupId">
           <a-select
             v-model.trim="form.groupId"
-            :options="roleList"
+            :options="roleGroupList"
+            value-key="id"
+            :field-names="{ value: 'id', label: 'name' }"
             placeholder="请选择角色组"
           />
         </a-form-item>
