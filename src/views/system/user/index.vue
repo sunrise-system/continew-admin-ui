@@ -214,9 +214,11 @@ const onExport = () => {
 
 // 根据选中部门查询
 const handleSelectDept = (keys: Array<any>) => {
-  const currentId = keys.length === 1 ? keys[0] : undefined
-  queryForm.defaultDepartment = currentId
-  defaultDepartment.value = currentId
+  if (keys.length >= 1) {
+    const currentId = keys.length === 1 ? keys[0] : undefined
+    queryForm.defaultDepartment = currentId
+    defaultDepartment.value = currentId
+  }
   search()
 }
 
@@ -229,7 +231,7 @@ const onImport = () => {
 const UserAddDrawerRef = ref<InstanceType<typeof UserAddDrawer>>()
 // 新增
 const onAdd = () => {
-  UserAddDrawerRef.value?.onAdd(defaultDepartment)
+  UserAddDrawerRef.value?.onAdd(defaultDepartment.value)
 }
 
 // 修改
