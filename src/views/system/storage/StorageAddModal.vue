@@ -41,7 +41,7 @@ const [form, resetForm] = useResetReactive({
   isDefault: false,
   sort: 999,
   appSecret: '',
-  isActive: false,
+  isActive: true,
 })
 
 const columns: ColumnItem[] = reactive([
