@@ -1,5 +1,6 @@
 export * from './user'
 export * from './role'
+export * from './roleGroup'
 export * from './menu'
 export * from './dept'
 export * from './notice'
