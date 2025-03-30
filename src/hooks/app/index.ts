@@ -1,4 +1,5 @@
 export * from './useMenu'
 export * from './useDept'
 export * from './useRole'
+export * from './useRoleGroup'
 export * from './useDict'
