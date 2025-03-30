@@ -8,7 +8,7 @@
     @before-ok="save"
     @close="reset"
   >
-    <GiForm ref="formRef" v-model="form" :columns="columns" />
+<GiForm ref="formRef" v-model="form" :columns="columns" />
   </a-drawer>
 </template>
 
@@ -60,7 +60,15 @@ const columns: ColumnItem[] = reactive([
     field: 'nickname',
     type: 'input',
     span: 24,
-    required: true,
+    props: {
+      maxLength: 30,
+    },
+  },
+  {
+    label: '工号',
+    field: 'code',
+    type: 'input',
+    span: 24,
     props: {
       maxLength: 30,
     },
