@@ -28,6 +28,12 @@ export function listRoleDict(query?: { name: string, status: number }) {
   // return http.get<LabelValueState[]>(`${BASE_URL}/dict/role`, query)
 }
 
+/** @desc 查询角色列表 */
+export function listRoleGroupDict(query?: { name: string, status: number }) {
+  return fetchMotion(`ADM08902B/list`, query)
+  // return http.get<LabelValueState[]>(`${BASE_URL}/dict/role`, query)
+}
+
 /** @desc 查询字典列表 */
 export function listCommonDict(code: string) {
   return http.get<LabelValueState[]>(`${BASE_URL}/dict/${code}`)
