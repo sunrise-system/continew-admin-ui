@@ -4,16 +4,28 @@
       <a-input v-model="searchKey" placeholder="搜索名称/编码" allow-clear>
         <template #prefix><icon-search /></template>
       </a-input>
-      <a-button v-permission="['system:role:create']" type="primary" @click="onAdd">
+
+      <a-dropdown trigger="hover">
+      <a-button v-permission="['system:role:create']" type="primary">
         <template #icon><icon-plus /></template>
       </a-button>
+      <template #content>
+        <a-doption @click="onAdd">创建角色</a-doption>
+        <a-doption @click="onAddGroup">新增角色分组</a-doption>
+      </template>
+    </a-dropdown>
     </div>
     <div class="tree-wrapper">
       <div class="tree">
         <a-tree
+          ref="treeRef"
           :data="(treeData as unknown as TreeNodeData[])"
-          :field-names="{ key: 'id' }"
+          :field-names="{
+            key: 'id',
+            title: 'name',
+          }"
           block-node
+          default-expand-all
           :selected-keys="selectedKeys"
           @select="select"
         >
@@ -25,7 +37,7 @@
                 css: true,
               }"
             >
-              {{ node.name }} ({{ node.code }})
+              {{ node.name }}({{ node.code }})
             </a-typography-paragraph>
           </template>
           <template #extra="node">
@@ -41,14 +53,16 @@
     </div>
 
     <RoleAddDrawer ref="RoleAddDrawerRef" @save-success="getTreeData" />
+    <RoleGroupAddDrawer ref="RoleGroupAddDrawerRef" @save-success="getTreeData" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { Message, Modal } from '@arco-design/web-vue'
-import type { TreeNodeData } from '@arco-design/web-vue'
+import type { TreeInstance, TreeNodeData } from '@arco-design/web-vue'
 import { mapTree } from 'xe-utils'
 import RoleAddDrawer from '../RoleAddDrawer.vue'
+import RoleGroupAddDrawer from '../RoleGroupAddDrawer.vue'
 import RightMenu from './RightMenu.vue'
 import { type RoleResp, deleteRole, listRole } from '@/apis/system/role'
 import has from '@/utils/has'
@@ -58,13 +72,19 @@ const emit = defineEmits<{
   (e: 'node-click', keys: Array<any>): void
 }>()
 
+const treeRef = ref<TreeInstance>()
+
 const selectedKeys = ref()
+const selectedGroupId = ref('')
 // 选中节点
 const select = (keys: Array<any>) => {
   if (selectedKeys.value && selectedKeys.value[0] === keys[0]) {
     return
   }
   selectedKeys.value = keys
+  if (keys.length >= 1) {
+    selectedGroupId.value = keys[0]
+  }
   emit('node-click', keys)
 }
 
@@ -87,6 +107,9 @@ const getTreeData = async () => {
       },
     }))
     await nextTick(() => {
+      // 查询树列表
+      treeRef.value?.expandAll(true)
+
       select([dataList.value[0]?.id])
     })
   } finally {
@@ -115,9 +138,16 @@ const treeData = computed(() => {
 })
 
 const RoleAddDrawerRef = ref<InstanceType<typeof RoleAddDrawer>>()
+
+const RoleGroupAddDrawerRef = ref<InstanceType<typeof RoleGroupAddDrawer>>()
 // 新增
 const onAdd = () => {
-  RoleAddDrawerRef.value?.onAdd()
+  RoleAddDrawerRef.value?.onAdd(selectedGroupId)
+}
+
+// 新增
+const onAddGroup = () => {
+  RoleGroupAddDrawerRef.value?.onAdd()
 }
 
 // 点击菜单项
