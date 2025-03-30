@@ -21,7 +21,9 @@ export function getRole(id: string) {
 
 /** @desc 新增角色 */
 export function addRole(data: any) {
-  return http.post(`${BASE_URL}`, data)
+  const formArray: any = {}
+  formArray.data = data
+  return fetchMotion(`ADM08902A/savechanges`, formArray)
 }
 
 /** @desc 修改角色 */
