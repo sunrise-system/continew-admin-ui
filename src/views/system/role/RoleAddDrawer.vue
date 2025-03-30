@@ -23,6 +23,13 @@
         <a-form-item label="排序" field="sequency">
           <a-input-number v-model="form.sequency" placeholder="请输入排序" :min="1" mode="button" />
         </a-form-item>
+        <a-form-item hide-label field="dataScope">
+          <a-select
+            v-model.trim="form.groupId"
+            :options="roleList"
+            placeholder="请选择角色组"
+          />
+        </a-form-item>
       </fieldset>
       <fieldset>
         <legend>数据权限</legend>
@@ -61,7 +68,7 @@ import { useWindowSize } from '@vueuse/core'
 import type { GiForm } from '@/components/GiForm'
 
 import { useResetReactive } from '@/hooks'
-import { useDept, useDict } from '@/hooks/app'
+import { useDept, useDict, useRoleGroup } from '@/hooks/app'
 import { addRole, getRole, updateRole } from '@/apis'
 import { isMobile, parseData } from '@/utils'
 
@@ -78,6 +85,7 @@ const title = computed(() => (isUpdate.value ? '修改角色' : '新增角色'))
 const formRef = ref<InstanceType<typeof GiForm>>()
 const { data_scope_enum } = useDict('data_scope_enum')
 const { deptList, getDeptList } = useDept()
+const { roleGroupList, getRoleGroupList } = useRoleGroup()
 
 const rules: FormInstance['rules'] = {
   name: [{ required: true, message: '请输入名称' }],
@@ -90,6 +98,7 @@ const [form, resetForm] = useResetReactive({
   sequency: 999,
   code: '',
   name: '',
+  groupId: '',
   description: '',
   dataScope: 4,
 })
@@ -153,12 +162,17 @@ const save = async () => {
 }
 
 // 新增
-const onAdd = async () => {
+const onAdd = async (groupId: string) => {
   reset()
   if (!deptList.value.length) {
     await getDeptList()
   }
+  if (!roleGroupList.value.length) {
+    await getRoleGroupList()
+  }
+
   dataId.value = ''
+  form.groupId = groupId
   visible.value = true
 }
 
@@ -167,6 +181,9 @@ const onUpdate = async (id: string) => {
   reset()
   if (!deptList.value.length) {
     await getDeptList()
+  }
+  if (!roleGroupList.value.length) {
+    await getRoleGroupList()
   }
   dataId.value = id
   const { data } = await getRole(id)
