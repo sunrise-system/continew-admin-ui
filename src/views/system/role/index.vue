@@ -27,10 +27,15 @@ defineOptions({ name: 'SystemRole' })
 
 const activeTab = ref('1')
 
+const roleGroupId = ref('')
+
 const roleId = ref('')
 // 根据选中角色查询
 const handleSelectRole = (keys: Array<any>) => {
   roleId.value = keys.length === 1 ? keys[0] : undefined
+  if (keys.length >= 1) {
+    roleGroupId.value = keys[0]
+  }
 }
 </script>
 
