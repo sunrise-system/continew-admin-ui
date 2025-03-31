@@ -10,8 +10,8 @@
         <template #icon><icon-plus /></template>
       </a-button>
       <template #content>
-        <a-doption @click="onAdd">创建角色</a-doption>
-        <a-doption @click="onAddGroup">新增角色分组</a-doption>
+        <a-doption @click="onAdd">新增角色</a-doption>
+        <a-doption @click="onAddGroup">新增角色组</a-doption>
       </template>
     </a-dropdown>
     </div>
