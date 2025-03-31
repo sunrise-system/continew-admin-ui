@@ -41,7 +41,7 @@
       </template>
       <template #action="{ record }">
         <a-space>
-          <a-link v-permission="['code:generator:config']" title="配置" @click="onConfig(record.tableName, record.comment)">配置</a-link>
+          <a-link v-permission="['code:generator:config']" title="配置" @click="onConfig(record.activityId, record.description)">配置</a-link>
           <a-link
             v-permission="['code:generator:preview']"
             :disabled="!record.createTime"
@@ -90,14 +90,9 @@ const columns: TableInstance['columns'] = [
     align: 'center',
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
   },
-  { title: '表名称', dataIndex: 'tableName', minWidth: 225, ellipsis: true, tooltip: true },
-  { title: '描述', dataIndex: 'comment', ellipsis: true, tooltip: true },
-  { title: '类名前缀', dataIndex: 'classNamePrefix', ellipsis: true, tooltip: true },
-  { title: '作者名称', dataIndex: 'author' },
-  { title: '所属模块', dataIndex: 'moduleName', ellipsis: true, tooltip: true },
-  { title: '模块包名', dataIndex: 'packageName', ellipsis: true, tooltip: true },
-  { title: '配置时间', dataIndex: 'createTime', width: 180 },
-  { title: '修改时间', dataIndex: 'updateTime', width: 180 },
+  { title: '表名', dataIndex: 'tableName', minWidth: 225, ellipsis: true, tooltip: true },
+  { title: '名称', dataIndex: 'description', ellipsis: true, tooltip: true },
+  { title: '功能', dataIndex: 'activityId', ellipsis: true, tooltip: true },
   { title: '操作', dataIndex: 'action', slotName: 'action', width: 160, align: 'center', fixed: !isMobile() ? 'right' : undefined },
 ]
 
@@ -114,8 +109,8 @@ const onClearSelected = () => {
 
 const GenConfigDrawerRef = ref<InstanceType<typeof GenConfigDrawer>>()
 // 配置
-const onConfig = (tableName: string, comment: string) => {
-  GenConfigDrawerRef.value?.onOpen(tableName, comment)
+const onConfig = (activityId: string, description: string) => {
+  GenConfigDrawerRef.value?.onOpen(activityId, description)
 }
 
 const GenPreviewModalRef = ref<InstanceType<typeof GenPreviewModal>>()
