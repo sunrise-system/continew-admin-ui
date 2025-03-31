@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http from '@/utils/http'
+import http, { fetchMotion } from '@/utils/http'
 import type { LabelValueState } from '@/types/global'
 
 export type * from './type'
@@ -8,12 +8,18 @@ const BASE_URL = '/code/generator'
 
 /** @desc 查询代码生成列表 */
 export function listGenConfig(query: T.GenConfigPageQuery) {
-  return http.get<PageRes<T.GenConfigResp[]>>(`${BASE_URL}/config`, query)
+  return fetchMotion(`ADM08990A/list`, query)
+
+  // return http.get<PageRes<T.GenConfigResp[]>>(`${BASE_URL}/config`, query)
 }
 
 /** @desc 查询生成配置信息 */
-export function getGenConfig(tableName: string) {
-  return http.get<T.GenConfigResp>(`${BASE_URL}/config/${tableName}`)
+export function getGenConfig(id: string) {
+  const formArray: any = {}
+  formArray.id = id
+  return fetchMotion(`ADM08990A`, formArray)
+
+  // return http.get<T.GenConfigResp>(`${BASE_URL}/config/${tableName}`)
 }
 
 /** @desc 查询字段配置列表 */
