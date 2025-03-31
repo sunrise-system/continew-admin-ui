@@ -21,11 +21,15 @@
             <a-space wrap :size="[8, 8]">
               <a-input-search v-model="queryForm.description" placeholder="搜索用户名/昵称/描述" allow-clear @search="search" />
               <a-tree-select
-                v-model="queryForm.deptId"
+                v-model="queryForm.defaultDepartment"
                 :data="deptList"
                 placeholder="请选择所属部门"
                 allow-clear
                 allow-search
+                :field-names="{
+                  key: 'id',
+                  title: 'name',
+                }"
                 :filter-tree-node="filterDeptOptions"
                 @change="search"
               />
@@ -50,8 +54,8 @@
           <template #gender="{ record }">
             <GiCellGender :gender="record.gender" />
           </template>
-          <template #status="{ record }">
-            <GiCellStatus :status="record.status" />
+          <template #isActive="{ record }">
+            <GiCellStatus :status="record.isActive" />
           </template>
         </GiTable>
       </a-col>
@@ -59,8 +63,8 @@
         <a-card>
           <template #title>已选择: {{ selectedKeys.length }}</template>
           <a-table :columns="selectedColumns" :data="[...selectedData.values()]" :pagination="paginationOptions">
-            <template #nickname="{ record }">
-              {{ record.nickname }}({{ record.username }})
+            <template #name="{ record }">
+              {{ record.name }}({{ record.code }})
             </template>
             <template #action="{ record }">
               <a-button status="danger" size="mini" @click="handleDeleteSelectedUser(record)">
@@ -100,6 +104,7 @@ interface Props {
 // 查询表单
 const queryForm = reactive<UserQuery>({
   sort: ['t1.createTime,desc', 't1.id,desc'],
+  defaultDepartment: '',
   roleId: props.roleId,
 })
 
@@ -118,6 +123,8 @@ const listColumns: TableInstance['columns'] = [
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
     fixed: !isMobile() ? 'left' : undefined,
   },
+  { title: '工号', dataIndex: 'code', slotName: 'code', minWidth: 140, ellipsis: true, tooltip: true },
+  { title: '用户名', dataIndex: 'name', slotName: 'name', minWidth: 140, ellipsis: true, tooltip: true },
   {
     title: '昵称',
     dataIndex: 'nickname',
@@ -127,8 +134,7 @@ const listColumns: TableInstance['columns'] = [
     tooltip: true,
     fixed: !isMobile() ? 'left' : undefined,
   },
-  { title: '用户名', dataIndex: 'username', slotName: 'username', minWidth: 140, ellipsis: true, tooltip: true },
-  { title: '状态', slotName: 'status', align: 'center' },
+  { title: '状态', slotName: 'isActive', align: 'center' },
   { title: '性别', dataIndex: 'gender', slotName: 'gender', align: 'center' },
   { title: '所属部门', dataIndex: 'deptName', minWidth: 180, ellipsis: true, tooltip: true },
   { title: '描述', dataIndex: 'description', minWidth: 130, ellipsis: true, tooltip: true },
@@ -136,7 +142,7 @@ const listColumns: TableInstance['columns'] = [
 
 // 右侧已选用户列定义
 const selectedColumns = [
-  { title: '用户', dataIndex: 'nickname', slotName: 'nickname', minWidth: 140, ellipsis: true, tooltip: true },
+  { title: '用户', dataIndex: 'name', slotName: 'name', minWidth: 140, ellipsis: true, tooltip: true },
   { title: '操作', dataIndex: 'action', slotName: 'action', align: 'center', width: 90 },
 ]
 const paginationOptions: Options = {
@@ -147,7 +153,7 @@ const paginationOptions: Options = {
 // 重置
 const reset = () => {
   queryForm.description = undefined
-  queryForm.deptId = undefined
+  queryForm.defaultDepartment = undefined
   search()
 }
 
