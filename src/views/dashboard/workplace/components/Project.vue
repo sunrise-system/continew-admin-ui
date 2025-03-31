@@ -74,7 +74,7 @@
 <script setup lang="ts">
 const list = [
   {
-    alias: 'ContiNew Admin',
+    alias: 'ContiNew AdminXXX',
     name: 'continew-admin',
     owner: 'continew-org',
     desc: '🔥Almost最佳后端规范🔥持续迭代优化的前后端分离中后台管理系统框架，开箱即用，持续提供舒适的开发体验。',
