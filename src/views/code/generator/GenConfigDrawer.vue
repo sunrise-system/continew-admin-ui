@@ -211,10 +211,10 @@ const formColumns: ColumnItem[] = reactive([
 const dataList = ref<FieldConfigResp[]>([])
 const loading = ref(false)
 // 查询列表数据
-const getDataList = async (tableName: string, requireSync: boolean) => {
+const getDataList = async (activityId: string, requireSync: boolean) => {
   try {
     loading.value = true
-    const { data } = await listFieldConfig(tableName, requireSync)
+    const { data } = await listFieldConfig(activityId, requireSync)
     dataList.value = data
   } finally {
     loading.value = false
@@ -242,8 +242,8 @@ const reset = () => {
 }
 
 // 同步
-const handleRefresh = async (tableName: string) => {
-  await getDataList(tableName, true)
+const handleRefresh = async (activityId: string) => {
+  await getDataList(activityId, true)
 }
 
 // 拖拽排序
@@ -259,7 +259,7 @@ const save = async () => {
       activeKey.value = '1'
       return false
     }
-    await saveGenConfig(form.tableName, {
+    await saveGenConfig(form.activityId, {
       genConfig: form,
       fieldConfigs: dataList.value,
     } as GeneratorConfigResp)
@@ -272,17 +272,17 @@ const save = async () => {
 }
 
 // 打开
-const onOpen = async (tableName: string, comment: string) => {
+const onOpen = async (activityId: string, description: string) => {
   reset()
-  comment = comment ? `（${comment}）` : ' '
-  title.value = `${tableName}${comment}配置`
+  description = description ? `（${description}）` : ' '
+  title.value = `${activityId}${description}配置`
   // 查询生成配置
-  const { data } = await getGenConfig(tableName)
+  const { data } = await getGenConfig(activityId)
   Object.assign(form, data)
   form.isOverride = form.isOverride || false
   visible.value = true
   // 查询字段配置
-  await getDataList(tableName, false)
+  await getDataList(activityId, false)
   const res = await listFieldConfigDict()
   dictList.value = res.data
 }
