@@ -35,7 +35,7 @@ export interface UserQuery {
   description?: string
   status?: number
   createTime?: Array<string>
-  deptId?: string
+  defaultDepartment?: string
   sort: Array<string>
   userIds?: Array<string>
   roleId?: string
@@ -112,6 +112,7 @@ export interface MenuResp {
 }
 export interface MenuQuery {
   title?: string
+  bTree?: boolean
   status?: number
 }
 
