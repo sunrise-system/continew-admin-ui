@@ -46,7 +46,12 @@ export function updateRolePermission(id: string, data: any) {
 
 /** @desc 查询角色关联用户 */
 export function listRoleUser(id: string, query: T.RoleUserPageQuery) {
-  return http.get<PageRes<T.RoleUserResp[]>>(`${BASE_URL}/${id}/user`, query)
+  const formArray: any = {}
+  formArray.data = query
+  formArray.id = id
+  return fetchMotion(`ADM08902C/list`, formArray)
+
+  //  return http.get<PageRes<T.RoleUserResp[]>>(`${BASE_URL}/${id}/user`, query)
 }
 
 /** @desc 分配角色给用户 */
