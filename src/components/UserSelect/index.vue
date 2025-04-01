@@ -81,7 +81,7 @@
 <script setup lang="ts">
 import type { TableInstance, TreeNodeData } from '@arco-design/web-vue'
 
-import { type UserQuery, type UserResp, listAllUser, listUser } from '@/apis'
+import { type UserQuery, type UserResp, listAllUser, listUser, listUserWORole } from '@/apis'
 import { type Options, useTable } from '@/hooks'
 import { useDept } from '@/hooks/app'
 import { isMobile } from '@/utils'
@@ -110,7 +110,7 @@ const queryForm = reactive<UserQuery>({
 
 // 用户列表
 const { tableData: dataList, loading, pagination, search } = useTable(
-  (page) => listUser({ ...queryForm, ...page }),
+  (page) => listUserWORole({ ...queryForm, ...page }),
   { immediate: true, formatResult: (data) => data.map((i) => ({ ...i, id: `${i?.id}`, disabled: false })) },
 )
 
