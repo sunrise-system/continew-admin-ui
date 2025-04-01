@@ -9,6 +9,7 @@
     @before-ok="save"
     @close="reset"
   >
+  {{ dataId }}
     <UserSelect v-if="visible" ref="UserSelectRef" v-model:value="selectedUsers" :role-id="dataId" @select-user="onSelectUser" />
   </a-modal>
 </template>
