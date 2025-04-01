@@ -39,8 +39,8 @@
     <template #roleNames="{ record }">
       <GiCellTags :data="record.roleNames" />
     </template>
-    <template #status="{ record }">
-      <GiCellStatus :status="record.status" />
+    <template #isActive="{ record }">
+      <GiCellBoolean :is-active="record.isActive" />
     </template>
     <template #action="{ record }">
       <a-space>
@@ -65,9 +65,10 @@ import type { TableInstance } from '@arco-design/web-vue'
 import { Message, Modal } from '@arco-design/web-vue'
 import RoleAssignModal from '../RoleAssignModal.vue'
 import { useResetReactive, useTable } from '@/hooks'
-import { type RoleUserQuery, type RoleUserResp, listRoleUser, unassignFromUsers } from '@/apis/system/role'
+import { type RoleUserQuery, type RoleUserResp, listRoleUser, unassignUsers } from '@/apis/system/role'
 import { isMobile } from '@/utils'
 import has from '@/utils/has'
+import GiCellBoolean from '@/components/GiCell/GiCellBoolean.vue'
 
 const props = withDefaults(defineProps<Props>(), {
   roleId: '',
@@ -107,11 +108,10 @@ const columns: TableInstance['columns'] = [
     tooltip: true,
     fixed: !isMobile() ? 'left' : undefined,
   },
-  { title: '用户名', dataIndex: 'username', slotName: 'username', minWidth: 120, ellipsis: true, tooltip: true },
-  { title: '状态', dataIndex: 'status', slotName: 'status', align: 'center' },
+  { title: '用户名', dataIndex: 'name', slotName: 'name', minWidth: 120, ellipsis: true, tooltip: true },
+  { title: '状态', dataIndex: 'isActive', slotName: 'isActive', align: 'center' },
   { title: '性别', dataIndex: 'gender', slotName: 'gender', align: 'center' },
-  { title: '所属部门', dataIndex: 'deptName', minWidth: 140, ellipsis: true, tooltip: true },
-  { title: '角色', dataIndex: 'roleNames', slotName: 'roleNames', minWidth: 165 },
+  { title: '所属部门', dataIndex: 'defaultDepartment', minWidth: 140, ellipsis: true, tooltip: true },
   { title: '描述', dataIndex: 'description', minWidth: 130, ellipsis: true, tooltip: true },
   {
     title: '操作',
@@ -142,7 +142,7 @@ const onMulDelete = () => {
     content: `是否确定取消分配角色给所选的${selectedKeys.value.length}个用户？`,
     hideCancel: false,
     onOk: async () => {
-      await unassignFromUsers(selectedKeys.value)
+      await unassignUsers(props.roleId, selectedKeys.value)
       Message.success('取消成功')
       search()
     },
@@ -151,8 +151,8 @@ const onMulDelete = () => {
 
 // 删除
 const onDelete = (record: RoleUserResp) => {
-  return handleDelete(() => unassignFromUsers([record.id]), {
-    content: `是否确定取消分配角色给用户「${record.nickname}(${record.username})」？`,
+  return handleDelete(() => unassignUsers(props.roleId, [record.id]), {
+    content: `是否确定取消分配角色给用户「${record.name}(${record.code})」？`,
     successTip: '取消成功',
     showModal: true,
   })
