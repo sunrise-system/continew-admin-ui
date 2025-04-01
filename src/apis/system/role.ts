@@ -12,6 +12,11 @@ export function listRole(query: T.RoleQuery) {
   // return http.get<T.RoleResp[]>(`${BASE_URL}/list`, query)
 }
 
+/** @desc 查询用户列表 */
+export function listUserWORole(query: T.UserPageQuery) {
+  return fetchMotion(`ADM08902D/list`, query)
+}
+
 /** @desc 查询角色详情 */
 export function getRole(id: string) {
   const formArray: any = {}
@@ -55,13 +60,20 @@ export function listRoleUser(id: string, query: T.RoleUserPageQuery) {
 }
 
 /** @desc 分配角色给用户 */
-export function assignToUsers(id: string, userIds: Array<string>) {
-  return http.post(`${BASE_URL}/${id}/user`, userIds)
+export function assignToUsers(roleId: string, userIds: Array<string>) {
+  const formArray: any = {}
+  formArray.data = {}
+  formArray.data.userId = userIds
+  formArray.roleId = roleId
+  return fetchMotion(`ADM08902C/assignuser`, formArray)
 }
 
 /** @desc 取消分配角色给用户 */
-export function unassignFromUsers(userRoleIds: Array<string | number>) {
-  return http.del(`${BASE_URL}/user`, userRoleIds)
+export function unassignUsers(id: string, ids: Array<string | number>) {
+  const formArray: any = {}
+  formArray.data = ids
+  formArray.id = id
+  return fetchMotion(`ADM08902C/delete`, formArray)
 }
 
 /** @desc 查询角色关联用户 ID */
