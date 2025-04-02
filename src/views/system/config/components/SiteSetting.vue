@@ -130,7 +130,7 @@ import {
 } from '@/apis/system'
 import { useAppStore } from '@/stores'
 import { useResetReactive } from '@/hooks'
-import { fileToBase64 } from '@/utils'
+import { fileToBase64, parseList } from '@/utils'
 
 defineOptions({ name: 'BasicSetting' })
 
@@ -190,7 +190,7 @@ const queryForm = reactive({
 const getDataList = async () => {
   loading.value = true
   const { data } = await listOption(queryForm)
-  siteConfig.value = data.reduce((obj: SiteConfig, option: OptionResp) => {
+  siteConfig.value = parseList(data).reduce((obj: SiteConfig, option: OptionResp) => {
     obj[option.code] = { ...option }
     return obj
   }, {})
