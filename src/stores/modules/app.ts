@@ -3,6 +3,7 @@ import { computed, reactive, toRefs } from 'vue'
 import { generate, getRgbStr } from '@arco-design/color'
 import { type BasicConfig, listSiteOptionDict } from '@/apis'
 import { getSettings } from '@/config/setting'
+import { parseList } from '@/utils'
 
 const storeSetup = () => {
   // App配置
@@ -60,8 +61,8 @@ const storeSetup = () => {
   const initSiteConfig = () => {
     listSiteOptionDict().then((res) => {
       const resMap = new Map()
-      res.data.forEach((item) => {
-        resMap.set(item.label, item.value)
+      parseList(res.data).forEach((item) => {
+        resMap.set(item.code, item.value)
       })
       siteConfig.SITE_FAVICON = resMap.get('SITE_FAVICON')
       siteConfig.SITE_LOGO = resMap.get('SITE_LOGO')
