@@ -58,7 +58,7 @@
 import { nextTick, ref } from 'vue'
 import { Message, type TableInstance } from '@arco-design/web-vue'
 import { type MenuResp, listMenu } from '@/apis/system/menu'
-import { isMobile } from '@/utils'
+import { isMobile, parseData } from '@/utils'
 import type GiTable from '@/components/GiTable/index.vue'
 import { useTable } from '@/hooks'
 import { getRole, updateRolePermission } from '@/apis'
@@ -91,41 +91,39 @@ const onExpanded = () => {
  * @param menus 菜单数据
  */
 const transformMenu = (menus: MenuResp[]) => {
-  if (menus) {
-    return menus.map((item) => {
+  if (!menus) {
+    menus = []
+  }
+  return menus.map((item) => {
     // 如果当前项有子项，递归处理子项
-      if (item.children && item.children.length > 0) {
+    if (item.children && item.children.length > 0) {
       // 过滤出 type 为 3 的按钮权限
-        const permissions = item.children.filter((child) => child.type === 3 || child.permission).map((child) => ({
-          id: child.id,
-          title: child.title,
-          parentId: child.parentId,
-          permission: child.permission,
-        }))
+      const permissions = item.children.filter((child) => child.type === 'b' || child.permission).map((child) => ({
+        id: child.id,
+        title: child.title,
+        parentId: child.parentId,
+        permission: child.permission,
+      }))
 
-        // 过滤出 type 不为 3 的子项
-        item.children = item.children.filter((child) => child.type !== 3 && !child.permission)
+      // 过滤出 type 不为 3 的子项
+      item.children = item.children.filter((child) => child.type !== 'b' && !child.permission)
 
-        // 如果有权限，将其添加到当前项的 permissions 属性中
-        if (permissions.length > 0) {
-          item.permissions = permissions
-          item.checkedPermissions = permissions.filter((permission) => permission.isChecked)
-        }
-
-        // 递归处理剩余的子项
-        item.children = transformMenu(item.children)
-
-        // 如果 children 为空数组，移除 children 属性
-        if (item.children.length === 0) {
-          delete item.children
-        }
+      // 如果有权限，将其添加到当前项的 permissions 属性中
+      if (permissions.length > 0) {
+        item.permissions = permissions
+        item.checkedPermissions = permissions.filter((permission) => permission.isChecked)
       }
 
-      return item
-    })
-  } else {
-    return []
-  }
+      // 递归处理剩余的子项
+      item.children = transformMenu(item.children)
+
+      // 如果 children 为空数组，移除 children 属性
+      if (item.children.length === 0) {
+        delete item.children
+      }
+    }
+    return item
+  })
 }
 
 // 更新表格数据的选中状态
@@ -153,7 +151,7 @@ const {
   tableData,
   loading,
   search,
-} = useTable(() => listMenu(), {
+} = useTable(() => listMenu({}), {
   immediate: true,
   formatResult(data) {
     return transformMenu(data)
@@ -302,18 +300,19 @@ const fetchRole = async (id: string) => {
   disabled.value = !has.hasPermOr(['system:role:updatePermission'])
   // 查询角色详情
   const { data } = await getRole(id)
+  const data2 = parseData(data)
   if (!disabled.value) {
-    disabled.value = data.isSystem
+    disabled.value = data2.isSystem
   }
-  isCascade.value = data.menuCheckStrictly
+  isCascade.value = data2.menuCheckStrictly
   // 更新选中键集合
-  selectedKeys.value = new Set(data.menuIds)
+  selectedKeys.value = new Set(data2.menuIds)
   // 更新表格数据的选中状态
-  updateTableDataCheckedStatus(tableData.value, data.menuIds)
+  updateTableDataCheckedStatus(tableData.value, data2.menuIds)
   // 手动设置表格行的选中状态，确保组件响应
   await nextTick(() => {
     tableRef.value?.tableRef?.selectAll(false)
-    tableRef.value?.tableRef?.select(data.menuIds, true)
+    tableRef.value?.tableRef?.select(data2.menuIds, true)
     showCheckedAll.value = !disabled.value
   })
 }
