@@ -41,7 +41,10 @@ export function listCommonDict(code: string) {
 
 /** @desc 查询系统配置参数 */
 export function listSiteOptionDict() {
-  return http.get<LabelValueState[]>(`${BASE_URL}/dict/option/site`)
+  const formArray: any = {}
+  formArray.category = 'site'
+
+  return fetchMotion(`ADM08915A/list`, formArray)
 }
 
 /** @desc 上传文件 */
