@@ -132,7 +132,7 @@ const queryFormColumns: ColumnItem[] = reactive([
     },
     props: {
       options: DisEnableStatusList,
-      placeholder: '请选择状态',
+      placeholder: '全部状态',
     },
   },
   {
