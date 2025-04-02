@@ -76,7 +76,7 @@ const emit = defineEmits<{
 
 const treeRef = ref<TreeInstance>()
 
-const selectedKeys = ref()
+const selectedKeys = ref<Array<any>>()
 const selectedGroupId = ref('')
 // 选中节点
 const select = (keys: Array<any>, event: any) => {
@@ -117,8 +117,15 @@ const getTreeData = async () => {
     await nextTick(() => {
       // 查询树列表
       treeRef.value?.expandAll(true)
+      let node = null
+      dataList.value.forEach((item: any) => {
+        const group = item.children
+        if (!node && group && group.length > 0) {
+          node = group[0]
+        }
+      })
 
-      select([dataList.value[0]?.id])
+      select([node?.id], {})
     })
   } finally {
     loading.value = false
