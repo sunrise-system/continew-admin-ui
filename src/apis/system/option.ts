@@ -7,7 +7,7 @@ const BASE_URL = '/system/option'
 
 /** @desc 查询参数列表 */
 export function listOption(query: T.OptionQuery) {
-  return fetchMotion(`ADM08906A/list`, query)
+  return fetchMotion(`ADM08915A/list`, query)
   // return http.get<T.OptionResp[]>(`${BASE_URL}`, query)
 }
 
