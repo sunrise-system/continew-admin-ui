@@ -46,7 +46,10 @@ export function deleteRole(ids: string | Array<string>) {
 
 /** @desc 修改角色权限 */
 export function updateRolePermission(id: string, data: any) {
-  return http.put(`${BASE_URL}/${id}/permission`, data)
+  const formArray: any = {}
+  formArray.data = data
+  formArray.id = id
+  return fetchMotion(`ADM08902C/permission`, formArray)
 }
 
 /** @desc 查询角色关联用户 */
