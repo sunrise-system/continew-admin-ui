@@ -93,7 +93,7 @@ const getDataList = async () => {
   try {
     loading.value = true
     const { data } = await listOption(queryForm)
-    loginConfig.value = data.reduce((obj: LoginConfig, option: OptionResp) => {
+    loginConfig.value = parseList(data).reduce((obj: LoginConfig, option: OptionResp) => {
       obj[option.code] = { ...option, value: Number.parseInt(option.value) }
       return obj
     }, {})
