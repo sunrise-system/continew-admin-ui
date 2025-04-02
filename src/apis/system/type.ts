@@ -92,7 +92,7 @@ export interface MenuResp {
   id: string
   title: string
   parentId: string
-  type: 1 | 2 | 3
+  type: 1 | 2 | 3 | 'd' | 'm' | 'b'
   path: string
   name: string
   component: string
