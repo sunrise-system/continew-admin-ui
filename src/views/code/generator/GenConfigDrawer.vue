@@ -127,6 +127,7 @@ import type { LabelValueState } from '@/types/global'
 import { type ColumnItem, GiForm } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
 import { useDict } from '@/hooks/app'
+import { parseData } from '@/utils'
 
 const emit = defineEmits<{
   (e: 'save-success'): void
@@ -146,64 +147,44 @@ const [form, resetForm] = useResetReactive({
 })
 const formColumns: ColumnItem[] = reactive([
   {
-    label: '作者名称',
-    field: 'author',
-    type: 'input',
-    required: true,
-    props: {
-      maxLength: 100,
-    },
-  },
-  {
-    label: '业务名称',
-    field: 'businessName',
+    label: '名称',
+    field: 'description',
     type: 'input',
     props: {
-      placeholder: '自定义业务名称，例如：用户',
+      placeholder: '业务功能名称',
       maxLength: 50,
     },
-    rules: [{ required: true, message: '请输入业务名称' }],
+    rules: [{ required: true, message: '请输入业务功能名称' }],
   },
   {
-    label: '所属模块',
-    field: 'moduleName',
+    label: '业务功能代码',
+    field: 'activityId',
     type: 'input',
     props: {
-      placeholder: '项目模块名称，例如：continew-system',
-      maxLength: 60,
-      showWordLimit: true,
-    },
-    rules: [{ required: true, message: '请输入所属模块' }],
-  },
-  {
-    label: '模块包名',
-    field: 'packageName',
-    type: 'input',
-    props: {
-      placeholder: '项目模块包名，例如：top.continew.admin.system',
+      placeholder: '请输入业务功能代码.例如：ADM0NNNNA.',
       maxLength: 60,
     },
-    rules: [{ required: true, message: '请输入模块包名' }],
+    rules: [{ required: true, message: '请输入业务功能代码' }],
   },
   {
-    label: '去表前缀',
-    field: 'tablePrefix',
+    label: '数据表名称',
+    field: 'tableName',
     type: 'input',
     props: {
-      placeholder: '数据库表前缀，例如：sys_',
-      maxLength: 20,
+      placeholder: '数据表名称',
+      maxLength: 50,
     },
   },
   {
-    label: '是否覆盖',
-    field: 'isOverride',
+    label: '启用',
+    field: 'isActive',
     type: 'switch',
     props: {
       type: 'round',
       checkedValue: true,
       uncheckedValue: false,
-      checkedText: '是',
-      uncheckedText: '否',
+      checkedText: '启用',
+      uncheckedText: '禁用',
     },
   },
 ])
@@ -278,7 +259,7 @@ const onOpen = async (activityId: string, description: string) => {
   title.value = `${activityId}${description}配置`
   // 查询生成配置
   const { data } = await getGenConfig(activityId)
-  Object.assign(form, data)
+  Object.assign(form, parseData(data))
   form.isOverride = form.isOverride || false
   visible.value = true
   // 查询字段配置
