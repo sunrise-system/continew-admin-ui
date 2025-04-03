@@ -289,7 +289,7 @@ const selectPermission = (record) => {
 const save = async () => {
   await updateRolePermission(props.roleId, {
     menuIds: Array.from(selectedKeys.value),
-    menuCheckStrictly: isCascade.value,
+    isCascade: isCascade.value,
   })
   Message.success('保存成功')
 }
@@ -304,7 +304,7 @@ const fetchRole = async (id: string) => {
   if (!disabled.value) {
     disabled.value = data2.isSystem
   }
-  isCascade.value = data2.menuCheckStrictly
+  isCascade.value = data2.isCascade
   // 更新选中键集合
   selectedKeys.value = new Set(data2.menuIds)
   // 更新表格数据的选中状态
