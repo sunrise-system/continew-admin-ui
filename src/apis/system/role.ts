@@ -48,7 +48,7 @@ export function deleteRole(ids: string | Array<string>) {
 export function updateRolePermission(id: string, data: any) {
   const formArray: any = {}
   formArray.data = data
-  formArray.id = id
+  formArray.roleId = id
   return fetchMotion(`ADM08902C/permission`, formArray)
 }
 
