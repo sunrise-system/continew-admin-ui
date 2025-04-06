@@ -39,7 +39,6 @@
               </a-doption>
               <a-doption
                 v-permission="['system:storage:delete']"
-                class="danger"
                 :disabled="data.isDefault"
                 :title="data.isDefault ? '不允许删除默认存储' : ''"
                 @click="onDelete(data)"

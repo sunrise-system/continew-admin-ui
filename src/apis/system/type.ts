@@ -24,7 +24,7 @@ export type UserDetailResp = UserResp & {
   pwdResetTime?: string
 }
 export interface UserImportResp {
-  importKey: string
+  FileUrl: string
   totalRows: number
   validRows: number
   duplicateUserRows: number

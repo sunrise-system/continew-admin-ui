@@ -297,6 +297,8 @@ const save = async () => {
 const showCheckedAll = ref(true)
 // 加载角色详情
 const fetchRole = async (id: string) => {
+  try {
+    loading.value = true
   disabled.value = !has.hasPermOr(['system:role:updatePermission'])
   // 查询角色详情
   const { data } = await getRole(id)
@@ -315,6 +317,9 @@ const fetchRole = async (id: string) => {
     tableRef.value?.tableRef?.select(data2.menuIds, true)
     showCheckedAll.value = !disabled.value
   })
+  } finally {
+    loading.value = false
+  }
 }
 
 // 刷新

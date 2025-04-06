@@ -62,12 +62,15 @@ export function downloadUserImportTemplate() {
 
 /** @desc 解析用户导入数据 */
 export function parseImportUser(data: FormData) {
-  return http.post(`${BASE_URL}/import/parse`, data)
+  return http.post(`fileup`, data)
 }
 
 /** @desc 导入用户 */
-export function importUser(data: any) {
-  return http.post(`${BASE_URL}/import`, data)
+export function importUser(id: string, data: any) {
+  const formArray: any = {}
+  formArray.data = data
+  formArray.id = id
+  return fetchMotion(`ADM08903A/import`, formArray)
 }
 
 /** @desc 重置密码 */

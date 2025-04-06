@@ -21,7 +21,7 @@ import LeftBox from './BasicInfo.vue'
 import RightBox from './Social.vue'
 import PasswordPolicy from './Security.vue'
 
-defineOptions({ name: 'SettingProfile' })
+defineOptions({ name: 'UserProfile' })
 </script>
 
 <style scoped lang="scss">

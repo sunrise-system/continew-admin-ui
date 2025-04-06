@@ -33,7 +33,7 @@
             accept=".xls, .xlsx, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
           />
         </div>
-        <div v-if="dataResult.importKey">
+        <div v-if="dataResult.FileUrl">
           <div class="file-box">
             <a-space size="large">
               <a-statistic title="总计行数" :value="dataResult.totalRows" />
@@ -52,7 +52,7 @@
       <fieldset>
         <legend>2.导入策略</legend>
         <a-form-item label="用户已存在" field="duplicateUser">
-          <a-radio-group v-model="form.duplicateUser" type="button">
+          <a-radio-group v-model="form.duplicateUserId" type="button">
             <a-radio :value="1">跳过该行</a-radio>
             <a-radio :value="3">停止导入</a-radio>
             <a-radio :value="2">修改数据</a-radio>
@@ -72,9 +72,9 @@
         </a-form-item>
         <a-form-item label="默认状态" field="defaultStatus">
           <a-switch
-            v-model="form.defaultStatus"
-            :checked-value="1"
-            :unchecked-value="2"
+            v-model="form.defaultIsActive"
+            :checked-value="true"
+            :unchecked-value="false"
             checked-text="启用"
             unchecked-text="禁用"
             type="round"
@@ -108,14 +108,14 @@ const uploadFile = ref([])
 
 const [form, resetForm] = useResetReactive({
   errorPolicy: 1,
-  duplicateUser: 1,
+  duplicateUserId: 1,
   duplicateEmail: 1,
   duplicatePhone: 1,
-  defaultStatus: 1,
+  defaultIsActive: true,
 })
 
 const dataResult = ref<UserImportResp>({
-  importKey: '',
+  FileUrl: '',
   totalRows: 0,
   validRows: 0,
   duplicateUserRows: 0,
@@ -126,7 +126,7 @@ const dataResult = ref<UserImportResp>({
 // 重置
 const reset = () => {
   formRef.value?.resetFields()
-  dataResult.value.importKey = ''
+  dataResult.value.FileUrl = ''
   uploadFile.value = []
   resetForm()
 }
@@ -146,7 +146,9 @@ const handleUpload = (options: RequestOption) => {
     formData.append(name as string, fileItem.file as Blob)
     try {
       const res = await parseImportUser(formData)
-      dataResult.value = res.data
+      const data = {}
+      data.FileUrl = res.FileUrl
+      dataResult.value = data
       Message.success('上传解析成功')
       onSuccess(res)
     } catch (error) {
@@ -163,12 +165,12 @@ const handleUpload = (options: RequestOption) => {
 // 执行导入
 const save = async () => {
   try {
-    if (!dataResult.value.importKey) {
+    if (!dataResult.value.FileUrl) {
       Message.warning('请先上传文件，解析导入数据')
       return false
     }
-    form.importKey = dataResult.value.importKey
-    const res = await importUser(form)
+    form.FileUrl = dataResult.value.FileUrl
+    const res = await importUser(form.FileUrl, form)
     Message.success(`导入成功! 新增${res.data.insertRows}, 修改${res.data.updateRows}`)
     emit('save-success')
     return true
