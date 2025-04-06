@@ -110,6 +110,7 @@ import {
   updateOption,
 } from '@/apis/system'
 import { useResetReactive } from '@/hooks'
+import { parseList } from '@/utils'
 
 defineOptions({ name: 'MailSetting' })
 const { width } = useWindowSize()
@@ -173,7 +174,9 @@ const queryForm = {
 const getDataList = async () => {
   loading.value = true
   const { data } = await listOption(queryForm)
-  mailConfig.value = data.reduce((obj: MailConfig, option: OptionResp) => {
+  const data2 = parseList(data)
+
+  mailConfig.value = data2.reduce((obj: MailConfig, option: OptionResp) => {
     obj[option.code] = { ...option, value: ['MAIL_PORT', 'MAIL_SSL_PORT'].includes(option.code) ? Number.parseInt(option.value) : option.value }
     return obj
   }, {})
