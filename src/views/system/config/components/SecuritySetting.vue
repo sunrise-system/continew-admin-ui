@@ -146,6 +146,7 @@ import { useWindowSize } from '@vueuse/core'
 import { type FormInstance, Message, Modal } from '@arco-design/web-vue'
 import { type OptionResp, type SecurityConfig, listOption, resetOptionValue, updateOption } from '@/apis/system'
 import { useResetReactive } from '@/hooks'
+import { parseList } from '@/utils'
 
 defineOptions({ name: 'SecuritySetting' })
 const { width } = useWindowSize()
@@ -224,7 +225,8 @@ const queryForm = {
 const getDataList = async () => {
   loading.value = true
   const { data } = await listOption(queryForm)
-  securityConfig.value = data.reduce((obj: SecurityConfig, option: OptionResp) => {
+  const data2 = parseList(data)
+  securityConfig.value = data2.reduce((obj: SecurityConfig, option: OptionResp) => {
     obj[option.code] = { ...option, value: Number.parseInt(option.value) }
     return obj
   }, {})
