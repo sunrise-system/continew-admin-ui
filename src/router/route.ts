@@ -60,6 +60,12 @@ export const systemRoutes: RouteRecordRaw[] = [
         component: () => import('@/views/user/message/index.vue'),
         meta: { title: '消息中心', showInTabs: false },
       },
+      {
+        path: '/user/notice',
+        name: 'UserNotice',
+        component: () => import('@/views/user/message/components/detail/index.vue'),
+        meta: { title: '公告详情' },
+      },
     ],
   }
 ]

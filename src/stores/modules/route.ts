@@ -91,9 +91,7 @@ const storeSetup = () => {
   // 生成路由
   const generateRoutes = async (): Promise<RouteRecordRaw[]> => {
     const { data } = await getUserRoute()
-
     const asyncRoutes = formatAsyncRoutes(parseList(data))
-
     const flatRoutes = flatMultiLevelRoutes(cloneDeep(asyncRoutes))
     setRoutes(asyncRoutes)
     return flatRoutes

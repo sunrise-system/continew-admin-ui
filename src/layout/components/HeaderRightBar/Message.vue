@@ -48,7 +48,7 @@ const getMessageData = async () => {
 
 // 打开消息中心
 const open = () => {
-  window.open('/user/message')
+  window.open('/user/message?tab=msg')
 }
 
 // 全部已读
