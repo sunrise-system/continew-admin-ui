@@ -1,0 +1,61 @@
+// 组件选择面板
+.epic-component-view {
+  height: 100%;
+
+  .epic-componet-item {
+    cursor: pointer;
+    border: 1px solid var(--epic-border-color);
+    padding: 8px 10px;
+    border-radius: 4px;
+
+    .iconfont {
+      margin-right: 5px;
+      font-size: 16px;
+      color: var(--epic-text-secondary);
+    }
+
+    &:hover {
+      border-color: var(--epic-primary-color);
+      color: var(--epic-primary-color);
+      background-color: var(--epic-compoent-hover-color);
+
+      .iconfont {
+        color: var(--epic-primary-color);
+      }
+    }
+  }
+
+  .epic-tabs-box {
+    width: 62px;
+    height: 100%;
+    background: var(--epic-compoent-tabs-color);
+    padding: 12px 6px;
+    box-sizing: border-box;
+
+    .epic-tab {
+      height: 28px;
+      line-height: 28px;
+      border-radius: 6px;
+      font-size: var(--epic-text-sm);
+      font-weight: 500;
+      letter-spacing: 0em;
+      color: var(--epic-text-main);
+      margin-bottom: 10px;
+      text-align: center;
+
+      &.checked {
+        color: var(--epic-primary-color);
+        background-color: var(--epic-primary-hover-color);
+      }
+    }
+  }
+
+  .epic-search-box {
+    border-bottom: 1px solid var(--epic-border-color);
+
+    // element 搜素框样式
+    // .el-input__wrapper {
+    //   background-color: #f7f7f7;
+    // }
+  }
+}

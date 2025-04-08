@@ -1,0 +1,172 @@
+// 编辑画布
+.epic-edit-canvas {
+  flex: 1;
+
+  background-size: 15px 15px;
+  overflow: hidden;
+
+  .epic-edit-range {
+    overflow-y: auto;
+    box-shadow:
+      rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+      rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+    cursor: pointer;
+    background-color: var(--epic-edit-range-color);
+
+    .epic-draggable-range {
+      min-height: 60px;
+      height: 100%;
+      border: 1px var(--epic-border-color) dashed;
+      width: 100%;
+    }
+
+    >div>div>.epic-draggable-range {
+      border: transparent;
+
+      // 屏蔽antd element-plus label点击事件
+      .ant-form-item-label>label,
+      .el-form-item>.el-form-item__label {
+        pointer-events: none;
+      }
+    }
+
+    .root-node>.form-main>form>.epic-draggable-range {
+      border: transparent;
+    }
+  }
+
+  .epic-hover-widget {
+    border: 1px var(--epic-primary-color) dashed;
+    box-sizing: border-box;
+  }
+
+  .epic-checked-widget {
+    border: 1px var(--epic-primary-color) dashed;
+    background: var(--epic-widget-shade-color);
+
+    &::before {
+      content: "";
+      height: 5px;
+      background: var(--epic-primary-color);
+      position: absolute;
+      left: 0;
+      width: 100%;
+    }
+
+    &.top,
+    &.center {
+      &::before {
+        top: -5px;
+      }
+    }
+
+    &.bottom {
+      &::before {
+        bottom: -5px;
+      }
+    }
+
+    .epic-widget-action-box {
+      position: absolute;
+      z-index: 999;
+      height: 30px;
+      background: var(--epic-primary-color);
+      border-radius: 4px 4px 0px 0px;
+      display: flex;
+      padding: 0 4px;
+
+      .epic-widget-action-item {
+        height: 30px;
+        padding: 0 4px;
+        cursor: pointer;
+        color: white;
+        display: flex;
+        align-items: center;
+
+        .iconfont {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .form-main {
+      padding: 6px;
+      border: 1px solid #f0f0f0;
+    }
+  }
+
+  // 隐藏设计区域滚动条
+  .epic-edit-screen-container {
+    &::-webkit-scrollbar {
+      // display: none;
+      width: 6px;
+      height: 6px;
+    }
+  }
+
+  .epic-edit-toolbar {
+    height: 40px;
+    background: var(--epic-view-color);
+    box-sizing: border-box;
+    border-bottom: 1px solid var(--epic-border-color);
+
+    .epic-divider {
+      width: 1px;
+      height: 20px;
+      background-color: var(--epic-divider-color);
+      margin: 0 4px;
+    }
+
+    .epic-action-item {
+      color: var(--epic-text-medium);
+      height: 32px;
+      border-radius: 4px;
+
+      &.disabled {
+        color: var(--epic-text-disabled);
+        cursor: no-drop;
+      }
+
+      &:hover {
+        background: var(--epic-action-hover-color);
+      }
+    }
+
+    .epic-device {
+      border: 1px solid var(--epic-border-color);
+
+      .epic-device-item {
+
+        &.checked {
+          color: var(--epic-primary-color);
+          background: var(--epic-action-hover-color);
+        }
+      }
+    }
+
+  }
+
+  .edit-draggable-widget {
+    cursor: move;
+    // display: inline-block;
+    &.epic-unmover-item{
+      display: contents;
+    }
+  }
+
+  background-image: linear-gradient(var(--epic-designer-color) 14px, transparent 0),
+  linear-gradient(90deg, transparent 14px, var(--epic-designer-dot-color) 0);
+}
+
+.epic-node-mask {
+  position: relative;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 99;
+  }
+}

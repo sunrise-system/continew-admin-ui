@@ -1,0 +1,56 @@
+{
+  "name": "epic-designer",
+  "version": "1.0.1",
+  "description": "基于vue3的设计器,可视化开发页面表单",
+  "private": false,
+  "keywords": [
+    "表单设计",
+    "表单设计器",
+    "低代码",
+    "可视化",
+    "设计器",
+    "页面设计",
+    "设计工具",
+    "工作流",
+    "form",
+    "designer",
+    "epic-designer"
+  ],
+  "bugs": {
+    "url": "https://github.com/Kchengz/epic-designer/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Kchengz/epic-designer"
+  },
+  "author": "kchengz",
+  "type": "module",
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "lint": "eslint . --fix --ext .js,.jsx,.json,.ts,.tsx,.vue"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "typings": "dist/epic-designer/index.d.ts",
+  "peerDependencies": {
+    "ant-design-vue": ">=3.2.20",
+    "element-plus": ">=2.6.0",
+    "monaco-editor": ">=0.48.0",
+    "naive-ui": ">=2.30.0",
+    "vue": ">=3.1.0"
+  },
+  "dependencies": {
+    "vuedraggable": "4.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@unocss/preset-rem-to-px": "^0.65.3",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-node-externals": "^8.0.0",
+    "unocss": "^0.65.3",
+    "vitest": "^2.1.8",
+    "vue-tsc": "^2.2.0"
+  }
+}

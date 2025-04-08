@@ -1,0 +1,120 @@
+.epic-tree {
+  .epic-tree-main {
+    padding-right: 10px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  a {
+    color: var(--epic-text-main);
+    display: flex;
+
+    &:hover {
+      color: var(--epic-text-main);
+    }
+
+    .text {
+      display: inline-block;
+      width: 100%;
+
+      &.hover {
+        background-color: var(--epic-widget-hover-color);
+      }
+
+      &.checked {
+        background: var(--epic-primary-hover-color);
+        color: var(--epic-primary-color);
+      }
+
+      .epic-text-padding {
+        padding: 0 6px;
+        white-space: nowrap;
+        color: var(--epic-text-main);
+
+        &.hidden {
+          color: var(--epic-text-helper);
+        }
+        &:hover .epic-copy-id-btn{
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .epic-node-type-text {
+    font-size: var(--epic-text-sm);
+    color: var(--epic-text-disabled);
+    margin-left: 6px;
+  }
+
+  .epic-tree-node {
+    &.level-1 {
+      padding-left: 10px;
+    }
+
+    padding-left: 16px;
+    min-height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+
+    .icon-expanded {
+      position: absolute;
+      left: 8px;
+      transition: transform 0.3s;
+      color: var(--epic-border-color);
+      font-size: var(--epic-text-sm);
+
+      &.expanded {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  .epic-tree-sublist {
+    height: 0;
+    overflow: hidden;
+
+    &.expanded {
+      height: auto;
+    }
+
+    .epic-tree-node {
+      position: relative;
+
+      &::after,
+      &::before {
+        content: "";
+        position: absolute;
+        background: var(--epic-border-color);
+        z-index: 99;
+      }
+
+      &::after {
+        width: 1px;
+        height: 100%;
+        left: 4px;
+        top: 0;
+      }
+
+      &::before {
+        width: 8px;
+        height: 1px;
+        left: 4px;
+        top: 13px;
+      }
+
+      &.expanded::before {
+        display: none;
+      }
+
+      &:last-child {
+        &::after {
+          height: 13px;
+        }
+      }
+    }
+  }
+}
