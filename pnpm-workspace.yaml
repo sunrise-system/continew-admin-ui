@@ -1,0 +1,7 @@
+packages:
+  - 'packages/*'
+  - 'packages/ui-kit/*'
+  - 'internal/*'
+  - scripts
+#  - "docs"
+#  - "examples"
