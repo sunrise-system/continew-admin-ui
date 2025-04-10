@@ -1,37 +1,37 @@
 {
-  "name": "@epic-designer/core",
-  "version": "1.0.1",
+  "author": "kchengz",
+  "bugs": {
+    "url": "https://github.com/Kchengz/nada-designer/issues"
+  },
+  "dependencies": {
+    "monaco-editor": "^0.52.2",
+    "vuedraggable": "4.1.0"
+  },
   "description": "基于vue3的设计器,可视化开发页面表单",
-  "private": false,
+  "devDependencies": {
+    "unocss": "^0.65.3",
+    "vitest": "^2.1.8"
+  },
   "keywords": [
     "form",
-    "epic-designer",
+    "nada-designer",
     "设计器",
     "页面设计",
     "低代码",
     "可视化",
     "工作流"
   ],
-  "bugs": {
-    "url": "https://github.com/Kchengz/epic-designer/issues"
-  },
+  "main": "src/index.ts",
+  "name": "@nada-designer/core",
+  "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kchengz/epic-designer"
+    "url": "https://github.com/Kchengz/nada-designer"
   },
-  "author": "kchengz",
-  "type": "module",
   "scripts": {
     "preview": "vite preview",
     "test": "vitest"
   },
-  "main": "src/index.ts",
-  "dependencies": {
-    "monaco-editor": "^0.52.2",
-    "vuedraggable": "4.1.0"
-  },
-  "devDependencies": {
-    "unocss": "^0.65.3",
-    "vitest": "^2.1.8"
-  }
+  "type": "module",
+  "version": "1.0.1"
 }

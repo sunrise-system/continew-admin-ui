@@ -1,6 +1,6 @@
-import presetRemToPx from '@unocss/preset-rem-to-px';
+import presetRemToPx from '@unocss/preset-rem-to-px'
 // uno.config.ts
-import { defineConfig, presetUno, transformerDirectives } from 'unocss';
+import { defineConfig, presetUno, transformerDirectives } from 'unocss'
 
 export default defineConfig({
   exclude: [
@@ -26,7 +26,7 @@ export default defineConfig({
   variants: [
     (matcher) => ({
       matcher,
-      selector: (s) => `.epic-scoped ${s}`,
+      selector: (s) => `.nada-scoped ${s}`,
     }),
   ],
-});
+})

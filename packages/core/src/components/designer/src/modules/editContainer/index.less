@@ -1,26 +1,26 @@
 // 编辑画布
-.epic-edit-canvas {
+.nada-edit-canvas {
   flex: 1;
 
   background-size: 15px 15px;
   overflow: hidden;
 
-  .epic-edit-range {
+  .nada-edit-range {
     overflow-y: auto;
     box-shadow:
       rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
       rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
     cursor: pointer;
-    background-color: var(--epic-edit-range-color);
+    background-color: var(--nada-edit-range-color);
 
-    .epic-draggable-range {
+    .nada-draggable-range {
       min-height: 60px;
       height: 100%;
-      border: 1px var(--epic-border-color) dashed;
+      border: 1px var(--nada-border-color) dashed;
       width: 100%;
     }
 
-    >div>div>.epic-draggable-range {
+    >div>div>.nada-draggable-range {
       border: transparent;
 
       // 屏蔽antd element-plus label点击事件
@@ -30,24 +30,24 @@
       }
     }
 
-    .root-node>.form-main>form>.epic-draggable-range {
+    .root-node>.form-main>form>.nada-draggable-range {
       border: transparent;
     }
   }
 
-  .epic-hover-widget {
-    border: 1px var(--epic-primary-color) dashed;
+  .nada-hover-widget {
+    border: 1px var(--nada-primary-color) dashed;
     box-sizing: border-box;
   }
 
-  .epic-checked-widget {
-    border: 1px var(--epic-primary-color) dashed;
-    background: var(--epic-widget-shade-color);
+  .nada-checked-widget {
+    border: 1px var(--nada-primary-color) dashed;
+    background: var(--nada-widget-shade-color);
 
     &::before {
       content: "";
       height: 5px;
-      background: var(--epic-primary-color);
+      background: var(--nada-primary-color);
       position: absolute;
       left: 0;
       width: 100%;
@@ -66,16 +66,16 @@
       }
     }
 
-    .epic-widget-action-box {
+    .nada-widget-action-box {
       position: absolute;
       z-index: 999;
       height: 30px;
-      background: var(--epic-primary-color);
+      background: var(--nada-primary-color);
       border-radius: 4px 4px 0px 0px;
       display: flex;
       padding: 0 4px;
 
-      .epic-widget-action-item {
+      .nada-widget-action-item {
         height: 30px;
         padding: 0 4px;
         cursor: pointer;
@@ -96,7 +96,7 @@
   }
 
   // 隐藏设计区域滚动条
-  .epic-edit-screen-container {
+  .nada-edit-screen-container {
     &::-webkit-scrollbar {
       // display: none;
       width: 6px;
@@ -104,42 +104,42 @@
     }
   }
 
-  .epic-edit-toolbar {
+  .nada-edit-toolbar {
     height: 40px;
-    background: var(--epic-view-color);
+    background: var(--nada-view-color);
     box-sizing: border-box;
-    border-bottom: 1px solid var(--epic-border-color);
+    border-bottom: 1px solid var(--nada-border-color);
 
-    .epic-divider {
+    .nada-divider {
       width: 1px;
       height: 20px;
-      background-color: var(--epic-divider-color);
+      background-color: var(--nada-divider-color);
       margin: 0 4px;
     }
 
-    .epic-action-item {
-      color: var(--epic-text-medium);
+    .nada-action-item {
+      color: var(--nada-text-medium);
       height: 32px;
       border-radius: 4px;
 
       &.disabled {
-        color: var(--epic-text-disabled);
+        color: var(--nada-text-disabled);
         cursor: no-drop;
       }
 
       &:hover {
-        background: var(--epic-action-hover-color);
+        background: var(--nada-action-hover-color);
       }
     }
 
-    .epic-device {
-      border: 1px solid var(--epic-border-color);
+    .nada-device {
+      border: 1px solid var(--nada-border-color);
 
-      .epic-device-item {
+      .nada-device-item {
 
         &.checked {
-          color: var(--epic-primary-color);
-          background: var(--epic-action-hover-color);
+          color: var(--nada-primary-color);
+          background: var(--nada-action-hover-color);
         }
       }
     }
@@ -149,16 +149,16 @@
   .edit-draggable-widget {
     cursor: move;
     // display: inline-block;
-    &.epic-unmover-item{
+    &.nada-unmover-item{
       display: contents;
     }
   }
 
-  background-image: linear-gradient(var(--epic-designer-color) 14px, transparent 0),
-  linear-gradient(90deg, transparent 14px, var(--epic-designer-dot-color) 0);
+  background-image: linear-gradient(var(--nada-designer-color) 14px, transparent 0),
+  linear-gradient(90deg, transparent 14px, var(--nada-designer-dot-color) 0);
 }
 
-.epic-node-mask {
+.nada-node-mask {
   position: relative;
   &::before {
     content: "";

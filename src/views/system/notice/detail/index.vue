@@ -7,8 +7,9 @@
       </a-affix>
     </div>
     <div class="detail_content">
-      <h1 class="title">{{ form?.title }}</h1>
+      <h1 class="title">{{ form?.name }}</h1>
       <div class="info">
+       **** {{ form }} ****
         <a-space>
           <span>
             <icon-user class="icon" />
@@ -42,6 +43,7 @@ import AiEditor from './components/index.vue'
 import { getNotice } from '@/apis/system/notice'
 import { useTabsStore } from '@/stores'
 import { useResetReactive } from '@/hooks'
+import { isMobile, parseData } from '@/utils'
 
 const route = useRoute()
 const router = useRouter()
@@ -50,7 +52,7 @@ const tabsStore = useTabsStore()
 const { id } = route.query
 const containerRef = ref<HTMLElement | null>()
 const [form, resetForm] = useResetReactive({
-  title: '',
+  name: '',
   createUserString: '',
   effectiveTime: '',
   createTime: '',
@@ -67,7 +69,7 @@ const onBack = () => {
 const onOpen = async (id: string) => {
   resetForm()
   const { data } = await getNotice(id)
-  Object.assign(form, data)
+  Object.assign(form, parseData(data))
 }
 
 onMounted(() => {

@@ -3,7 +3,7 @@ import type { editor } from 'monaco-editor';
 
 import { nextTick, onMounted, ref, watch } from 'vue';
 
-import { useTheme } from '@epic-designer/hooks';
+import { useTheme } from '@nada-designer/hooks';
 import * as monaco from 'monaco-editor';
 
 const props = withDefaults(
@@ -146,10 +146,10 @@ defineExpose({
 });
 </script>
 <template>
-  <div ref="editContainer" class="epic-code-editor"></div>
+  <div ref="editContainer" class="nada-code-editor"></div>
 </template>
 <style lang="less" scoped>
-.epic-code-editor {
+.nada-code-editor {
   width: 100%;
   min-height: 150px;
 

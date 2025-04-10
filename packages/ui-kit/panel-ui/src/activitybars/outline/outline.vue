@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { Designer, PageSchema } from '@epic-designer/types';
+import type { Designer, PageSchema } from '@nada-designer/types';
 
 import { computed, inject } from 'vue';
 
-import { EpicIcon, EpicTree } from '@epic-designer/base-ui';
-import { pluginManager } from '@epic-designer/utils';
+import { NadaIcon, EpicTree } from '@nada-designer/base-ui';
+import { pluginManager } from '@nada-designer/utils';
 
 const pageSchema = inject('pageSchema') as PageSchema;
 const designer = inject('designer') as Designer;
@@ -21,7 +21,7 @@ function handleNodeClick(e: any) {
 }
 </script>
 <template>
-  <div class="epic-outline">
+  <div class="nada-outline">
     <EpicTree
       :options="pageSchema.schemas"
       draggable
@@ -31,15 +31,15 @@ function handleNodeClick(e: any) {
     >
       <template #tree-node="{ schema }">
         <div
-          class="epic-text-padding flex"
+          class="nada-text-padding flex"
           :class="{ hidden: schema.componentProps?.hidden }"
           @mouseenter.stop="designer.setHoverNode(schema)"
           @mouseleave.stop="designer.setHoverNode(null)"
         >
           <span class="max-w-full truncate">
-            <EpicIcon
+            <NadaIcon
               v-if="schema.componentProps?.hidden"
-              name="icon--epic--visibility-off-outline-rounded"
+              name="icon--nada--visibility-off-outline-rounded"
               class="translate-y-2px"
             />
             {{
@@ -48,7 +48,7 @@ function handleNodeClick(e: any) {
                 ?.defaultSchema.label
             }}
           </span>
-          <span class="epic-node-type-text w-0 flex-1 truncate">
+          <span class="nada-node-type-text w-0 flex-1 truncate">
             {{ schema.id }}
           </span>
         </div>

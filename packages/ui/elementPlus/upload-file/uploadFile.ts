@@ -2,7 +2,7 @@ import type { UploadProps, UploadUserFile } from 'element-plus';
 
 import { computed, defineComponent, h, ref, watch } from 'vue';
 
-import { getFileNameByUrl, getUUID } from '@epic-designer/utils';
+import { getFileNameByUrl, getUUID } from '@nada-designer/utils';
 import { ElButton, ElMessage, ElUpload } from 'element-plus';
 
 export default defineComponent({
@@ -135,7 +135,7 @@ export default defineComponent({
                   default: () => [
                     h('span', {
                       class:
-                        'icon--epic icon--epic--cloud-upload-outlined text-lg',
+                        'icon--nada icon--nada--cloud-upload-outlined text-lg',
                       style: { 'margin-right': '2px' },
                     }),
                     h('span', null, { default: () => '上传文件' }),

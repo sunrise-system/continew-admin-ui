@@ -3,7 +3,7 @@ import type { OnError } from 'naive-ui/es/upload/src/interface';
 
 import { defineComponent, h, nextTick, ref, watch } from 'vue';
 
-import { getFileNameByUrl, getUUID } from '@epic-designer/utils';
+import { getFileNameByUrl, getUUID } from '@nada-designer/utils';
 import { NButton, NUpload } from 'naive-ui';
 
 export default defineComponent({
@@ -87,7 +87,7 @@ export default defineComponent({
                     default: () => [
                       h('span', {
                         class:
-                          'icon--epic icon--epic--cloud-upload-outlined text-lg',
+                          'icon--nada icon--nada--cloud-upload-outlined text-lg',
                         style: { 'margin-right': '2px' },
                       }),
                       h('span', null, { default: () => '上传文件' }),

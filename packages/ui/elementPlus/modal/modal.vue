@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ComponentSchema } from '@epic-designer/types';
+import type { ComponentSchema } from '@nada-designer/types';
 
 import { computed, useAttrs } from 'vue';
 
@@ -25,7 +25,7 @@ const attrs = useAttrs();
 const getComponentProps = computed<Record<string, any>>(() => ({
   ...props.componentSchema,
   ...attrs,
-  class: 'epic-modal-el epic-modal-main',
+  class: 'nada-modal-el nada-modal-main',
   'destroy-on-close': true,
   title: props.componentSchema?.label ?? '',
 }));
@@ -46,7 +46,7 @@ function handleClose() {
   <ElDialog
     v-bind="getComponentProps"
     :title="getComponentProps.label ?? ''"
-    class="epic-modal-el epic-modal-main epic-scoped"
+    class="nada-modal-el nada-modal-main nada-scoped"
     destroy-on-close
     @update:model-value="handleClose"
   >
@@ -61,7 +61,7 @@ function handleClose() {
         </template>
       </slot>
     </slot>
-    <div class="epic-modal-footer">
+    <div class="nada-modal-footer">
       <ElButton @click="handleClose"> 关闭 </ElButton>
       <ElButton v-if="!props.hideConfirm" type="primary" @click="handleOk">
         {{ props.okText }}

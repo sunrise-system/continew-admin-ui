@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   component: () => import('./button'),
@@ -144,6 +144,6 @@ export default {
     type: 'button',
   },
   groupName: '表单',
-  icon: 'icon--epic--fit-screen-rounded',
+  icon: 'icon--nada--fit-screen-rounded',
   sort: 1200,
 } as ComponentConfigModel;

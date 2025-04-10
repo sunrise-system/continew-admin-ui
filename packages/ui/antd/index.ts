@@ -1,7 +1,7 @@
-import type { PluginManager } from '@epic-designer/utils';
+import type { PluginManager } from '@nada-designer/utils';
 
 // 注册ant-design-vue ui
-import { pluginManager as pManager } from '@epic-designer/utils';
+import { pluginManager as pManager } from '@nada-designer/utils';
 import { version } from 'ant-design-vue';
 
 import Button from './button';
@@ -40,13 +40,13 @@ export function setupAntd(pluginManager: PluginManager = pManager): void {
   if (firstNumber > 3) {
     // 定义 CSS 样式
     const css = `
-.epic-modal-ant .epic-modal-main {
+.nada-modal-ant .nada-modal-main {
   padding: 4px 12px 12px;
 }
-.epic-modal-ant .ant-modal-title {
+.nada-modal-ant .ant-modal-title {
   padding: 16px 16px 0px;
 }
-.epic-modal-ant .ant-modal-content {
+.nada-modal-ant .ant-modal-content {
   padding: 0px;
 }`;
     style.append(document.createTextNode(css));

@@ -28,12 +28,12 @@
           <template #default>导出</template>
         </a-button>
       </template>
-      <template #accessKey="{ record }">
-        <CellCopy :content="record.accessKey" />
+      <template #appKey="{ record }">
+        <CellCopy :content="record.appKey" />
       </template>
-      <template #secretKey="{ record }">
-        <a-space v-if="record.secretKey" :size="[2]">
-          <CellCopy :content="record.secretKey" />
+      <template #appSecurity="{ record }">
+        <a-space v-if="record.appSecurity" :size="[2]">
+          <CellCopy :content="record.appSecurity" />
           <a-tooltip content="隐藏">
             <a-button type="text" size="mini" @click="onSecretHide(record)">
               <template #icon><icon-eye-invisible size="16" /></template>
@@ -49,8 +49,8 @@
           </a-tooltip>
         </a-space>
       </template>
-      <template #status="{ record }">
-        <GiCellStatus :status="record.status" />
+      <template #isActive="{ record }">
+        <GiCellBoolean :is-active="record.isActive" />
       </template>
       <template #action="{ record }">
         <a-space>
@@ -99,7 +99,7 @@ import {
   resetAppSecret,
 } from '@/apis/open/app'
 import { useDownload, useTable } from '@/hooks'
-import { isMobile } from '@/utils'
+import { isMobile, parseData } from '@/utils'
 import has from '@/utils/has'
 
 defineOptions({ name: 'OpenApp' })
@@ -116,23 +116,12 @@ const {
   handleDelete,
 } = useTable((page) => listApp({ ...queryForm, ...page }), { immediate: true })
 const columns: TableInstance['columns'] = [
-  {
-    title: '序号',
-    width: 66,
-    align: 'center',
-    render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
-    fixed: !isMobile() ? 'left' : undefined,
-  },
   { title: '名称', dataIndex: 'name', slotName: 'name', ellipsis: true, tooltip: true, fixed: !isMobile() ? 'left' : undefined },
-  { title: 'Access Key', dataIndex: 'accessKey', slotName: 'accessKey', width: 200 },
-  { title: 'Secret Key', dataIndex: 'secretKey', slotName: 'secretKey', width: 200 },
-  { title: '失效时间', dataIndex: 'expireTime', width: 180 },
-  { title: '状态', dataIndex: 'status', slotName: 'status', width: 80, align: 'center' },
+  { title: 'Access Key', dataIndex: 'appKey', slotName: 'appKey', width: 200 },
+  { title: 'Secret Key', dataIndex: 'appSecurity', slotName: 'appSecurity', width: 200 },
+  { title: '失效时间', dataIndex: 'expireDate', width: 180 },
+  { title: '状态', dataIndex: 'isActive', slotName: 'isActive', width: 80, align: 'center' },
   { title: '描述', dataIndex: 'description', ellipsis: true, tooltip: true },
-  { title: '创建人', dataIndex: 'createUserString', ellipsis: true, tooltip: true, show: false },
-  { title: '创建时间', dataIndex: 'createTime', width: 180 },
-  { title: '修改人', dataIndex: 'updateUserString', ellipsis: true, tooltip: true, show: false },
-  { title: '修改时间', dataIndex: 'updateTime', width: 180, show: false },
   {
     title: '操作',
     dataIndex: 'action',
@@ -171,12 +160,12 @@ const onExport = () => {
 // 查看密钥
 const onSecret = async (record: AppResp) => {
   const { data } = await getAppSecret(record.id)
-  record.secretKey = data.secretKey
+  record.appSecurity = parseData(data).appSecurity
 }
 
 // 隐藏显示密钥
 const onSecretHide = (record: AppResp) => {
-  record.secretKey = undefined
+  record.appSecurity = undefined
 }
 
 // 重置密钥

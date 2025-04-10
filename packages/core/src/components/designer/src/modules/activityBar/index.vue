@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { ActivitybarModel } from '@epic-designer/types';
+import type { ActivitybarModel } from '@nada-designer/types';
 
 import { computed, ref, shallowRef } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
-import { pluginManager } from '@epic-designer/utils';
+import { NadaIcon } from '@nada-designer/base-ui';
+import { pluginManager } from '@nada-designer/utils';
 
 defineOptions({
   name: 'EActivityBar',
@@ -33,26 +33,26 @@ function handleClick(item: ActivitybarModel, index: number) {
 </script>
 <template>
   <div class="relative flex">
-    <div class="epic-action-bar">
-      <ul class="epic-actions-container">
+    <div class="nada-action-bar">
+      <ul class="nada-actions-container">
         <li
           v-for="(item, index) in activitybars"
           :key="index"
-          class="epic-action-item"
+          class="nada-action-item"
           :title="item.title"
           :class="{ checked: activityBarCheckedIndex === index }"
           @click="handleClick(item, index)"
         >
-          <EpicIcon class="relative" :name="item.icon" />
+          <NadaIcon class="relative" :name="item.icon" />
           <div class="text-14px">X-X-{{ item.title }}</div>
         </li>
       </ul>
     </div>
     <div
-      class="epic-left-sidebar"
+      class="nada-left-sidebar"
       :class="{ hide: activityBarCheckedIndex === null }"
     >
-      <div class="epic-sidebar-container">
+      <div class="nada-sidebar-container">
         <component :is="sidebarComponent" />
       </div>
     </div>

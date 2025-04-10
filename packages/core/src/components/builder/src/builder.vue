@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import type {
-  EpicNodeInstance,
+  NadaNodeInstance,
   FormDataModel,
   PageSchema,
-} from '@epic-designer/types';
-import type { PageManager } from '@epic-designer/utils';
+} from '@nada-designer/types';
+import type { PageManager } from '@nada-designer/utils';
 
 import {
   computed,
@@ -15,13 +15,13 @@ import {
   watch,
 } from 'vue';
 
-import { EpicBaseLoader, EpicNode } from '@epic-designer/base-ui';
-import { setupPage } from '@epic-designer/panel-ui';
+import { NadaBaseLoader, NadaNode } from '@nada-designer/base-ui';
+import { setupPage } from '@nada-designer/panel-ui';
 import {
   deepCompareAndModify,
   findSchemas,
   pluginManager,
-} from '@epic-designer/utils';
+} from '@nada-designer/utils';
 
 import { useBuilder } from '../hooks/useBuilder';
 // 定义组件的 props 类型
@@ -99,9 +99,9 @@ function handleReady() {
     findSchemas(pageManager.pageSchema.schemas, (schema) => {
       if (
         schema.on &&
-        Object.prototype.hasOwnProperty.call(schema.on, 'epicReady')
+        Object.prototype.hasOwnProperty.call(schema.on, 'nadaReady')
       ) {
-        pageManager.doActions(schema.on.epicReady);
+        pageManager.doActions(schema.on.nadaReady);
       }
       return false;
     });
@@ -111,7 +111,7 @@ function handleReady() {
 }
 
 // 获取当前实例，并提取 proxy
-const instance = getCurrentInstance() as EpicNodeInstance;
+const instance = getCurrentInstance() as NadaNodeInstance;
 // 注入组件实例到 pageManager
 pageManager.addComponentInstance('builder', instance);
 
@@ -130,13 +130,13 @@ defineExpose({
 </script>
 
 <template>
-  <div v-if="!pluginManager.initialized.value" class="epic-loading-box">
-    <!-- <EpicBaseLoader /> -->
+  <div v-if="!pluginManager.initialized.value" class="nada-loading-box">
+    <!-- <NadaBaseLoader /> -->
   </div>
   <Suspense v-else @resolve="handleReady">
     <template #default>
-      <div class="epic-builder-main epic-scoped">
-        <EpicNode
+      <div class="nada-builder-main nada-scoped">
+        <NadaNode
           v-for="(item, index) in pageManager.pageSchema.schemas"
           :key="index"
           :component-schema="item"
@@ -144,8 +144,8 @@ defineExpose({
       </div>
     </template>
     <template #fallback>
-      <div class="epic-loading-box">
-        <EpicBaseLoader />
+      <div class="nada-loading-box">
+        <NadaBaseLoader />
       </div>
     </template>
   </Suspense>

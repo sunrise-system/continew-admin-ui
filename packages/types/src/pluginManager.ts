@@ -1,6 +1,6 @@
 import type { AsyncComponentLoader, Component, ShallowRef } from 'vue';
 
-import type { ComponentSchema } from './epic-designer';
+import type { ComponentSchema } from './nada-designer';
 // 定义 ComponentType 类型
 export type ComponentType = AsyncComponentLoader | Component | string;
 

@@ -3,13 +3,13 @@ import type {
   ComponentSchema,
   Designer,
   PageSchema,
-} from '@epic-designer/types';
+} from '@nada-designer/types';
 
 import type { TreeProps } from './types';
 
 import { computed, inject } from 'vue';
 
-import { pluginManager } from '@epic-designer/utils';
+import { pluginManager } from '@nada-designer/utils';
 import draggable from 'vuedraggable';
 
 import ETreeNodeItem from './treeNodeItem.vue';
@@ -55,10 +55,10 @@ function isDraggable(schema: ComponentSchema) {
       ?.immovable
   ) {
     // 禁止拖拽
-    return 'epic-unmover-item';
+    return 'nada-unmover-item';
   }
 
-  return 'epic-draggable-item';
+  return 'nada-draggable-item';
 }
 
 const getDisabled = computed(() => {
@@ -77,13 +77,13 @@ const getDisabled = computed(() => {
     v-model="modelSchemas"
     item-key="id"
     :component-data="{}"
-    class="epic-draggable-range"
+    class="nada-draggable-range"
     v-bind="{
       animation: 200,
       tag: 'ul',
       group: 'tree-draggable',
       ghostClass: 'moveing',
-      draggable: '.epic-draggable-item',
+      draggable: '.nada-draggable-item',
       disabled: getDisabled,
     }"
     @start="handleSelect($event.oldIndex)"

@@ -1,6 +1,6 @@
 import type { ComponentInternalInstance } from 'vue';
 
-import type { ComponentSchema } from './epic-designer';
+import type { ComponentSchema } from './nada-designer';
 
 export interface ExtendedExposed {
   getAttr?: (key: string) => any;
@@ -10,6 +10,6 @@ export interface ExtendedExposed {
   setValue?: (value: any) => void;
 }
 
-export type EpicNodeInstance = ComponentInternalInstance & {
+export type NadaNodeInstance = ComponentInternalInstance & {
   exposed?: ComponentInternalInstance['exposed'] & ExtendedExposed;
 };

@@ -30,7 +30,7 @@ describe('usePageManager 函数测试', () => {
 
   it('应该正确设置和获取方法', () => {
     const pageManager = usePageManager();
-    const mockScript = `const { defineExpose, find } = epic;
+    const mockScript = `const { defineExpose, find } = nada;
 
             function test (){
                 return 'mock result'

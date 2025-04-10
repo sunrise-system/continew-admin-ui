@@ -1,9 +1,9 @@
 <script lang="ts" setup>
 import type {
   ComponentSchema,
-  EpicNodeInstance,
+  NadaNodeInstance,
   FormDataModel,
-} from '@epic-designer/types';
+} from '@nada-designer/types';
 
 import type { AsyncComponentLoader, VNode } from 'vue';
 
@@ -32,12 +32,12 @@ import {
   PageManager,
   pluginManager,
   setValueByPath,
-} from '@epic-designer/utils';
+} from '@nada-designer/utils';
 
 import dynamicFormItem from './dynamicFormItem.vue';
 
 defineOptions({
-  name: 'EpicNode',
+  name: 'NadaNode',
 });
 
 const props = defineProps<{
@@ -217,7 +217,7 @@ const getComponentProps = computed(() => {
 
 // 添加组件实例
 function handleAddComponentInstance(vNode?: VNode) {
-  const instance = (vNode?.component ?? nodeInstance) as EpicNodeInstance;
+  const instance = (vNode?.component ?? nodeInstance) as NadaNodeInstance;
   if (!innerSchema.id || !instance) {
     return;
   }
@@ -375,7 +375,7 @@ onBeforeUnmount(handleVnodeUnmounted);
       <!-- 嵌套组件递归 start -->
       <!-- 渲染子组件 start -->
       <template #node="data">
-        <EpicNode v-bind="data" />
+        <NadaNode v-bind="data" />
       </template>
       <!-- 渲染子组件 end -->
       <!-- 渲染布局设计子组件列表 start -->

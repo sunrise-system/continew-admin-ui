@@ -3,14 +3,14 @@ import type {
   ComponentSchema,
   Designer,
   PageSchema,
-} from '@epic-designer/types';
+} from '@nada-designer/types';
 
 import { computed, inject } from 'vue';
 
-import { Revoke } from '@epic-designer/utils';
+import { Revoke } from '@nada-designer/utils';
 import draggable from 'vuedraggable';
 
-import EpicNodeItem from './nodeItem.vue';
+import NadaNodeItem from './nodeItem.vue';
 
 defineOptions({
   name: 'EditNodeItem',
@@ -57,12 +57,12 @@ function handleAdd() {
     :component-data="{
       type: 'transition-group',
     }"
-    class="epic-draggable-range"
+    class="nada-draggable-range"
     v-bind="{
       animation: 200,
       group: 'edit-draggable',
-      handle: '.epic-draggable-item',
-      ghostClass: 'epic-moveing',
+      handle: '.nada-draggable-item',
+      ghostClass: 'nada-moveing',
     }"
     @start="handleSelect($event.oldIndex)"
     @end="handleEnd()"
@@ -72,7 +72,7 @@ function handleAdd() {
     "
   >
     <template #item="{ element, index }">
-      <EpicNodeItem :key="index" :schema="element" />
+      <NadaNodeItem :key="index" :schema="element" />
     </template>
   </draggable>
 </template>

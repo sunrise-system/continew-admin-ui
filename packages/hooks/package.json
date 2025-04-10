@@ -1,8 +1,8 @@
 {
-  "name": "@epic-designer/hooks",
-  "version": "1.0.1",
-  "description": "epic-designer hooks",
   "author": "kchengz",
+  "description": "nada-designer hooks",
+  "main": "src/index.ts",
+  "name": "@nada-designer/hooks",
   "type": "module",
-  "main": "src/index.ts"
+  "version": "1.0.1"
 }

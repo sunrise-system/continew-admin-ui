@@ -1,18 +1,18 @@
 <script lang="ts" setup>
-import type { Designer, DesignerProps, PageSchema } from '@epic-designer/types';
+import type { Designer, DesignerProps, PageSchema } from '@nada-designer/types';
 
 import type { Ref } from 'vue';
 
 import { computed, inject, ref } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
-import { useStore } from '@epic-designer/hooks';
+import { NadaIcon } from '@nada-designer/base-ui';
+import { useStore } from '@nada-designer/hooks';
 import {
   convertKFormData,
   deepCompareAndModify,
   pluginManager,
   Revoke,
-} from '@epic-designer/utils';
+} from '@nada-designer/utils';
 
 import EpicPreviewJson from './previewJson.vue';
 
@@ -27,17 +27,17 @@ const previewJson = ref<InstanceType<typeof EpicPreviewJson> | null>(null);
 
 const deviceOptions = [
   {
-    icon: 'icon--epic--computer-outline-rounded',
+    icon: 'icon--nada--computer-outline-rounded',
     key: 'pc',
     title: 'pc',
   },
   {
-    icon: 'icon--epic--tablet-android-outline-rounded',
+    icon: 'icon--nada--tablet-android-outline-rounded',
     key: 'pad',
     title: '平板',
   },
   {
-    icon: 'icon--epic--phone-iphone-outline-sharp',
+    icon: 'icon--nada--phone-iphone-outline-sharp',
     key: 'mobile',
     title: '手机',
   },
@@ -46,42 +46,42 @@ const deviceOptions = [
 const actionOptions = computed(() => {
   return [
     {
-      icon: 'icon--epic--code',
+      icon: 'icon--nada--code',
       on: handlePreviewJSON,
       title: '查看数据',
     },
     {
-      icon: 'icon--epic--exit-to-app-rounded',
+      icon: 'icon--nada--exit-to-app-rounded',
       on: handleOpenFileSelector,
       title: '导入数据',
     },
     {
-      icon: 'icon--epic--trash',
+      icon: 'icon--nada--trash',
       on: designer.reset,
       title: '清空',
     },
     {
       disabled: revoke.recordList.value.length === 0,
       divider: true,
-      icon: 'icon--epic--undo',
+      icon: 'icon--nada--undo',
       on: handleUndo,
       title: '撤销',
     },
     {
       disabled: revoke.undoList.value.length === 0,
-      icon: 'icon--epic--redo',
+      icon: 'icon--nada--redo',
       on: handleRedo,
       title: '重做',
     },
     {
       divider: true,
-      icon: 'icon--epic--eye',
+      icon: 'icon--nada--eye',
       on: designer.preview,
       show: () => designerProps.value.hiddenHeader,
       title: '预览',
     },
     {
-      icon: 'icon--epic--save-outline-rounded',
+      icon: 'icon--nada--save-outline-rounded',
       on: designer.save,
       show: () => designerProps.value.hiddenHeader,
       title: '保存',
@@ -235,22 +235,22 @@ function handleSetCanvas(type: string) {
 </script>
 <template>
   <!-- 工具条 start  -->
-  <div class="epic-edit-toolbar flex items-center justify-between px-2">
+  <div class="nada-edit-toolbar flex items-center justify-between px-2">
     <!-- 操作按钮 start  -->
     <div class="flex h-full flex-1 items-center">
       <template v-for="(action, index) in actionOptions" :key="index">
         <div
           v-if="action.divider && isShow(action.show)"
-          class="epic-divider"
+          class="nada-divider"
         ></div>
         <div
           v-if="isShow(action.show)"
           :title="action.title"
-          class="epic-action-item h-90% px-10px flex cursor-pointer items-center text-base"
+          class="nada-action-item h-90% px-10px flex cursor-pointer items-center text-base"
           :class="{ disabled: action.disabled }"
           @click="action.on"
         >
-          <EpicIcon :name="action.icon" />
+          <NadaIcon :name="action.icon" />
         </div>
       </template>
     </div>
@@ -279,16 +279,16 @@ function handleSetCanvas(type: string) {
       <!-- 缩放操作 end  -->
       <!-- 画布类型切换 start -->
       <div
-        class="epic-device h-28px p-2px flex items-center gap-1 rounded-md border"
+        class="nada-device h-28px p-2px flex items-center gap-1 rounded-md border"
       >
         <template v-for="item in deviceOptions" :key="item.key">
           <div
             :title="item.title"
-            class="epic-device-item flex h-full cursor-pointer items-center rounded-sm px-1 text-base transition-colors"
+            class="nada-device-item flex h-full cursor-pointer items-center rounded-sm px-1 text-base transition-colors"
             :class="{ checked: item.key === selectedKey }"
             @click="handleSetCanvas(item.key)"
           >
-            <EpicIcon :name="item.icon" />
+            <NadaIcon :name="item.icon" />
           </div>
         </template>
       </div>

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { inject } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
-import { pluginManager } from '@epic-designer/utils';
+import { NadaIcon } from '@nada-designer/base-ui';
+import { pluginManager } from '@nada-designer/utils';
 import { useVModel } from '@vueuse/core';
 import draggable from 'vuedraggable';
 
@@ -68,9 +68,9 @@ function handleRemove(index: number) {
               ? 'grid-cols-[16px_auto_auto_16px_16px]'
               : 'grid-cols-[16px_auto_auto_16px]'
           "
-          class="option-item text-16px text-$epic-text-secondary mb-2 grid items-center gap-2"
+          class="option-item text-16px text-$nada-text-secondary mb-2 grid items-center gap-2"
         >
-          <EpicIcon class="handle mr-2 cursor-move" name="icon--epic--drag" />
+          <NadaIcon class="handle mr-2 cursor-move" name="icon--nada--drag" />
           <Input
             v-model="option.label"
             v-model:value="option.label"
@@ -81,15 +81,15 @@ function handleRemove(index: number) {
             v-model:value="option.value"
             placeholder="value"
           />
-          <EpicIcon
+          <NadaIcon
             v-if="tree"
             class="text-lg! cursor-pointer"
-            name="icon--epic--add-rounded"
+            name="icon--nada--add-rounded"
             @click="handleAddChildren(option)"
           />
-          <EpicIcon
+          <NadaIcon
             class="hover:text-red cursor-pointer"
-            name="icon--epic--delete-outline-rounded"
+            name="icon--nada--delete-outline-rounded"
             @click="handleRemove(index)"
           />
         </div>

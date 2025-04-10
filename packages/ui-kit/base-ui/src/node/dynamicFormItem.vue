@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { ComponentSchema, EpicNodeInstance } from '@epic-designer/types';
-import type { PageManager } from '@epic-designer/utils';
+import type { ComponentSchema, NadaNodeInstance } from '@nada-designer/types';
+import type { PageManager } from '@nada-designer/utils';
 
 import type { VNode } from 'vue';
 
 import { inject } from 'vue';
 
-import { pluginManager } from '@epic-designer/utils';
+import { pluginManager } from '@nada-designer/utils';
 
 defineOptions({
   inheritAttrs: false,
@@ -28,7 +28,7 @@ const addFormItemInstance = (vNode: VNode) => {
   if (vNode.component) {
     pageManager.addComponentInstance(
       `${props.formItemProps.id}_formItem`,
-      vNode.component as EpicNodeInstance,
+      vNode.component as NadaNodeInstance,
     );
   }
 };

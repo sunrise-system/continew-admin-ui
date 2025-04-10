@@ -1,15 +1,15 @@
 <script lang="ts" setup>
-import type { Revoke } from '@epic-designer/utils';
+import type { Revoke } from '@nada-designer/utils';
 
 import { computed, inject, nextTick } from 'vue';
 
-import { EpicNode } from '@epic-designer/base-ui';
-import { ComponentSchema, Designer, PageSchema } from '@epic-designer/types';
+import { NadaNode } from '@nada-designer/base-ui';
+import { ComponentSchema, Designer, PageSchema } from '@nada-designer/types';
 import {
   getValueByPath,
   pluginManager,
   setValueByPath,
-} from '@epic-designer/utils';
+} from '@nada-designer/utils';
 
 const designer = inject('designer') as Designer;
 const pageSchema = inject('pageSchema') as PageSchema;
@@ -107,14 +107,14 @@ function handleSetValue(
 }
 </script>
 <template>
-  <div :key="selectedNode?.id" class="epic-style-view">
+  <div :key="selectedNode?.id" class="nada-style-view">
     <div v-for="item in componentStyles" :key="item.field">
-      <div v-if="isShow(item)" class="epic-attr-item" :class="item.layout">
-        <div v-if="item.label" class="epic-attr-label" :title="item.label">
+      <div v-if="isShow(item)" class="nada-attr-item" :class="item.layout">
+        <div v-if="item.label" class="nada-attr-label" :title="item.label">
           {{ item.label }}
         </div>
-        <div class="epic-attr-input">
-          <EpicNode
+        <div class="nada-attr-input">
+          <NadaNode
             :component-schema="{
               ...item,
               componentProps: {

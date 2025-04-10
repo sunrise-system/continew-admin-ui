@@ -66,6 +66,7 @@ import type { LabelValueState } from '@/types/global'
 import { useTabsStore } from '@/stores'
 import { useResetReactive } from '@/hooks'
 import { useDict } from '@/hooks/app'
+import { isMobile, parseData } from '@/utils'
 
 const { width } = useWindowSize()
 const route = useRoute()
@@ -80,7 +81,7 @@ const formRef = ref<InstanceType<typeof GiForm>>()
 const { notice_type } = useDict('notice_type')
 
 const [form, resetForm] = useResetReactive({
-  title: '',
+  name: '',
   type: '',
   effectiveTime: '',
   terminateTime: '',
@@ -91,7 +92,7 @@ const [form, resetForm] = useResetReactive({
 const columns: ColumnItem[] = reactive([
   {
     label: '标题',
-    field: 'title',
+    field: 'name',
     type: 'input',
     props: {
       maxLength: 150,
@@ -148,7 +149,7 @@ const columns: ColumnItem[] = reactive([
 const onUpdate = async (id: string) => {
   resetForm()
   const res = await getNotice(id)
-  Object.assign(form, res.data)
+  Object.assign(form, parseData(res.data))
 }
 
 // 返回

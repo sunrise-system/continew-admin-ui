@@ -33,7 +33,7 @@ export default defineConfig({
       },
       formats: ['es', 'cjs'],
       // 指定组件编译入口文件
-      name: 'epic-designer',
+      name: 'nada-designer',
     },
     outDir: 'dist',
     // 库编译模式配置
@@ -57,7 +57,7 @@ export default defineConfig({
             {
               dest: './dist/',
               rename: 'style.css',
-              src: './dist/epic-designer.css',
+              src: './dist/nada-designer.css',
             },
           ],
           verbose: true, // 在终端进行console.log
@@ -77,19 +77,19 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@epic-designer/base-ui': path.resolve(
+      '@nada-designer/base-ui': path.resolve(
         __dirname,
         '../ui-kit/base-ui/src/index',
       ),
-      '@epic-designer/core': path.resolve(__dirname, '../core/src/index'),
-      '@epic-designer/hooks': path.resolve(__dirname, '../hooks/src/index'),
-      '@epic-designer/panel-ui': path.resolve(
+      '@nada-designer/core': path.resolve(__dirname, '../core/src/index'),
+      '@nada-designer/hooks': path.resolve(__dirname, '../hooks/src/index'),
+      '@nada-designer/panel-ui': path.resolve(
         __dirname,
         '../ui-kit/panel-ui/src/index',
       ),
-      '@epic-designer/types': path.resolve(__dirname, '../types/src/index'),
-      '@epic-designer/ui': path.resolve(__dirname, '../ui/'),
-      '@epic-designer/utils': path.resolve(__dirname, '../utils/src/index'),
+      '@nada-designer/types': path.resolve(__dirname, '../types/src/index'),
+      '@nada-designer/ui': path.resolve(__dirname, '../ui/'),
+      '@nada-designer/utils': path.resolve(__dirname, '../utils/src/index'),
     },
   },
 });

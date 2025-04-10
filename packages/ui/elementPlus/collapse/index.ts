@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   component: () => import('./collapse'),
@@ -38,5 +38,5 @@ export default {
       },
     ],
   },
-  icon: 'epic-icon-xiala',
+  icon: 'nada-icon-xiala',
 } as ComponentConfigModel;

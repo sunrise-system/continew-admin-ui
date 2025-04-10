@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { Designer, DesignerProps } from '@epic-designer/types';
+import type { Designer, DesignerProps } from '@nada-designer/types';
 
 import { inject, ref, toRaw, watch } from 'vue';
 
@@ -7,7 +7,7 @@ import {
   deepCompareAndModify,
   deepEqual,
   pluginManager,
-} from '@epic-designer/utils';
+} from '@nada-designer/utils';
 
 const MonacoEditor = pluginManager.getComponent('monacoEditor');
 const monacoEditorRef = ref<any>(null);
@@ -42,11 +42,11 @@ function setSchemas(e: string) {
 }
 </script>
 <template>
-  <div class="epic-sound-code">
+  <div class="nada-sound-code">
     <MonacoEditor
       ref="monacoEditorRef"
       auto-toggle-theme
-      class="epic-editor"
+      class="nada-editor"
       :read-only="designerProps.sourceCodeReadOnly"
       :model-value="initModelValue"
       line-numbers="off"

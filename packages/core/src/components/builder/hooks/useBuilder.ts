@@ -1,8 +1,8 @@
-import type { FormDataModel } from '@epic-designer/types';
+import type { FormDataModel } from '@nada-designer/types';
 
 import { ref, watch } from 'vue';
 
-import { deepClone, usePageManager } from '@epic-designer/utils';
+import { deepClone, usePageManager } from '@nada-designer/utils';
 
 export function useBuilder() {
   const ready = ref<boolean>(false);

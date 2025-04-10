@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   component: async () => (await import('element-plus')).ElSlider,
@@ -234,6 +234,6 @@ export default {
     type: 'slider',
   },
   groupName: '表单',
-  icon: 'icon--epic--switches',
+  icon: 'icon--nada--switches',
   sort: 930,
 } as ComponentConfigModel;

@@ -1,6 +1,6 @@
-import type { ComponentSchema } from '@epic-designer/types';
+import type { ComponentSchema } from '@nada-designer/types';
 
-import { PageSchema } from '@epic-designer/types';
+import { PageSchema } from '@nada-designer/types';
 
 import { pluginManager } from '../index';
 import { getUUID } from './string';
@@ -516,7 +516,7 @@ export function findSchemaInfoById(
 }
 
 /**
- * 将k-form-design数据转换为epic-designer数据
+ * 将k-form-design数据转换为nada-designer数据
  * @param data
  * @returns
  */
@@ -540,7 +540,7 @@ export function convertKFormData(data: any) {
           {
             label: '表单',
             type: 'form',
-            icon: 'epic-icon-daibanshixiang',
+            icon: 'nada-icon-daibanshixiang',
             labelWidth: data.config.labelWidth || 100,
             name: 'default',
             componentProps: {

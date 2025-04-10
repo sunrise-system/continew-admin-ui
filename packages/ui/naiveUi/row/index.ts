@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   component: () => import('./row'),
@@ -102,6 +102,6 @@ export default {
     childImmovable: true,
   },
   groupName: '布局',
-  icon: 'icon--epic--width-normal-outline',
+  icon: 'icon--nada--width-normal-outline',
   sort: 800,
 } as ComponentConfigModel;

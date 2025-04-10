@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { Designer, PageSchema } from '@epic-designer/types';
-import type { EventModel, Revoke } from '@epic-designer/utils';
+import type { Designer, PageSchema } from '@nada-designer/types';
+import type { EventModel, Revoke } from '@nada-designer/utils';
 
 import { computed, inject } from 'vue';
 
@@ -8,7 +8,7 @@ import {
   getValueByPath,
   pluginManager,
   setValueByPath,
-} from '@epic-designer/utils';
+} from '@nada-designer/utils';
 
 const pageSchema = inject('pageSchema') as PageSchema;
 const designer = inject('designer') as Designer;
@@ -30,7 +30,7 @@ type EventGroup = {
 const LIFECYCLE_EVENTS: EventModel[] = [
   {
     description: '挂载完成（全部组件）',
-    type: 'epicReady',
+    type: 'nadaReady',
   },
   {
     description: '挂载完成（本组件）',
@@ -94,7 +94,7 @@ function handleSetValue(value: any, field: string) {
 }
 </script>
 <template>
-  <div class="epic-event-view">
+  <div class="nada-event-view">
     <div v-if="selectedNode">
       <EActionEditor
         :key="selectedNode.id"

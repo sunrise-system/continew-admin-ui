@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   bindModel: 'value',
@@ -104,6 +104,6 @@ export default {
     type: 'color-picker',
   },
   groupName: '表单',
-  icon: 'icon--epic--palette-outline',
+  icon: 'icon--nada--palette-outline',
   sort: 950,
 } as ComponentConfigModel;

@@ -1,7 +1,7 @@
 {
-  "name": "@epic-designer/base-ui",
+  "name": "@nada-designer/base-ui",
   "version": "1.0.1",
-  "description": "epic-designer base-ui",
+  "description": "nada-designer base-ui",
   "author": "kchengz",
   "type": "module",
   "main": "./src/index.ts",

@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   component: async () => (await import('element-plus')).ElSwitch,
@@ -132,7 +132,7 @@ export default {
     type: 'switch',
   },
   groupName: '表单',
-  icon: 'icon--epic--toggle-off-outline',
+  icon: 'icon--nada--toggle-off-outline',
   sort: 930,
 } as ComponentConfigModel;
 

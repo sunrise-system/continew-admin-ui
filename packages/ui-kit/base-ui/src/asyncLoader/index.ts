@@ -1,1 +1,1 @@
-export { default as EpicBaseLoader } from './baseLoader.vue';
+export { default as NadaBaseLoader } from './baseLoader.vue';

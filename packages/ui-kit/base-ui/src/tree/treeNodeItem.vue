@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { ComponentSchema, PageSchema } from '@epic-designer/types';
+import type { ComponentSchema, PageSchema } from '@nada-designer/types';
 
 import { computed, defineComponent, h, inject, Ref, Slots } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
-import { pluginManager } from '@epic-designer/utils';
+import { NadaIcon } from '@nada-designer/base-ui';
+import { pluginManager } from '@nada-designer/utils';
 
 import ETreeNodes from './treeNodes.vue';
 
@@ -48,7 +48,7 @@ const TreeNodeText = defineComponent({
         slots['tree-node']?.(props) ??
           h(
             'span',
-            { class: 'epic-text-padding flex' },
+            { class: 'nada-text-padding flex' },
             {
               default: () => [
                 h(
@@ -60,7 +60,7 @@ const TreeNodeText = defineComponent({
                 ),
                 h(
                   'span',
-                  { class: 'epic-node-type-text flex-1 w-0 truncate' },
+                  { class: 'nada-node-type-text flex-1 w-0 truncate' },
                   props.schema.id,
                 ),
               ],
@@ -94,7 +94,7 @@ init();
 </script>
 <template>
   <li
-    class="epic-tree-node"
+    class="nada-tree-node"
     :class="{
       expanded: props.schema.children?.length,
       'level-1': props.schema.id === pageSchema.schemas[0]?.id,
@@ -110,14 +110,14 @@ init();
         :class="{ expanded }"
         @click="handleExpanded"
       >
-        <EpicIcon name="icon--epic--caret-right-outlined" />
+        <NadaIcon name="icon--nada--caret-right-outlined" />
       </span>
       <TreeNodeText />
     </a>
     <ETreeNodes
       v-if="props.schema.children?.length"
       v-model:schemas="props.schema.children"
-      class="epic-tree-sublist"
+      class="nada-tree-sublist"
       :class="{ expanded }"
       :parent-schema="props.schema"
     />

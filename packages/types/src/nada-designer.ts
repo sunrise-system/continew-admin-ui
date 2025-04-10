@@ -1,4 +1,4 @@
-import type { ActionsModel } from '@epic-designer/utils';
+import type { ActionsModel } from '@nada-designer/utils';
 
 import type { FormItemRule } from './rules';
 

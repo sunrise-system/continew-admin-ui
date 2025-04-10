@@ -1,5 +1,5 @@
 <template>
-  <div class="gi_table_page">
+  <GiPageLayout>
     <GiTable
       row-key="id"
       :data="dataList"
@@ -46,7 +46,7 @@
         </a-space>
       </template>
     </GiTable>
-  </div>
+  </GiPageLayout>
 </template>
 
 <script setup lang="ts">
@@ -80,13 +80,11 @@ const columns: TableInstance['columns'] = [
     align: 'center',
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
   },
-  { title: '标题', dataIndex: 'title', slotName: 'title', minWidth: 200, ellipsis: true, tooltip: true },
+  { title: '标题', dataIndex: 'name', slotName: 'name', minWidth: 200, ellipsis: true, tooltip: true },
   { title: '类型', dataIndex: 'type', slotName: 'type', align: 'center' },
   { title: '状态', dataIndex: 'status', slotName: 'status', align: 'center' },
   { title: '生效时间', dataIndex: 'effectiveTime', width: 180 },
   { title: '终止时间', dataIndex: 'terminateTime', width: 180 },
-  { title: '创建人', dataIndex: 'createUserString', show: false, ellipsis: true, tooltip: true },
-  { title: '创建时间', dataIndex: 'createTime', width: 180 },
   {
     title: '操作',
     dataIndex: 'action',
@@ -108,7 +106,7 @@ const reset = () => {
 // 删除
 const onDelete = (record: NoticeResp) => {
   return handleDelete(() => deleteNotice(record.id), {
-    content: `是否确定删除公告「${record.title}」？`,
+    content: `是否确定删除公告「${record.name}」？`,
     showModal: true,
   })
 }

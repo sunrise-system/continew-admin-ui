@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   bindModel: 'value',
@@ -166,6 +166,6 @@ export default {
     type: 'input',
   },
   groupName: '表单',
-  icon: 'icon--epic--border-color-outline-rounded',
+  icon: 'icon--nada--border-color-outline-rounded',
   sort: 700,
 } as ComponentConfigModel;

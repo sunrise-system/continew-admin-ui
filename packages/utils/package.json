@@ -1,7 +1,7 @@
 {
-  "name": "@epic-designer/utils",
+  "name": "@nada-designer/utils",
   "version": "1.0.1",
-  "description": "epic-designer utils",
+  "description": "nada-designer utils",
   "author": "kchengz",
   "main": "src/index.ts"
 }

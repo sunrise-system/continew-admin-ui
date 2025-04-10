@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   component: () => import('./card'),
@@ -22,6 +22,6 @@ export default {
     children: [],
   },
   groupName: '布局',
-  icon: 'icon--epic--wysiwyg-rounded',
+  icon: 'icon--nada--wysiwyg-rounded',
   sort: 900,
 } as ComponentConfigModel;

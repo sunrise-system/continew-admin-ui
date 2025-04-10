@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { ComponentSchema } from '@epic-designer/types';
+import type { ComponentSchema } from '@nada-designer/types';
 
 import { computed } from 'vue';
 
-import { EpicNode } from '@epic-designer/base-ui';
+import { NadaNode } from '@nada-designer/base-ui';
 
 const props = defineProps<{
   actionArgsConfigs: ComponentSchema[];
@@ -42,14 +42,14 @@ function handleSetValue(value: any, field: string) {
 }
 </script>
 <template>
-  <div class="epic-attribute-view">
+  <div class="nada-attribute-view">
     <div v-for="item in props.actionArgsConfigs" :key="item.id">
-      <div v-show="isShow(item)" class="epic-attr-item" :class="item.layout">
-        <div class="epic-attr-label" :title="item.label">
+      <div v-show="isShow(item)" class="nada-attr-item" :class="item.layout">
+        <div class="nada-attr-label" :title="item.label">
           {{ item.label }}
         </div>
-        <div class="epic-attr-input">
-          <EpicNode
+        <div class="nada-attr-input">
+          <NadaNode
             :component-schema="{
               ...item,
               componentProps: {

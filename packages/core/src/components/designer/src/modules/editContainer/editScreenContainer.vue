@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { DesignerProps, PageSchema } from '@epic-designer/types';
+import type { DesignerProps, PageSchema } from '@nada-designer/types';
 
 import type { Ref } from 'vue';
 
@@ -14,8 +14,8 @@ import {
   watchEffect,
 } from 'vue';
 
-import { useElementDrag, useElementZoom, useStore } from '@epic-designer/hooks';
-import { debounce } from '@epic-designer/utils';
+import { useElementDrag, useElementZoom, useStore } from '@nada-designer/hooks';
+import { debounce } from '@nada-designer/utils';
 import { useElementSize, useResizeObserver, watchOnce } from '@vueuse/core';
 
 import Toolbar from './toolbar.vue';
@@ -216,7 +216,7 @@ function computedScale() {
 
     <div
       ref="editScreenContainerRef"
-      class="epic-edit-screen-container flex-1 overflow-auto overflow-y-hidden"
+      class="nada-edit-screen-container flex-1 overflow-auto overflow-y-hidden"
       :class="{ 'cursor-grab': draggableComputed }"
       :draggable="draggableComputed"
       @wheel="handleZoom"

@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   bindModel: 'value',
@@ -102,6 +102,6 @@ export default {
     type: 'radio',
   },
   groupName: '表单',
-  icon: 'icon--epic--radio-button-checked-outline',
+  icon: 'icon--nada--radio-button-checked-outline',
   sort: 850,
 } as ComponentConfigModel;

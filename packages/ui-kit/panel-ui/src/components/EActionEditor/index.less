@@ -1,25 +1,25 @@
-.epic-event-item {
-  .epic-event-info {
+.nada-event-item {
+  .nada-event-info {
     display: flex;
-    background-color: var(--epic-event-item-color);
+    background-color: var(--nada-event-item-color);
     padding: 0 12px;
     justify-content: space-between;
     align-items: center;
     height: 36px;
-    border: 1px solid var(--epic-border-color);
-    color: var(--epic-text-main);
+    border: 1px solid var(--nada-border-color);
+    color: var(--nada-text-main);
     margin: 0px -1px -1px 0px;
   }
 
-  .epic-event-btn>span {
+  .nada-event-btn>span {
     cursor: pointer;
   }
 
-  .epic-action-editor-main {
-    .epic-editor-item {
+  .nada-action-editor-main {
+    .nada-editor-item {
       margin: 8px 0px;
-      border: 1px solid var(--epic-border-color);
-      color: var(--epic-text-main);
+      border: 1px solid var(--nada-border-color);
+      color: var(--nada-text-main);
       padding: 8px;
       display: flex;
       justify-content: space-between;
@@ -30,38 +30,38 @@
   }
 }
 
-.epic-modal-action-main {
+.nada-modal-action-main {
   display: flex;
   height: 100%;
 }
 
-.epic-modal-left-panel,
-.epic-script-left-panel {
+.nada-modal-left-panel,
+.nada-script-left-panel {
   width: 240px;
-  border: 1px solid var(--epic-border-color);
+  border: 1px solid var(--nada-border-color);
   overflow: auto;
   padding: 8px;
   box-sizing: border-box;
 
   .fun-btn {
-    border: 1px solid var(--epic-border-color);
+    border: 1px solid var(--nada-border-color);
     padding: 8px 12px;
     border-radius: 3px;
     cursor: pointer;
     margin-bottom: 6px;
 
     &.checked {
-      background-color: var(--epic-primary-hover-color);
-      border-color: var(--epic-primary-color);
-      color: var(--epic-primary-color);
+      background-color: var(--nada-primary-hover-color);
+      border-color: var(--nada-primary-color);
+      color: var(--nada-primary-color);
     }
   }
 }
 
-.epic-modal-right-panel,
-.epic-script-right-panel {
+.nada-modal-right-panel,
+.nada-script-right-panel {
   flex: 1;
-  border: 1px solid var(--epic-border-color);
+  border: 1px solid var(--nada-border-color);
   margin-left: 8px;
   padding: 8px;
 
@@ -71,17 +71,17 @@
   }
 }
 
-.epic-script-edit {
+.nada-script-edit {
   display: flex;
 
-  .epic-script-left-panel {
-    .epic-tree-select {
+  .nada-script-left-panel {
+    .nada-tree-select {
       height: 240px;
       overflow: auto;
     }
 
     .tree-node-item,
-    .epic-action-item {
+    .nada-action-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -90,7 +90,7 @@
       .action {
         opacity: 0;
         pointer-events: none;
-        color: var(--epic-primary-color);
+        color: var(--nada-primary-color);
       }
 
       &:hover .action {
@@ -102,20 +102,20 @@
 
   }
 
-  .epic-script-right-panel {
+  .nada-script-right-panel {
     // width: 240px;
     // flex: none;
   }
 }
 
-.epic-action-select {
-  border-top: 1px solid var(--epic-border-color);
+.nada-action-select {
+  border-top: 1px solid var(--nada-border-color);
   margin-top: 12px;
   padding: 8px;
   padding-right: 0;
   overflow: auto;
 
-  .epic-action-item {
+  .nada-action-item {
     height: 32px;
     line-height: 32px;
     padding-left: 12px;
@@ -124,29 +124,29 @@
     border: 1px solid transparent;
 
     &:hover {
-      background-color: var(--epic-primary-hover-color);
-      color: var(--epic-primary-color);
+      background-color: var(--nada-primary-hover-color);
+      color: var(--nada-primary-color);
     }
 
     &.checked {
-      background-color: var(--epic-primary-hover-color);
-      border-color: var(--epic-primary-color);
-      color: var(--epic-primary-color);
+      background-color: var(--nada-primary-hover-color);
+      border-color: var(--nada-primary-color);
+      color: var(--nada-primary-color);
     }
   }
 }
 
-.epic-editor-item {
+.nada-editor-item {
   display: flex;
   align-items: center;
   padding-top: 6px;
 
-  .epic-action-box {
+  .nada-action-box {
     display: flex;
     align-items: center;
 
 
-    .epic-del-btn {
+    .nada-del-btn {
       width: 30px;
       height: 100%;
       text-align: center;
@@ -157,14 +157,14 @@
       }
     }
 
-    .epic-edit-btn {
+    .nada-edit-btn {
       width: 30px;
       height: 100%;
       text-align: center;
       cursor: pointer;
 
       &:hover {
-        color: var(--epic-primary-color);
+        color: var(--nada-primary-color);
       }
     }
   }
@@ -173,5 +173,5 @@
 .add-btn {
   cursor: pointer;
   margin-top: 6px;
-  color: var(--epic-primary-color);
+  color: var(--nada-primary-color);
 }

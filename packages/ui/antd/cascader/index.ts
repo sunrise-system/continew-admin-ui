@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   bindModel: 'value',
@@ -196,6 +196,6 @@ export default {
     type: 'cascader',
   },
   groupName: '表单',
-  icon: 'icon--epic--full-coverage-outline',
+  icon: 'icon--nada--full-coverage-outline',
   sort: 900,
 } as ComponentConfigModel;

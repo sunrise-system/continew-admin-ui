@@ -1,8 +1,8 @@
-import type { ComponentSchema, EpicNodeInstance } from '@epic-designer/types';
+import type { ComponentSchema, NadaNodeInstance } from '@nada-designer/types';
 
 import { reactive, ref, watchEffect } from 'vue';
 
-import { usePageSchema } from '@epic-designer/hooks';
+import { usePageSchema } from '@nada-designer/hooks';
 
 import { deepCompareAndModify, findSchemas, getValueByPath } from '../index';
 import { pluginManager } from './pluginManager';
@@ -15,7 +15,7 @@ export interface ActionsModel {
 }
 
 export function usePageManager() {
-  const componentInstances = ref<Record<string, EpicNodeInstance>>({});
+  const componentInstances = ref<Record<string, NadaNodeInstance>>({});
   const funcs = ref<Record<string, Function>>({});
   // 当前模式 true 设计模式, false 渲染模式
   const isDesignMode = ref(false);
@@ -35,7 +35,7 @@ export function usePageManager() {
   function find(
     queryValue: string,
     queryField = 'id',
-  ): EpicNodeInstance['exposed'] | null {
+  ): NadaNodeInstance['exposed'] | null {
     const instance = findInstance(queryValue, queryField);
     // 返回组件实例的 exposed 属性
     return instance?.exposed ?? null;
@@ -50,7 +50,7 @@ export function usePageManager() {
   function findAll(
     queryValue: string,
     queryField = 'id',
-  ): EpicNodeInstance['exposed'][] {
+  ): NadaNodeInstance['exposed'][] {
     const instances = findInstanceAll(queryValue, queryField);
     // 返回组件实例的 exposed 属性数组
     return instances.map((instance) => instance.exposed);
@@ -65,7 +65,7 @@ export function usePageManager() {
   function findInstance(
     queryValue: string,
     queryField = 'id',
-  ): EpicNodeInstance | null {
+  ): NadaNodeInstance | null {
     // 如果查询字段是 id，直接在组件实例映射中查找
     if (queryField === 'id') {
       return componentInstances.value[queryValue] ?? null;
@@ -96,7 +96,7 @@ export function usePageManager() {
   function findInstanceAll(
     queryValue: string,
     queryField = 'id',
-  ): EpicNodeInstance[] {
+  ): NadaNodeInstance[] {
     // 如果查询字段是 id，直接返回对应的组件实例数组
     if (queryField === 'id') {
       const instance = componentInstances.value[queryValue];
@@ -132,7 +132,7 @@ export function usePageManager() {
    * @param id
    * @param instance
    */
-  function addComponentInstance(id: string, instance: EpicNodeInstance) {
+  function addComponentInstance(id: string, instance: NadaNodeInstance) {
     componentInstances.value[id] = instance;
   }
   /**
@@ -163,7 +163,7 @@ export function usePageManager() {
 
     try {
       // eslint-disable-next-line no-new-func
-      new Function(`const epic = this;${scriptStr}`).bind({
+      new Function(`const nada = this;${scriptStr}`).bind({
         ...publicMethods,
         defineExpose,
         find,

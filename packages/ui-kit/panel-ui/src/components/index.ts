@@ -1,6 +1,6 @@
-import type { PluginManager } from '@epic-designer/utils';
+import type { PluginManager } from '@nada-designer/utils';
 
-import { EpicNode } from '@epic-designer/base-ui';
+import { NadaNode } from '@nada-designer/base-ui';
 
 import MonacoEditor from './MonacoEditor';
 import Page from './Page';
@@ -40,7 +40,7 @@ export function setupComponent(pluginManager: PluginManager): void {
     'EOptionsEditor',
     async () => await import('./EOptionsEditor/index.vue'),
   );
-  pluginManager.component('EpicNode', EpicNode);
+  pluginManager.component('NadaNode', NadaNode);
 
   const componentArray = [MonacoEditor];
 

@@ -1,7 +1,7 @@
 {
-  "name": "@epic-designer/panel-ui",
+  "name": "@nada-designer/panel-ui",
   "version": "1.0.1",
-  "description": "epic-designer panel-ui",
+  "description": "nada-designer panel-ui",
   "author": "kchengz",
   "type": "module",
   "main": "./src/index.ts",

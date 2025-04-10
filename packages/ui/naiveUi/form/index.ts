@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   component: () => import('./form.vue'),
@@ -142,6 +142,6 @@ export default {
     children: [],
   },
   groupName: '表单',
-  icon: 'icon--epic--list-alt-outline-rounded',
+  icon: 'icon--nada--list-alt-outline-rounded',
   sort: 600,
 } as ComponentConfigModel;

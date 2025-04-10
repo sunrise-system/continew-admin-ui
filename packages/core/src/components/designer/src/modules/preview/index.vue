@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { PageSchema } from '@epic-designer/types';
+import type { PageSchema } from '@nada-designer/types';
 
 import { inject, nextTick, ref } from 'vue';
 
-import { getUUID, pluginManager } from '@epic-designer/utils';
+import { getUUID, pluginManager } from '@nada-designer/utils';
 
 import { EBuilder } from '../../../../builder';
 

@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   bindModel: 'value',
@@ -159,6 +159,6 @@ export default {
     type: 'textarea',
   },
   groupName: '表单',
-  icon: 'icon--epic--edit-square-outline-rounded',
+  icon: 'icon--nada--edit-square-outline-rounded',
   sort: 705,
 } as ComponentConfigModel;

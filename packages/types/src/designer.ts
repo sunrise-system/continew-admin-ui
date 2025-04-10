@@ -1,4 +1,4 @@
-import { PageSchema } from '@epic-designer/types';
+import { PageSchema } from '@nada-designer/types';
 
 export interface DesignerProps {
   defaultSchema?: PageSchema;

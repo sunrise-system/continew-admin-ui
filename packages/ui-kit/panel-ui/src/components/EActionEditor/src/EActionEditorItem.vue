@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { PageSchema } from '@epic-designer/types';
+import type { PageSchema } from '@nada-designer/types';
 
 import type { PropType } from 'vue';
 
 import { inject } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
-import { findSchemaById } from '@epic-designer/utils';
+import { NadaIcon } from '@nada-designer/base-ui';
+import { findSchemaById } from '@nada-designer/utils';
 import draggable from 'vuedraggable';
 
 const props = defineProps({
@@ -92,21 +92,21 @@ function getNewEvents(type: string) {
 }
 </script>
 <template>
-  <div v-for="item in itemEvents" :key="item.type" class="epic-event-item">
-    <div class="epic-event-info">
-      <div class="epic-event-label" :title="item.describe ?? item.description">
+  <div v-for="item in itemEvents" :key="item.type" class="nada-event-item">
+    <div class="nada-event-info">
+      <div class="nada-event-label" :title="item.describe ?? item.description">
         {{ item.describe ?? item.description }}
       </div>
       <div
-        class="epic-event-btn text-$epic-text-secondary flex items-center text-lg"
+        class="nada-event-btn text-$nada-text-secondary flex items-center text-lg"
       >
-        <EpicIcon
-          name="icon--epic--add-rounded"
+        <NadaIcon
+          name="icon--nada--add-rounded"
           @click="handleOpen(item.type)"
         />
       </div>
     </div>
-    <div class="epic-action-editor-main">
+    <div class="nada-action-editor-main">
       <draggable
         v-model="props.events[item.type]"
         item-key="id"
@@ -118,11 +118,11 @@ function getNewEvents(type: string) {
         :animation="200"
       >
         <template #item="{ element: action, index }">
-          <div class="epic-editor-item rounded">
+          <div class="nada-editor-item rounded">
             <div class="w-36px flex items-center text-lg">
-              <EpicIcon
-                class="handle text-$epic-text-medium mr-2 cursor-move text-lg"
-                name="icon--epic--drag"
+              <NadaIcon
+                class="handle text-$nada-text-medium mr-2 cursor-move text-lg"
+                name="icon--nada--drag"
               />
             </div>
             <div class="flex-1">
@@ -133,15 +133,15 @@ function getNewEvents(type: string) {
               <div v-else-if="action.type === 'public'">公共函数</div>
               {{ action.methodName }}
             </div>
-            <div class="epic-action-box text-$epic-text-medium text-lg">
+            <div class="nada-action-box text-$nada-text-medium text-lg">
               <div
-                class="epic-edit-btn"
+                class="nada-edit-btn"
                 @click="handleEdit(index, item.type, action)"
               >
-                <EpicIcon name="icon--epic--page-info-outline-rounded" />
+                <NadaIcon name="icon--nada--page-info-outline-rounded" />
               </div>
-              <div class="epic-del-btn" @click="handleDelete(index, item.type)">
-                <EpicIcon name="icon--epic--delete-outline-rounded" />
+              <div class="nada-del-btn" @click="handleDelete(index, item.type)">
+                <NadaIcon name="icon--nada--delete-outline-rounded" />
               </div>
             </div>
           </div>

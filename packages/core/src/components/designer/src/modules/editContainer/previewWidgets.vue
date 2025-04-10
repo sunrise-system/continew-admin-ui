@@ -4,21 +4,21 @@ import type {
   Designer,
   DesignerProps,
   PageSchema,
-} from '@epic-designer/types';
-import type { PageManager } from '@epic-designer/utils';
+} from '@nada-designer/types';
+import type { PageManager } from '@nada-designer/utils';
 
 import type { Ref } from 'vue';
 
 import { computed, inject, ref, watch } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
-import { useStore, useTimedQuery } from '@epic-designer/hooks';
+import { NadaIcon } from '@nada-designer/base-ui';
+import { useStore, useTimedQuery } from '@nada-designer/hooks';
 import {
   findSchemaInfoById,
   generateNewSchema,
   pluginManager,
   Revoke,
-} from '@epic-designer/utils';
+} from '@nada-designer/utils';
 import { useResizeObserver } from '@vueuse/core';
 
 const pageManager = inject('pageManager', {}) as PageManager;
@@ -38,7 +38,7 @@ const selectorPosition = ref<'bottom' | 'center' | 'top'>('top');
 
 const { canvasScale, disabledZoom } = useStore();
 
-let epicEditRange: HTMLDivElement | null = null;
+let nadaEditRange: HTMLDivElement | null = null;
 
 /**
  * 判断组件是否可移动和可拖拽删除
@@ -159,9 +159,9 @@ let oldScrollLeft = 0;
  */
 function setSeletorStyle() {
   const element = getSelectComponentElement.value;
-  if (!element || !epicEditRange) return;
+  if (!element || !nadaEditRange) return;
 
-  const { left: offsetX, top: offsetY } = epicEditRange.getBoundingClientRect();
+  const { left: offsetX, top: offsetY } = nadaEditRange.getBoundingClientRect();
 
   let rect = element.getBoundingClientRect?.();
   if (!rect && element.nextElementSibling) {
@@ -172,9 +172,9 @@ function setSeletorStyle() {
 
   const scale = disabledZoom.value ? 1 : canvasScale.value;
   // 计算选择器部件位置
-  const selectorTop = top - offsetY + (epicEditRange?.scrollTop ?? 0) * scale;
+  const selectorTop = top - offsetY + (nadaEditRange?.scrollTop ?? 0) * scale;
   const selectorLeft =
-    left - offsetX + (epicEditRange?.scrollLeft ?? 0) * scale;
+    left - offsetX + (nadaEditRange?.scrollLeft ?? 0) * scale;
 
   const selectorRefHeight = height / scale;
 
@@ -218,9 +218,9 @@ function setSeletorStyle() {
 function scrollIntoView(selectorTop: number, selectorLeft: number) {
   // 自动滚动到元素可视区域 start
   const element = getSelectComponentElement.value;
-  if (!epicEditRange || !element) return;
+  if (!nadaEditRange || !element) return;
   // 获取两个元素的边界框信息
-  const rect2 = epicEditRange.getBoundingClientRect();
+  const rect2 = nadaEditRange.getBoundingClientRect();
   const { width } = element.getBoundingClientRect();
 
   const scale = disabledZoom.value ? 1 : canvasScale.value;
@@ -229,10 +229,10 @@ function scrollIntoView(selectorTop: number, selectorLeft: number) {
   const newScrollTop = selectorTop / scale - rect2.top;
   let newScrollLeft = selectorLeft / scale - rect2.left + width / scale;
   newScrollLeft < rect2.width && (newScrollLeft = 0);
-  const yMin = epicEditRange.scrollTop - rect2.height / 3 + 60;
-  const yMax = epicEditRange.scrollTop + (rect2.height / 3) * 2;
-  const xMin = epicEditRange.scrollLeft - rect2.width + 200;
-  const xMax = epicEditRange.scrollLeft + rect2.width - 200;
+  const yMin = nadaEditRange.scrollTop - rect2.height / 3 + 60;
+  const yMax = nadaEditRange.scrollTop + (rect2.height / 3) * 2;
+  const xMin = nadaEditRange.scrollLeft - rect2.width + 200;
+  const xMax = nadaEditRange.scrollLeft + rect2.width - 200;
 
   // 判断定位误差是否小于10px，小于则不处理
   if (
@@ -250,8 +250,8 @@ function scrollIntoView(selectorTop: number, selectorLeft: number) {
   )
     return;
 
-  epicEditRange.scrollTop = newScrollTop;
-  epicEditRange.scrollLeft = newScrollLeft;
+  nadaEditRange.scrollTop = newScrollTop;
+  nadaEditRange.scrollLeft = newScrollLeft;
   // 自动滚动到元素可视区域 end
 }
 
@@ -261,8 +261,8 @@ function scrollIntoView(selectorTop: number, selectorLeft: number) {
 function setHoverStyle() {
   const element = getHoverComponentElement.value;
 
-  if (!element || !epicEditRange) return;
-  const { left: offsetX, top: offsetY } = epicEditRange.getBoundingClientRect();
+  if (!element || !nadaEditRange) return;
+  const { left: offsetX, top: offsetY } = nadaEditRange.getBoundingClientRect();
 
   let rect = element.getBoundingClientRect?.();
   if (!rect && element.nextElementSibling) {
@@ -273,8 +273,8 @@ function setHoverStyle() {
   const scale = disabledZoom.value ? 1 : canvasScale.value;
 
   // 计算选择器部件位置
-  const hoverTop = top - offsetY + (epicEditRange.scrollTop ?? 0) * scale;
-  const hoverLeft = left - offsetX + (epicEditRange.scrollLeft ?? 0) * scale;
+  const hoverTop = top - offsetY + (nadaEditRange.scrollTop ?? 0) * scale;
+  const hoverLeft = left - offsetX + (nadaEditRange.scrollLeft ?? 0) * scale;
 
   if (hoverWidgetRef.value) {
     hoverWidgetRef.value.style.width = `${width / scale}px`;
@@ -359,10 +359,10 @@ function handleDelete() {
   revoke.push(pageSchema.schemas, '删除组件');
 }
 
-// 初始化函数，传入一个指向 Epic 编辑范围的引用
-function handleInit(epicEditRangeRef) {
-  epicEditRange = epicEditRangeRef;
-  epicEditRange?.addEventListener('scroll', () => {
+// 初始化函数，传入一个指向 nada 编辑范围的引用
+function handleInit(nadaEditRangeRef) {
+  nadaEditRange = nadaEditRangeRef;
+  nadaEditRange?.addEventListener('scroll', () => {
     setSeletorStyle();
   });
 
@@ -381,11 +381,11 @@ defineExpose({
   <div
     v-show="showSelector && designer.state.selectedNode?.id !== 'root'"
     ref="selectorRef"
-    class="epic-checked-widget z-999 pointer-events-none absolute"
+    class="nada-checked-widget z-999 pointer-events-none absolute"
     :class="`${selectorPosition} ${selectorTransition ? 'transition-all' : ''}`"
   >
-    <div ref="actionBoxRef" class="epic-widget-action-box">
-      <div class="epic-widget-action-item whitespace-nowrap">
+    <div ref="actionBoxRef" class="nada-widget-action-box">
+      <div class="nada-widget-action-item whitespace-nowrap">
         <!-- {{ designer.state.selectedNode?.type }} -->
         {{
           pluginManager.getComponentConfingByType(
@@ -397,24 +397,24 @@ defineExpose({
       <div v-if="isRemovableAndDraggable" class="flex items-center">
         <div
           title="选择父节点"
-          class="epic-widget-action-item pointer-events-auto"
+          class="nada-widget-action-item pointer-events-auto"
           @click="handleSelectParentNode"
         >
-          <EpicIcon name="icon--epic--upward" />
+          <NadaIcon name="icon--nada--upward" />
         </div>
         <div
           title="复制"
-          class="epic-widget-action-item pointer-events-auto"
+          class="nada-widget-action-item pointer-events-auto"
           @click="handleCopy"
         >
-          <EpicIcon name="icon--epic--copy-all-outline-rounded" />
+          <NadaIcon name="icon--nada--copy-all-outline-rounded" />
         </div>
         <div
           title="删除"
-          class="epic-widget-action-item pointer-events-auto"
+          class="nada-widget-action-item pointer-events-auto"
           @click="handleDelete"
         >
-          <EpicIcon name="icon--epic--delete-outline-rounded" />
+          <NadaIcon name="icon--nada--delete-outline-rounded" />
         </div>
       </div>
       <!-- 操作按钮 end  -->
@@ -428,7 +428,7 @@ defineExpose({
       designer.state.selectedNode?.id !== designer.state.hoverNode?.id
     "
     ref="hoverWidgetRef"
-    class="epic-hover-widget z-998 pointer-events-none absolute"
+    class="nada-hover-widget z-998 pointer-events-none absolute"
   ></div>
   <!-- 悬停效果 end  -->
 </template>

@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   component: async () => (await import('element-plus')).ElInputNumber,
@@ -142,6 +142,6 @@ export default {
     type: 'number',
   },
   groupName: '表单',
-  icon: 'icon--epic--123-rounded',
+  icon: 'icon--nada--123-rounded',
   sort: 710,
 } as ComponentConfigModel;

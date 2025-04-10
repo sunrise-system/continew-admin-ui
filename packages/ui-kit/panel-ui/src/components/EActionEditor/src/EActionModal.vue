@@ -3,18 +3,18 @@ import type {
   ComponentSchema,
   FormDataModel,
   PageSchema,
-} from '@epic-designer/types';
+} from '@nada-designer/types';
 
 import { computed, inject, nextTick, reactive, ref, toRaw } from 'vue';
 
-import { EpicIcon, EpicTree } from '@epic-designer/base-ui';
+import { NadaIcon, EpicTree } from '@nada-designer/base-ui';
 import {
   deepClone,
   findSchemaById,
   getUUID,
   PageManager,
   pluginManager,
-} from '@epic-designer/utils';
+} from '@nada-designer/utils';
 import { useClipboard } from '@vueuse/core';
 
 import EArgsEditor from './EArgsEditor.vue';
@@ -201,8 +201,8 @@ defineExpose({
     @close="handleClose"
     @ok="handleSave"
   >
-    <div class="epic-modal-action-main rounded">
-      <div class="epic-modal-left-panel flex h-full flex-col">
+    <div class="nada-modal-action-main rounded">
+      <div class="nada-modal-left-panel flex h-full flex-col">
         <!-- 动作所属对象 start -->
         <div class="flex h-0 flex-1 flex-col">
           <div
@@ -228,13 +228,13 @@ defineExpose({
             >
               <template #tree-node="{ schema }">
                 <div
-                  class="epic-text-padding flex items-center hover:bg-gray-100"
+                  class="nada-text-padding flex items-center hover:bg-gray-100"
                   :class="{ hidden: schema.componentProps?.hidden }"
                 >
                   <span class="max-w-full truncate">
-                    <EpicIcon
+                    <NadaIcon
                       v-if="schema.componentProps?.hidden"
-                      name="icon--epic--visibility-off-outline-rounded"
+                      name="icon--nada--visibility-off-outline-rounded"
                       class="translate-y-2px"
                     />
                     {{
@@ -243,11 +243,11 @@ defineExpose({
                         ?.defaultSchema.label
                     }}
                   </span>
-                  <span class="epic-node-type-text w-0 flex-1 truncate">
+                  <span class="nada-node-type-text w-0 flex-1 truncate">
                     {{ schema.id }}
                   </span>
                   <Button
-                    class="epic-copy-id-btn opacity-0"
+                    class="nada-copy-id-btn opacity-0"
                     size="small"
                     @click.stop="copy(schema.id)"
                   >
@@ -259,14 +259,14 @@ defineExpose({
           </div>
         </div>
         <!-- 动作选择 start -->
-        <div class="epic-action-select h-30/100 flex flex-col">
+        <div class="nada-action-select h-30/100 flex flex-col">
           <div class="mb-2">动作选择</div>
           <div class="pr-8px flex-1 overflow-auto">
             <div
               v-for="item in methodOptions"
               :key="item.value"
               :class="{ checked: item.value === state.actionItem.methodName }"
-              class="epic-action-item"
+              class="nada-action-item"
               @click="handleCheckedMethod(item.value)"
             >
               <span>{{ item.label }}</span>
@@ -283,7 +283,7 @@ defineExpose({
         <!-- 动作选择 end -->
       </div>
       <!-- 动作配置 start -->
-      <div class="epic-modal-right-panel">
+      <div class="nada-modal-right-panel">
         <EScriptEdit v-if="state.actionItem.type === 'custom'" />
         <div
           v-else-if="actionArgsConfigs.length === 0"

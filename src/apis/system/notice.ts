@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http from '@/utils/http'
+import http, { fetchMotion } from '@/utils/http'
 
 export type * from './type'
 
@@ -7,17 +7,23 @@ const BASE_URL = '/system/notice'
 
 /** @desc 查询公告列表 */
 export function listNotice(query: T.NoticePageQuery) {
-  return http.get<PageRes<T.NoticeResp[]>>(`${BASE_URL}`, query)
+  return fetchMotion(`ADM08916A/list`, query)
+
+  // return http.get<PageRes<T.NoticeResp[]>>(`${BASE_URL}`, query)
 }
 
 /** @desc 查询公告详情 */
 export function getNotice(id: string) {
-  return http.get<T.NoticeResp>(`${BASE_URL}/${id}`)
+  const formArray: any = {}
+  formArray.id = id
+  return fetchMotion(`ADM08916A`, formArray)
 }
 
 /** @desc 新增公告 */
 export function addNotice(data: any) {
-  return http.post(BASE_URL, data)
+  const formArray: any = {}
+  formArray.data = data
+  return fetchMotion(`ADM08916A/savechanges`, formArray)
 }
 
 /** @desc 修改公告 */
@@ -27,5 +33,7 @@ export function updateNotice(data: any, id: string) {
 
 /** @desc 删除公告 */
 export function deleteNotice(ids: string | Array<number>) {
-  return http.del(`${BASE_URL}/${ids}`)
+  const formArray: any = {}
+  formArray.id = ids
+  return fetchMotion(`ADM08916A/delete`, formArray)
 }

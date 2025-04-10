@@ -1,4 +1,4 @@
-import type { ComponentSchema } from '@epic-designer/types';
+import type { ComponentSchema } from '@nada-designer/types';
 
 export interface TreeProps {
   draggable?: boolean;

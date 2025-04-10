@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { ComponentSchema } from '@epic-designer/types';
+import type { ComponentSchema } from '@nada-designer/types';
 
 import type { TreeProps } from './types';
 
 import { computed, provide, ref, useSlots } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
-import { pluginManager } from '@epic-designer/utils';
+import { NadaIcon } from '@nada-designer/base-ui';
+import { pluginManager } from '@nada-designer/utils';
 
 import ETreeNodes from './treeNodes.vue';
 
@@ -83,9 +83,9 @@ provide('treeProps', props);
 provide('handleSelect', handleSelect);
 </script>
 <template>
-  <div class="epic-tree flex h-full flex-col">
+  <div class="nada-tree flex h-full flex-col">
     <!-- 搜素框 start -->
-    <div class="epic-search-box px-10px py-6px">
+    <div class="nada-search-box px-10px py-6px">
       <Input
         v-model="keyword"
         v-model:value="keyword"
@@ -94,12 +94,12 @@ provide('handleSelect', handleSelect);
         allow-clear
       >
         <template #prefix>
-          <EpicIcon name="icon--epic--search-rounded" />
+          <NadaIcon name="icon--nada--search-rounded" />
         </template>
       </Input>
     </div>
     <!-- 搜素框 end -->
-    <div class="epic-tree-main h-0 flex-1 overflow-auto">
+    <div class="nada-tree-main h-0 flex-1 overflow-auto">
       <ETreeNodes v-model:schemas="getTreeData" />
       <div
         v-show="getTreeData.length === 0"

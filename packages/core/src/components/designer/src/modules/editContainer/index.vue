@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { computed, inject, onMounted, ref } from 'vue';
 
-import { PageSchema } from '@epic-designer/types';
+import { PageSchema } from '@nada-designer/types';
 
-import EpicEditScreenContainer from './editScreenContainer.vue';
-import EpicNodeItem from './nodeItem.vue';
-import EpicPreviewWidgets from './previewWidgets.vue';
+import nadaEditScreenContainer from './editScreenContainer.vue';
+import nadaNodeItem from './nodeItem.vue';
+import nadaPreviewWidgets from './previewWidgets.vue';
 
-const epicEditRangeRef = ref<HTMLDivElement | null>(null);
-const epicPreviewWidgetsRef = ref<null | typeof EpicPreviewWidgets>(null);
+const nadaEditRangeRef = ref<HTMLDivElement | null>(null);
+const nadaPreviewWidgetsRef = ref<null | typeof nadaPreviewWidgets>(null);
 
 const pageSchema = inject('pageSchema') as PageSchema;
 const rootSchema = computed(() => {
@@ -23,20 +23,20 @@ const getEditRangestyle = computed(() => {
 });
 
 onMounted(() => {
-  epicPreviewWidgetsRef.value?.handleInit(epicEditRangeRef.value);
+  nadaPreviewWidgetsRef.value?.handleInit(nadaEditRangeRef.value);
 });
 </script>
 <template>
-  <section class="epic-edit-canvas">
-    <EpicEditScreenContainer>
+  <section class="nada-edit-canvas">
+    <nadaEditScreenContainer>
       <div
-        ref="epicEditRangeRef"
-        class="epic-edit-range relative overflow-auto rounded-md"
+        ref="nadaEditRangeRef"
+        class="nada-edit-range relative overflow-auto rounded-md"
         :style="getEditRangestyle"
       >
-        <EpicNodeItem :schema="rootSchema" />
-        <EpicPreviewWidgets ref="epicPreviewWidgetsRef" />
+        <nadaNodeItem :schema="rootSchema" />
+        <nadaPreviewWidgets ref="nadaPreviewWidgetsRef" />
       </div>
-    </EpicEditScreenContainer>
+    </nadaEditScreenContainer>
   </section>
 </template>

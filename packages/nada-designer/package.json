@@ -1,5 +1,5 @@
 {
-  "name": "epic-designer",
+  "name": "nada-designer",
   "version": "1.0.1",
   "description": "基于vue3的设计器,可视化开发页面表单",
   "private": false,
@@ -14,14 +14,14 @@
     "工作流",
     "form",
     "designer",
-    "epic-designer"
+    "nada-designer"
   ],
   "bugs": {
-    "url": "https://github.com/Kchengz/epic-designer/issues"
+    "url": "https://github.com/Kchengz/nada-designer/issues"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kchengz/epic-designer"
+    "url": "https://github.com/Kchengz/nada-designer"
   },
   "author": "kchengz",
   "type": "module",
@@ -33,7 +33,7 @@
   },
   "main": "dist/index.js",
   "module": "dist/index.js",
-  "typings": "dist/epic-designer/index.d.ts",
+  "typings": "dist/nada-designer/index.d.ts",
   "peerDependencies": {
     "ant-design-vue": ">=3.2.20",
     "element-plus": ">=2.6.0",

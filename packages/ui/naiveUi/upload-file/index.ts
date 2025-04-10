@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   bindModel: 'modelValue',
@@ -71,7 +71,7 @@ export default {
   },
   defaultSchema: {
     componentProps: {
-      action: 'https://examples.epicjs.cn/epic-mock/common/upload',
+      action: 'https://examples.nadajs.cn/nada-mock/common/upload',
     },
     field: 'uploadFile',
     input: true,
@@ -79,6 +79,6 @@ export default {
     type: 'upload-file',
   },
   groupName: '表单',
-  icon: 'icon--epic--upload-rounded',
+  icon: 'icon--nada--upload-rounded',
   sort: 920,
 } as ComponentConfigModel;

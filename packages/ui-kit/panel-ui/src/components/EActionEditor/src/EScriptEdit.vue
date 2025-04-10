@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { PageSchema } from '@epic-designer/types';
+import type { PageSchema } from '@nada-designer/types';
 
 import { inject, ref } from 'vue';
 
-import { pluginManager } from '@epic-designer/utils';
+import { pluginManager } from '@nada-designer/utils';
 
 const MonacoEditor = pluginManager.getComponent('monacoEditor');
 const MonacoEditorConfig = {
@@ -23,7 +23,7 @@ const pageSchema = inject('pageSchema') as PageSchema;
       ref="monacoEditorRef"
       v-model="pageSchema.script"
       auto-toggle-theme
-      class="epic-editor flex-1"
+      class="nada-editor flex-1"
       :config="MonacoEditorConfig"
       language="javascript"
     />

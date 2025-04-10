@@ -1,5 +1,5 @@
-.epic-tree {
-  .epic-tree-main {
+.nada-tree {
+  .nada-tree-main {
     padding-right: 10px;
   }
 
@@ -9,11 +9,11 @@
   }
 
   a {
-    color: var(--epic-text-main);
+    color: var(--nada-text-main);
     display: flex;
 
     &:hover {
-      color: var(--epic-text-main);
+      color: var(--nada-text-main);
     }
 
     .text {
@@ -21,36 +21,36 @@
       width: 100%;
 
       &.hover {
-        background-color: var(--epic-widget-hover-color);
+        background-color: var(--nada-widget-hover-color);
       }
 
       &.checked {
-        background: var(--epic-primary-hover-color);
-        color: var(--epic-primary-color);
+        background: var(--nada-primary-hover-color);
+        color: var(--nada-primary-color);
       }
 
-      .epic-text-padding {
+      .nada-text-padding {
         padding: 0 6px;
         white-space: nowrap;
-        color: var(--epic-text-main);
+        color: var(--nada-text-main);
 
         &.hidden {
-          color: var(--epic-text-helper);
+          color: var(--nada-text-helper);
         }
-        &:hover .epic-copy-id-btn{
+        &:hover .nada-copy-id-btn{
           opacity: 1;
         }
       }
     }
   }
 
-  .epic-node-type-text {
-    font-size: var(--epic-text-sm);
-    color: var(--epic-text-disabled);
+  .nada-node-type-text {
+    font-size: var(--nada-text-sm);
+    color: var(--nada-text-disabled);
     margin-left: 6px;
   }
 
-  .epic-tree-node {
+  .nada-tree-node {
     &.level-1 {
       padding-left: 10px;
     }
@@ -64,8 +64,8 @@
       position: absolute;
       left: 8px;
       transition: transform 0.3s;
-      color: var(--epic-border-color);
-      font-size: var(--epic-text-sm);
+      color: var(--nada-border-color);
+      font-size: var(--nada-text-sm);
 
       &.expanded {
         transform: rotate(90deg);
@@ -73,7 +73,7 @@
     }
   }
 
-  .epic-tree-sublist {
+  .nada-tree-sublist {
     height: 0;
     overflow: hidden;
 
@@ -81,14 +81,14 @@
       height: auto;
     }
 
-    .epic-tree-node {
+    .nada-tree-node {
       position: relative;
 
       &::after,
       &::before {
         content: "";
         position: absolute;
-        background: var(--epic-border-color);
+        background: var(--nada-border-color);
         z-index: 99;
       }
 

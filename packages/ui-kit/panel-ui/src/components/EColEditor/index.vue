@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { ComponentSchema } from '@epic-designer/types';
+import type { ComponentSchema } from '@nada-designer/types';
 
 import type { PropType } from 'vue';
 
 import { computed } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
-import { getUUID, pluginManager } from '@epic-designer/utils';
+import { NadaIcon } from '@nada-designer/base-ui';
+import { getUUID, pluginManager } from '@nada-designer/utils';
 
 const props = defineProps({
   modelValue: {
@@ -58,9 +58,9 @@ function handleDelete(index: number) {
         :min="1"
         :max="24"
       />
-      <div v-if="colList.length > 1" class="epic-del-btn">
+      <div v-if="colList.length > 1" class="nada-del-btn">
         <span @click="handleDelete(index)">
-          <EpicIcon name="icon-shanchu1" />
+          <NadaIcon name="icon-shanchu1" />
         </span>
       </div>
     </div>

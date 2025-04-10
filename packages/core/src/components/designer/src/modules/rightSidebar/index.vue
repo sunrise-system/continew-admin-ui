@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { RightSidebarModel } from '@epic-designer/types';
+import type { RightSidebarModel } from '@nada-designer/types';
 
 import { computed, ref, shallowRef } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
-import { pluginManager } from '@epic-designer/utils';
+import { NadaIcon } from '@nada-designer/base-ui';
+import { pluginManager } from '@nada-designer/utils';
 
 import EpicBreadcrumb from './breadcrumb.vue';
 
@@ -35,29 +35,29 @@ function handleClick(item: RightSidebarModel, index: number) {
 }
 </script>
 <template>
-  <div v-if="sidebarComponent" class="epic-right-sidebar-container relative">
+  <div v-if="sidebarComponent" class="nada-right-sidebar-container relative">
     <!-- 折叠按钮 start -->
     <div
-      class="epic-right-sidebar-hide-btn left--18px top-80px w-28px h-28px z-9 absolute flex cursor-pointer items-center justify-center rounded-full"
+      class="nada-right-sidebar-hide-btn left--18px top-80px w-28px h-28px z-9 absolute flex cursor-pointer items-center justify-center rounded-full"
       @click="handleHideRight"
     >
-      <EpicIcon
+      <NadaIcon
         class="transition-all"
         :class="{ 'rotate-180': hideRightMain }"
-        name="icon--epic--arrow-forward-ios-rounded"
+        name="icon--nada--arrow-forward-ios-rounded"
       />
     </div>
     <div class="w-10px"></div>
     <!-- 折叠按钮 end -->
 
-    <div class="epic-right-sidebar w-308px" :class="{ hide: hideRightMain }">
+    <div class="nada-right-sidebar w-308px" :class="{ hide: hideRightMain }">
       <div class="w-308px">
         <EpicBreadcrumb />
-        <ul class="epic-actions-container">
+        <ul class="nada-actions-container">
           <li
             v-for="(item, index) in rightSidebars"
             :key="index"
-            class="epic-action-item"
+            class="nada-action-item"
             :title="item.title"
             :class="{ checked: activityBarCheckedIndex === index }"
             @click="handleClick(item, index)"
@@ -65,7 +65,7 @@ function handleClick(item: RightSidebarModel, index: number) {
             {{ item.title }}
           </li>
         </ul>
-        <div class="epic-sidebar-content">
+        <div class="nada-sidebar-content">
           <component :is="sidebarComponent" />
         </div>
       </div>

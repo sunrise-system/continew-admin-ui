@@ -7,7 +7,7 @@ import type {
 
 import { computed, nextTick, ref, useAttrs, watch } from 'vue';
 
-import { getUUID } from '@epic-designer/utils';
+import { getUUID } from '@nada-designer/utils';
 import { Image, message, Upload } from 'ant-design-vue';
 
 const props = withDefaults(
@@ -141,11 +141,11 @@ function previewError(): void {
 </script>
 
 <template>
-  <div class="epic-upload-image">
+  <div class="nada-upload-image">
     <Upload v-bind="getUploadProps">
       <div v-if="(fileList?.length ?? 0) < props.maxCount">
         <span
-          class="icon--epic icon--epic--cloud-upload-outlined mr-2px text-$epic-text-main text-lg"
+          class="icon--nada icon--nada--cloud-upload-outlined mr-2px text-$nada-text-main text-lg"
         ></span>
         <div class="ant-upload-text">点击上传</div>
       </div>

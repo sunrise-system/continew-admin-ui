@@ -1,6 +1,6 @@
-import type { ComponentSchema } from '@epic-designer/types';
+import type { ComponentSchema } from '@nada-designer/types';
 
-import { deepCompareAndModify } from '@epic-designer/utils';
+import { deepCompareAndModify } from '@nada-designer/utils';
 
 export function useFormSchema() {
   // 表单模式默认schema数据

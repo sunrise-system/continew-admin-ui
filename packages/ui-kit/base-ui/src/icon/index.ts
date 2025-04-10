@@ -1,1 +1,1 @@
-export { default as EpicIcon } from './icon.vue';
+export { default as NadaIcon } from './icon.vue';

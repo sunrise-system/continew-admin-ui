@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { PageSchema } from '@epic-designer/types';
+import type { PageSchema } from '@nada-designer/types';
 
 import { inject, ref } from 'vue';
 
-import { pluginManager } from '@epic-designer/utils';
+import { pluginManager } from '@nada-designer/utils';
 
 const Modal = pluginManager.getComponent('modal');
 const MonacoEditor = pluginManager.getComponent('monacoEditor');
@@ -38,7 +38,7 @@ function handleOpen() {
 /**
  * 导出数据
  */
-function handleExportData(fileName = `epic-data.json`) {
+function handleExportData(fileName = `nada-data.json`) {
   const content = JSON.stringify(pageSchema, null, 2);
   const encodedUri = `data:text/json;charset=utf-8,${encodeURIComponent(content)}`;
   const actions = document.createElement('a');

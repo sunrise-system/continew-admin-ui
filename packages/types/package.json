@@ -1,7 +1,7 @@
 {
-  "name": "@epic-designer/types",
+  "name": "@nada-designer/types",
   "version": "1.0.1",
-  "description": "epic-designer types",
+  "description": "nada-designer types",
   "author": "kchengz",
   "type": "module",
   "main": "./src/index.ts"

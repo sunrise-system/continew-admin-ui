@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 
-import { ComponentSchema } from '@epic-designer/types';
+import { ComponentSchema } from '@nada-designer/types';
 
 const props = defineProps<{
   componentSchema: ComponentSchema;

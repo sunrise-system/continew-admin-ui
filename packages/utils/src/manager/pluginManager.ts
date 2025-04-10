@@ -7,13 +7,13 @@ import type {
   ComponentType,
   PublicMethodModel,
   PublicMethodsModel,
-} from '@epic-designer/types';
+} from '@nada-designer/types';
 
 import type { AsyncComponentLoader } from 'vue';
 
 import { ref } from 'vue';
 
-import { useFormSchema, usePanel } from '@epic-designer/hooks';
+import { useFormSchema, usePanel } from '@nada-designer/hooks';
 
 import { loadAsyncComponent } from '../common';
 

@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   bindModel: 'model-value',
@@ -24,7 +24,7 @@ export default {
   },
   defaultSchema: {
     field: 'monacoEditor',
-    icon: 'epic-icon-write',
+    icon: 'nada-icon-write',
     input: true,
     label: '代码编辑器',
     type: 'monacoEditor',

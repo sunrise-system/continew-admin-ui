@@ -4,19 +4,19 @@ import type {
   Designer,
   DesignerProps,
   PageSchema,
-} from '@epic-designer/types';
+} from '@nada-designer/types';
 
 import type { Ref } from 'vue';
 
 import { computed, inject, ref } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
+import { NadaIcon } from '@nada-designer/base-ui';
 import {
   findSchemaInfoById,
   generateNewSchema,
   pluginManager,
   Revoke,
-} from '@epic-designer/utils';
+} from '@nada-designer/utils';
 import draggable from 'vuedraggable';
 
 const Input = pluginManager.getComponent('input');
@@ -92,9 +92,9 @@ function handleClick(schema: ComponentSchema) {
 }
 </script>
 <template>
-  <div class="epic-component-view flex flex-col">
+  <div class="nada-component-view flex flex-col">
     <!-- 搜素框 start -->
-    <div class="epic-search-box px-10px py-6px">
+    <div class="nada-search-box px-10px py-6px">
       <Input
         v-model="keyword"
         v-model:value="keyword"
@@ -103,9 +103,9 @@ function handleClick(schema: ComponentSchema) {
         allow-clear
       >
         <template #prefix>
-          <EpicIcon
-            class="text-$epic-text-helper"
-            name="icon--epic--search-rounded"
+          <NadaIcon
+            class="text-$nada-text-helper"
+            name="icon--nada--search-rounded"
           />
         </template>
       </Input>
@@ -113,11 +113,11 @@ function handleClick(schema: ComponentSchema) {
     <!-- 搜素框 end -->
     <div class="flex flex-1 overflow-auto">
       <!-- 分类选项 start  -->
-      <div class="epic-tabs-box">
+      <div class="nada-tabs-box">
         <div
           v-for="(item, index) in getSchemaTypeList"
           :key="index"
-          class="epic-tab cursor-pointer truncate"
+          class="nada-tab cursor-pointer truncate"
           :class="{ checked: activeItem.title === item.title }"
           :title="item.title"
           @click="handelChecked(item)"
@@ -142,16 +142,16 @@ function handleClick(schema: ComponentSchema) {
         >
           <template #item="{ element }">
             <div
-              class="epic-componet-item flex items-center truncate"
+              class="nada-componet-item flex items-center truncate"
               @click="handleClick(element)"
             >
-              <EpicIcon
+              <NadaIcon
                 :name="
                   pluginManager.getComponentConfingByType(element.type).icon ??
                   ''
                 "
               />
-              <div class="epic-componet-label w-0 flex-1 truncate">
+              <div class="nada-componet-label w-0 flex-1 truncate">
                 X3-{{ element.label }}
               </div>
             </div>

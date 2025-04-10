@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { nextTick, ref, watch } from 'vue';
 
-import { pluginManager } from '@epic-designer/utils';
+import { pluginManager } from '@nada-designer/utils';
 
 const props = defineProps<{
   modelValue?: number | string;
@@ -63,7 +63,7 @@ function handleUpdate() {
   <Input
     v-model="size"
     v-model:value="size"
-    class="epic-input-size"
+    class="nada-input-size"
     type="number"
     min="0"
     placeholder="请输入"

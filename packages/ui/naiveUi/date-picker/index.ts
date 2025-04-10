@@ -1,4 +1,4 @@
-import type { ComponentConfigModel } from '@epic-designer/types';
+import type { ComponentConfigModel } from '@nada-designer/types';
 
 export default {
   bindModel: 'formatted-value',
@@ -208,6 +208,6 @@ export default {
     type: 'date',
   },
   groupName: '表单',
-  icon: 'icon--epic--calendar-month-outline-rounded',
+  icon: 'icon--nada--calendar-month-outline-rounded',
   sort: 910,
 } as ComponentConfigModel;

@@ -2,13 +2,13 @@ import type {
   ActivitybarModel,
   RightSidebarModel,
   ViewsContainersModel,
-} from '@epic-designer/types';
+} from '@nada-designer/types';
 
 import type { AsyncComponentLoader } from 'vue';
 
 import { computed, ref, shallowRef } from 'vue';
 
-import { loadAsyncComponent } from '@epic-designer/utils';
+import { loadAsyncComponent } from '@nada-designer/utils';
 
 export type Attr = 'id' | 'title';
 

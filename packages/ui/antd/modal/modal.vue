@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ComponentSchema } from '@epic-designer/types';
+import type { ComponentSchema } from '@nada-designer/types';
 
 import { computed, useAttrs } from 'vue';
 
@@ -52,7 +52,7 @@ const getComponentProps = computed<Record<string, any>>(() => ({
   style: 'top:20px',
   title: props.componentSchema?.label ?? '',
   visible: firstNumber > 3 ? undefined : attrs.modelValue,
-  wrapClassName: 'epic-modal-ant',
+  wrapClassName: 'nada-modal-ant',
   children: null,
 }));
 
@@ -70,7 +70,7 @@ function handleClose() {
 
 <template>
   <Modal v-bind="getComponentProps">
-    <div class="epic-modal-main epic-scoped">
+    <div class="nada-modal-main nada-scoped">
       <slot>
         <slot name="edit-node">
           <slot
@@ -81,7 +81,7 @@ function handleClose() {
         </slot>
       </slot>
     </div>
-    <div class="epic-modal-footer">
+    <div class="nada-modal-footer">
       <Space align="end">
         <Button @click="handleClose"> 关闭 </Button>
         <Button v-if="!props.hideConfirm" type="primary" @click="handleOk">

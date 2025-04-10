@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { ComponentSchema, FormDataModel } from '@epic-designer/types';
-import type { PageManager } from '@epic-designer/utils';
+import type { ComponentSchema, FormDataModel } from '@nada-designer/types';
+import type { PageManager } from '@nada-designer/utils';
 
 import {
   computed,

@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { DesignerProps } from '@epic-designer/types';
+import type { DesignerProps } from '@nada-designer/types';
 
 import type { Ref } from 'vue';
 
 import { inject } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
-import { pluginManager } from '@epic-designer/utils';
+import { NadaIcon } from '@nada-designer/base-ui';
+import { pluginManager } from '@nada-designer/utils';
 
 const emits = defineEmits(['save', 'reset', 'preview']);
 const Button = pluginManager.getComponent('button');
@@ -27,12 +27,12 @@ function handleSave() {
 }
 </script>
 <template>
-  <header class="epic-header relative">
-    <div class="epic-header-item flex flex-1 items-center">
+  <header class="nada-header relative">
+    <div class="nada-header-item flex flex-1 items-center">
       <slot name="prefix">
         <a
           class="decoration-none flex items-center"
-          href="https://github.com/Kchengz/epic-designer"
+          href="https://github.com/Kchengz/nada-designer"
           target="_blank"
         >
           <img
@@ -46,18 +46,18 @@ function handleSave() {
       </slot>
     </div>
 
-    <div class="epic-header-item text-12px flex flex-1 justify-center">
+    <div class="nada-header-item text-12px flex flex-1 justify-center">
       <slot name="title">
         {{ designerProps.title }}
       </slot>
     </div>
-    <div class="epic-header-item flex flex-1 items-center justify-end">
+    <div class="nada-header-item flex flex-1 items-center justify-end">
       <slot name="right-prefix"></slot>
       <slot name="right-action">
         <div>
           <Button size="small" @click="handlePreview">
             <span class="flex! h-full items-center">
-              <EpicIcon name="icon--epic--eye" class="mr-4px" />
+              <NadaIcon name="icon--nada--eye" class="mr-4px" />
               预览
             </span>
           </Button>
@@ -65,8 +65,8 @@ function handleSave() {
         <div class="ml-2">
           <Button size="small" @click="handleSave">
             <span class="flex! h-full items-center">
-              <EpicIcon
-                name="icon--epic--save-outline-rounded"
+              <NadaIcon
+                name="icon--nada--save-outline-rounded"
                 class="mr-4px"
               />
               保存

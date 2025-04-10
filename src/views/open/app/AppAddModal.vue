@@ -19,6 +19,7 @@ import { useWindowSize } from '@vueuse/core'
 import { addApp, getApp, updateApp } from '@/apis/open/app'
 import { type ColumnItem, GiForm } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
+import { parseData } from '@/utils'
 
 const emit = defineEmits<{
   (e: 'save-success'): void
@@ -33,7 +34,7 @@ const title = computed(() => (isUpdate.value ? '修改应用' : '新增应用'))
 const formRef = ref<InstanceType<typeof GiForm>>()
 
 const [form, resetForm] = useResetReactive({
-  status: 1,
+  isActive: true,
 })
 
 const columns: ColumnItem[] = reactive([
@@ -48,8 +49,14 @@ const columns: ColumnItem[] = reactive([
     },
   },
   {
+    label: '描述',
+    field: 'description',
+    type: 'textarea',
+    span: 24,
+  },
+  {
     label: '失效时间',
-    field: 'expireTime',
+    field: 'expireDate',
     type: 'date-picker',
     span: 24,
     props: {
@@ -58,20 +65,14 @@ const columns: ColumnItem[] = reactive([
     },
   },
   {
-    label: '描述',
-    field: 'description',
-    type: 'textarea',
-    span: 24,
-  },
-  {
     label: '状态',
-    field: 'status',
+    field: 'isActive',
     type: 'switch',
     span: 24,
     props: {
       type: 'round',
-      checkedValue: 1,
-      uncheckedValue: 2,
+      checkedValue: true,
+      uncheckedValue: false,
       checkedText: '启用',
       uncheckedText: '禁用',
     },
@@ -115,7 +116,7 @@ const onUpdate = async (id: string) => {
   reset()
   dataId.value = id
   const { data } = await getApp(id)
-  Object.assign(form, data)
+  Object.assign(form, parseData(data))
   visible.value = true
 }
 

@@ -1,7 +1,7 @@
-import type { PluginManager } from '@epic-designer/utils';
+import type { PluginManager } from '@nada-designer/utils';
 
 // 注册element-plus ui
-import { pluginManager as pManager } from '@epic-designer/utils';
+import { pluginManager as pManager } from '@nada-designer/utils';
 import {
   ElCollapse,
   ElCollapseItem,

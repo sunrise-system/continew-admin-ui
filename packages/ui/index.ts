@@ -1,4 +1,4 @@
-import { pluginManager } from '@epic-designer/utils';
+import { pluginManager } from '@nada-designer/utils';
 
 export function setupAntd() {
   import('./antd').then(({ setupAntd }) => {
@@ -15,5 +15,11 @@ export function setupElementPlus() {
 export function setupNaiveUi() {
   import('./naiveUi').then(({ setupNaiveUi }) => {
     setupNaiveUi.bind(null, pluginManager)();
+  });
+}
+
+export function setupArcod() {
+  import('./arcod').then(({ setupArcod }) => {
+    setupArcod.bind(null, pluginManager)();
   });
 }

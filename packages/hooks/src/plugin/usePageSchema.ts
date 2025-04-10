@@ -1,7 +1,7 @@
 import { reactive } from 'vue';
 
-import { PageSchema } from '@epic-designer/types';
-import { deepClone, deepCompareAndModify } from '@epic-designer/utils';
+import { PageSchema } from '@nada-designer/types';
+import { deepClone, deepCompareAndModify } from '@nada-designer/utils';
 
 // 内部默认页面数据
 const innerDefaultSchema: PageSchema = {
@@ -18,7 +18,7 @@ const innerDefaultSchema: PageSchema = {
       children: [],
     },
   ],
-  script: `const { defineExpose, find } = epic;
+  script: `const { defineExpose, find } = nada;
   
   function test (){
       console.log('test')

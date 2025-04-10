@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { FormItemRule } from '@epic-designer/types';
-import type { PageManager } from '@epic-designer/utils';
+import type { FormItemRule } from '@nada-designer/types';
+import type { PageManager } from '@nada-designer/utils';
 
 import { computed, inject } from 'vue';
 
-import { EpicIcon, EpicNode } from '@epic-designer/base-ui';
+import { NadaIcon, NadaNode } from '@nada-designer/base-ui';
 
 import { lenTypeOptions, triggerOptions, typeOptions } from './data';
 
@@ -141,11 +141,11 @@ function handleDelete() {
         v-if="componentSchema.show ? componentSchema.show() : true"
         class="m-t-2 flex first:m-0"
       >
-        <div class="epic-attr-label" title="校验时机">
+        <div class="nada-attr-label" title="校验时机">
           {{ componentSchema.label }}
         </div>
-        <div class="epic-attr-input">
-          <EpicNode
+        <div class="nada-attr-input">
+          <NadaNode
             v-model="modelRule[componentSchema.model]"
             :component-schema="{ ...componentSchema, noFormItem: true }"
             @change="handleUpdate"
@@ -157,7 +157,7 @@ function handleDelete() {
       class="rule-btn-delete text-md w-24px h-24px rounded-bl-2 color-white absolute right-0 top-0 flex cursor-pointer items-center justify-center transition-all"
       @click="handleDelete"
     >
-      <EpicIcon name="icon--epic--delete-outline-rounded" />
+      <NadaIcon name="icon--nada--delete-outline-rounded" />
     </div>
   </div>
 </template>

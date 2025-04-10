@@ -2,6 +2,7 @@ import type { PluginOption } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 
+import UnoCSS from 'unocss/vite'
 import appInfo from './app-info'
 import createDevtools from './devtools'
 import createAutoImport from './auto-import'
@@ -13,6 +14,7 @@ export default function createVitePlugins(viteEnv, isBuild = false) {
   const vitePlugins: (PluginOption | PluginOption[])[] = [appInfo(), vue(), vueJsx()]
   vitePlugins.push(createDevtools(viteEnv))
   vitePlugins.push(createAutoImport())
+  vitePlugins.push(UnoCSS())
   vitePlugins.push(createComponents())
   vitePlugins.push(createSvgIcon(isBuild))
   vitePlugins.push(createMock(viteEnv, isBuild))

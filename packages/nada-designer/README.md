@@ -19,13 +19,13 @@
 
 
 
-📦github仓库：[https://github.com/Kchengz/epic-designer](https://github.com/Kchengz/epic-designer)
+📦github仓库：[https://github.com/Kchengz/nada-designer](https://github.com/Kchengz/nada-designer)
 
-📦gitee仓库：[https://gitee.com/kcz66/epic-designer](https://gitee.com/kcz66/epic-designer)
+📦gitee仓库：[https://gitee.com/kcz66/nada-designer](https://gitee.com/kcz66/nada-designer)
 
 📖文档地址：[https://docs.epicjs.cn](https://docs.epicjs.cn)
 
-📖文档备用地址：[https://www.kcz66.com/epic-designer/](https://www.kcz66.com/epic-designer/)
+📖文档备用地址：[https://www.kcz66.com/nada-designer/](https://www.kcz66.com/nada-designer/)
 
 💎项目预览地址：
 
@@ -42,7 +42,7 @@
 
 ## 最新版本
 
-[![](https://img.shields.io/npm/v/epic-designer.svg?style=flat-square)](https://www.npmjs.com/package/epic-designer)
+[![](https://img.shields.io/npm/v/nada-designer.svg?style=flat-square)](https://www.npmjs.com/package/nada-designer)
 
 [查看更新日志](./docs/updateLog.md)
 
@@ -71,13 +71,13 @@
 
 `EBuilder` 是一个页面构建组件，它可以将设计器生成的 JSON 配置构建成页面，完成组件的渲染、事件绑定和数据回显等操作。
 
-## 安装 epic-designer
+## 安装 nada-designer
 
 ```bash
-npm i epic-designer
+npm i nada-designer
 ```
 
-epic-designer 目标是支持多 UI 兼容,目前支持以下 UI
+nada-designer 目标是支持多 UI 兼容,目前支持以下 UI
 
 - element-plus
 - ant-design-vue
@@ -96,13 +96,13 @@ npm i element-plus
 main.ts 或者 main.js 引入注册组件
 
 ```javascript
-// 引入epic-designer样式
-import "epic-designer/dist/style.css";
+// 引入nada-designer样式
+import "nada-designer/dist/style.css";
 
 // 引入Element plus样式
 import "element-plus/dist/index.css";
 
-import { setupElementPlus } from "epic-designer/dist/ui/elementPlus";
+import { setupElementPlus } from "nada-designer/dist/ui/elementPlus";
 // 注册Element UI
 setupElementPlus();
 ```
@@ -118,13 +118,13 @@ npm i ant-design-vue
 main.ts 或者 main.js 引入注册组件
 
 ```javascript
-// 引入epic-designer样式
-import "epic-designer/dist/style.css";
+// 引入nada-designer样式
+import "nada-designer/dist/style.css";
 
 // 引入antd UI 重置样式
 import "ant-design-vue/dist/reset.css";
 
-import { setupAntd } from "epic-designer/dist/ui/antd";
+import { setupAntd } from "nada-designer/dist/ui/antd";
 // 使用Antd UI
 setupAntd();
 ```
@@ -134,13 +134,13 @@ setupAntd();
   为了减少维护精力，后续开发测试主要以 v4.x版本，不再对v3.x版本进行测试，建议升级ant-design-vue到v4.x最新版本
 
 ```javascript
-// 引入epic-designer样式
-import "epic-designer/dist/style.css";
+// 引入nada-designer样式
+import "nada-designer/dist/style.css";
 
 // 引入antd UI样式
 import "ant-design-vue/dist/antd.css";
 
-import { setupAntd } from "epic-designer/dist/ui/antd";
+import { setupAntd } from "nada-designer/dist/ui/antd";
 // 使用Antd UI
 setupAntd();
 ```
@@ -156,10 +156,10 @@ npm i -D naive-ui
 main.ts 或者 main.js 引入注册组件
 
 ```javascript
-// 引入epic-designer样式
-import "epic-designer/dist/style.css";
+// 引入nada-designer样式
+import "nada-designer/dist/style.css";
 
-import { setupNaiveUi } from "epic-designer/dist/ui/naiveUi";
+import { setupNaiveUi } from "nada-designer/dist/ui/naiveUi";
 // 注册Naive Ui
 setupNaiveUi();
 ```
@@ -173,7 +173,7 @@ setupNaiveUi();
   </div>
 </template>
 <script setup lang="ts">
-import { EDesigner } from "epic-designer";
+import { EDesigner } from "nada-designer";
 </script>
 <style>
 .h-full {
@@ -191,7 +191,7 @@ import { EDesigner } from "epic-designer";
   </div>
 </template>
 <script setup>
-import { EBuilder } from "epic-designer";
+import { EBuilder } from "nada-designer";
 
 const pageSchema = {
   schemas: [
@@ -203,7 +203,7 @@ const pageSchema = {
           label: "输入框",
           type: "input",
           field: "input",
-          icon: "epic-icon-write",
+          icon: "nada-icon-write",
           input: true,
           componentProps: {
             defaultValue: "",
@@ -229,11 +229,11 @@ const pageSchema = {
 
 点击链接加入 qq 群聊
 
-- [【epic-designer 交流群：747609683】](https://jq.qq.com/?_wv=1027&k=CtrM9ce2)
+- [【nada-designer 交流群：747609683】](https://jq.qq.com/?_wv=1027&k=CtrM9ce2)
 
 ## 捐赠
 
-如果你觉得epic-designer对你有帮助，欢迎给我捐赠
+如果你觉得nada-designer对你有帮助，欢迎给我捐赠
 
 ![](https://examples.epicjs.cn/static/donation.png)
 

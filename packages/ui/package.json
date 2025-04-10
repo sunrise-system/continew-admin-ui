@@ -1,15 +1,16 @@
 {
-  "name": "@epic-designer/ui",
-  "version": "1.0.1",
-  "description": "epic-designer base ui",
   "author": "kchengz",
-  "type": "module",
-  "scripts": {},
-  "main": "index.ts",
+  "description": "nada-designer base ui",
   "devDependencies": {
+    "@arco-design/web-vue": "^2.57.0",
     "ant-design-vue": "^4.2.6",
     "element-plus": "^2.9.1",
     "naive-ui": "^2.40.4",
     "vite-plugin-dts": "^4.4.0"
-  }
+  },
+  "main": "index.ts",
+  "name": "@nada-designer/ui",
+  "scripts": {},
+  "type": "module",
+  "version": "1.0.1"
 }

@@ -1,4 +1,4 @@
-import type { PluginManager } from '@epic-designer/utils';
+import type { PluginManager } from '@nada-designer/utils';
 
 /**
  * 初始化右侧边栏，向插件管理器注册右侧边栏项。

@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import type { ComponentSchema, Designer } from '@epic-designer/types';
+import type { ComponentSchema, Designer } from '@nada-designer/types';
 
 import { inject } from 'vue';
 
-import { EpicIcon } from '@epic-designer/base-ui';
-import { pluginManager } from '@epic-designer/utils';
+import { NadaIcon } from '@nada-designer/base-ui';
+import { pluginManager } from '@nada-designer/utils';
 
 const designer = inject('designer') as Designer;
 /**
@@ -16,7 +16,7 @@ function handleSelect(schema: ComponentSchema) {
 }
 </script>
 <template>
-  <div class="epic-breadcrumb h-40px flex items-center truncate py-2 pl-4">
+  <div class="nada-breadcrumb h-40px flex items-center truncate py-2 pl-4">
     <span v-for="(item, index) in designer.state.matched" :key="index">
       <span
         v-if="index > designer.state.matched.length - 4"
@@ -29,10 +29,10 @@ function handleSelect(schema: ComponentSchema) {
           "
           >...
         </span>
-        <EpicIcon
+        <NadaIcon
           v-if="index !== 0"
           class="m-1"
-          name="icon--epic--arrow-forward-ios-rounded"
+          name="icon--nada--arrow-forward-ios-rounded"
         />
         <span
           class="node-item cursor-pointer"

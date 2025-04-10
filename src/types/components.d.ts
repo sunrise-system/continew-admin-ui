@@ -12,7 +12,6 @@ declare module 'vue' {
     CellCopy: typeof import('./../components/CellCopy/index.vue')['default']
     Chart: typeof import('./../components/Chart/index.vue')['default']
     ColumnSetting: typeof import('./../components/GiTable/src/components/ColumnSetting.vue')['default']
-    copy: typeof import('./../components/GiCell/GiCellStatus copy.vue')['default']
     CronForm: typeof import('./../components/GenCron/CronForm/index.vue')['default']
     CronModal: typeof import('./../components/GenCron/CronModal/index.vue')['default']
     DateRangePicker: typeof import('./../components/DateRangePicker/index.vue')['default']

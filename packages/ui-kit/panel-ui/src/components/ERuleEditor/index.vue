@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type { FormItemRule } from '@epic-designer/types';
+import type { FormItemRule } from '@nada-designer/types';
 
 import type { PropType } from 'vue';
 
 import { ref, watch } from 'vue';
 
-import { EpicNode } from '@epic-designer/base-ui';
-import { deepClone, deepEqual, pluginManager } from '@epic-designer/utils';
+import { NadaNode } from '@nada-designer/base-ui';
+import { deepClone, deepEqual, pluginManager } from '@nada-designer/utils';
 import { useVModel } from '@vueuse/core';
 
 import { triggerOptions, typeOptions } from './data';
@@ -149,9 +149,9 @@ function handleDelete(index: number) {
           v-if="componentSchema.show ? componentSchema.show() : true"
           class="m-t-2 flex first:m-0"
         >
-          <div class="epic-attr-label">X123 {{ componentSchema.label }}</div>
+          <div class="nada-attr-label">X123 {{ componentSchema.label }}</div>
           <div class="flex-1">
-            <EpicNode
+            <NadaNode
               v-model="requiredRule[componentSchema.model]"
               :component-schema="{ ...componentSchema, noFormItem: true }"
               @change="handleUpdate"

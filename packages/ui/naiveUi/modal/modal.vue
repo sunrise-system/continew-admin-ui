@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, useAttrs } from 'vue';
 
-import { ComponentSchema } from '@epic-designer/types';
+import { ComponentSchema } from '@nada-designer/types';
 import { NButton, NModal, NSpace } from 'naive-ui';
 // 定义 props
 const props = withDefaults(
@@ -28,7 +28,7 @@ const attrs = useAttrs();
 // 计算属性
 const getComponentProps = computed<Record<string, any>>(() => ({
   ...props.componentSchema,
-  class: 'epic-modal-n',
+  class: 'nada-modal-n',
   preset: 'card',
   show: attrs.modelValue,
   title: props.componentSchema?.label ?? '',
@@ -51,12 +51,12 @@ const handleClose = () => {
   <NModal
     v-bind="getComponentProps"
     :title="getComponentProps.label ?? ''"
-    class="epic-modal-n epic-scoped"
+    class="nada-modal-n nada-scoped"
     preset="card"
     :style="{ width }"
     @update:show="handleClose"
   >
-    <div class="epic-modal-main">
+    <div class="nada-modal-main">
       <slot>
         <slot name="edit-node">
           <template v-if="children.length > 0">
@@ -70,7 +70,7 @@ const handleClose = () => {
       </slot>
     </div>
 
-    <div class="epic-modal-footer">
+    <div class="nada-modal-footer">
       <NSpace justify="end">
         <NButton @click="handleClose"> 关闭 </NButton>
         <NButton v-if="!props.hideConfirm" type="primary" @click="handleOk">
