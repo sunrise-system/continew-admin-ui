@@ -7,10 +7,10 @@ export interface AppResp {
   expireTime: string
   description: string
   status: 1 | 2
-  createUserString: string
-  createTime: string
+  sysCreatedBy: string
+  sysCreatedTime: string
   updateUserString: string
-  updateTime: string
+  sysLastModifiedTime: string
 }
 
 export interface AppQuery {
@@ -18,4 +18,4 @@ export interface AppQuery {
   sort: Array<string>
 }
 
-export interface AppPageQuery extends AppQuery, PageQuery {}
+export interface AppPageQuery extends AppQuery, PageQuery { }

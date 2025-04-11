@@ -28,7 +28,10 @@ export function addNotice(data: any) {
 
 /** @desc 修改公告 */
 export function updateNotice(data: any, id: string) {
-  return http.put(`${BASE_URL}/${id}`, data)
+  const formArray: any = {}
+  formArray.data = data
+  formArray.id = id
+  return fetchMotion(`ADM08916A/savechanges`, formArray)
 }
 
 /** @desc 删除公告 */

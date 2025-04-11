@@ -8,14 +8,14 @@ export interface GenConfigResp {
   author: string
   tablePrefix: string
   isOverride: boolean
-  createTime?: string
-  updateTime?: string
+  sysCreatedTime?: string
+  sysLastModifiedTime?: string
   classNamePrefix?: string
 }
 export interface GenConfigQuery {
   tableName?: string
 }
-export interface GenConfigPageQuery extends PageQuery, GenConfigQuery {}
+export interface GenConfigPageQuery extends PageQuery, GenConfigQuery { }
 
 export interface FieldConfigResp {
   tableName: string
@@ -32,7 +32,7 @@ export interface FieldConfigResp {
   formType: string
   queryType: string
   dictCode: string
-  createTime?: string
+  sysCreatedTime?: string
 }
 export interface GeneratorConfigResp {
   genConfig: GenConfigResp

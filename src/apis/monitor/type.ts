@@ -10,15 +10,15 @@ export interface OnlineUserResp {
   os: string
   status: number
   errorMsg: string
-  createUserString: string
-  createTime: string
+  sysCreatedBy: string
+  sysCreatedTime: string
 }
 export interface OnlineUserQuery {
   nickname?: string
   loginTime?: string
   sort: Array<string>
 }
-export interface OnlineUserPageQuery extends OnlineUserQuery, PageQuery {}
+export interface OnlineUserPageQuery extends OnlineUserQuery, PageQuery { }
 
 /** 系统日志类型 */
 export interface LogResp {
@@ -32,8 +32,8 @@ export interface LogResp {
   os: string
   status: number
   errorMsg: string
-  createUserString: string
-  createTime: string
+  sysCreatedBy: string
+  sysCreatedTime: string
 }
 export interface LogDetailResp extends LogResp {
   traceId: string
@@ -49,9 +49,9 @@ export interface LogQuery {
   description?: string
   module?: string
   ip?: string
-  createUserString?: string
-  createTime: Array<string>
+  sysCreatedBy?: string
+  sysCreatedTime: Array<string>
   status?: number
   sort: Array<string>
 }
-export interface LogPageQuery extends LogQuery, PageQuery {}
+export interface LogPageQuery extends LogQuery, PageQuery { }

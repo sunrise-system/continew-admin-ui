@@ -10,10 +10,10 @@ export interface UserResp {
   description: string
   status: 1 | 2
   isSystem?: boolean
-  createUserString: string
-  createTime: string
+  sysCreatedBy: string
+  sysCreatedTime: string
   updateUserString: string
-  updateTime: string
+  sysLastModifiedTime: string
   deptId: string
   deptName: string
   roleIds: Array<number>
@@ -34,7 +34,7 @@ export interface UserImportResp {
 export interface UserQuery {
   description?: string
   status?: number
-  createTime?: Array<string>
+  sysCreatedTime?: Array<string>
   defaultDepartment?: string
   sort: Array<string>
   userIds?: Array<string>
@@ -51,10 +51,10 @@ export interface RoleResp {
   description: string
   dataScope: number
   isSystem: boolean
-  createUserString: string
-  createTime: string
+  sysCreatedBy: string
+  sysCreatedTime: string
   updateUserString: string
-  updateTime: string
+  sysLastModifiedTime: string
   disabled: boolean
 }
 export type RoleDetailResp = RoleResp & {
@@ -104,10 +104,10 @@ export interface MenuResp {
   permission: string
   sort: number
   status: 1 | 2
-  createUserString: string
-  createTime: string
+  sysCreatedBy: string
+  sysCreatedTime: string
   updateUserString: string
-  updateTime: string
+  sysLastModifiedTime: string
   children: MenuResp[]
 }
 export interface MenuQuery {
@@ -124,10 +124,10 @@ export interface DeptResp {
   status: 1 | 2
   isSystem: boolean
   description: string
-  createUserString: string
-  createTime: string
+  sysCreatedBy: string
+  sysCreatedTime: string
   updateUserString: string
-  updateTime: string
+  sysLastModifiedTime: string
   parentId: string
   children: DeptResp[]
 }
@@ -143,10 +143,10 @@ export interface DictResp {
   code: string
   isSystem: boolean
   description: string
-  createUserString: string
-  createTime: string
+  sysCreatedBy: string
+  sysCreatedTime: string
   updateUserString: string
-  updateTime: string
+  sysLastModifiedTime: string
 }
 export interface DictQuery {
   description?: string
@@ -161,10 +161,10 @@ export interface DictItemResp {
   description: string
   status: 1 | 2
   dictId: number
-  createUserString: string
-  createTime: string
+  sysCreatedBy: string
+  sysCreatedTime: string
   updateUserString: string
-  updateTime: string
+  sysLastModifiedTime: string
 }
 export interface DictItemQuery {
   description?: string
@@ -186,10 +186,10 @@ export interface NoticeResp {
   terminateTime?: string
   noticeScope?: number
   noticeUsers?: Array<string>
-  createUserString?: string
-  createTime?: string
+  sysCreatedBy?: string
+  sysCreatedTime?: string
   updateUserString?: string
-  updateTime?: string
+  sysLastModifiedTime?: string
 }
 export interface NoticeQuery {
   title?: string
@@ -217,10 +217,10 @@ export interface FileItem {
   type: number
   storageId: string
   storageName: string
-  createUserString: string
-  createTime: string
+  sysCreatedBy: string
+  sysCreatedTime: string
   updateUserString: string
-  updateTime: string
+  sysLastModifiedTime: string
 }
 /** 文件资源统计信息 */
 export interface FileStatisticsResp {
@@ -277,10 +277,10 @@ export interface ClientResp {
   timeout: string
   status: string
   createUser: string
-  createTime: string
+  sysCreatedTime: string
   updateUser: string
-  updateTime: string
-  createUserString: string
+  sysLastModifiedTime: string
+  sysCreatedBy: string
   updateUserString: string
 }
 export interface ClientDetailResp {
@@ -294,10 +294,10 @@ export interface ClientDetailResp {
   timeout: string
   status: string
   createUser: string
-  createTime: string
+  sysCreatedTime: string
   updateUser: string
-  updateTime: string
-  createUserString: string
+  sysLastModifiedTime: string
+  sysCreatedBy: string
   updateUserString: string
 }
 export interface ClientQuery {
@@ -387,10 +387,10 @@ export interface SmsConfigResp {
   supplierConfig: string
   status: number
   createUser: string
-  createTime: string
+  sysCreatedTime: string
   updateUser: string
-  updateTime: string
-  createUserString: string
+  sysLastModifiedTime: string
+  sysCreatedBy: string
   updateUserString: string
   disabled: boolean
 }
@@ -411,10 +411,10 @@ export interface SmsLogResp {
   status: number
   resMsg: string
   createUser: string
-  createTime: string
+  sysCreatedTime: string
   updateUser: string
-  updateTime: string
-  createUserString: string
+  sysLastModifiedTime: string
+  sysCreatedBy: string
   updateUserString: string
 }
 export interface SmsLogQuery {
@@ -439,8 +439,8 @@ export interface MessageResp {
   type: number
   isRead: boolean
   readTime?: string
-  createUserString?: string
-  createTime: string
+  sysCreatedBy?: string
+  sysCreatedTime: string
 }
 
 export interface MessageQuery {
