@@ -136,7 +136,7 @@ function handlePreview(e: UploadFile): void {
  */
 function previewError(): void {
   if (!imgUrl.value) return;
-  message.error('图片地址无法访问!');
+  Notification.error('图片地址无法访问!');
 }
 </script>
 
