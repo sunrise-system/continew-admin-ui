@@ -4,13 +4,13 @@ import type {
   DesignerProps,
   DesignerState,
   PageSchema,
-} from '@nada-designer/types'
+} from '@nada-designer/types';
 
-import { computed, nextTick, provide, reactive, ref, watchEffect } from 'vue'
+import { computed, nextTick, provide, reactive, ref, watchEffect } from 'vue';
 
-import { NadaBaseLoader } from '@nada-designer/base-ui'
-import { useStore } from '@nada-designer/hooks'
-import { setupPanel } from '@nada-designer/panel-ui'
+import { NadaBaseLoader } from '@nada-designer/base-ui';
+import { useStore } from '@nada-designer/hooks';
+import { setupPanel } from '@nada-designer/panel-ui';
 import {
   deepClone,
   deepCompareAndModify,
@@ -20,9 +20,9 @@ import {
   pluginManager,
   usePageManager,
   useRevoke,
-} from '@nada-designer/utils'
+} from '@nada-designer/utils';
 
-import type NadaPreview from './modules/preview/index.vue'
+import type NadaPreview from './modules/preview/index.vue';
 
 const props = withDefaults(defineProps<DesignerProps>(), {
   disabledZoom: false,
@@ -30,30 +30,30 @@ const props = withDefaults(defineProps<DesignerProps>(), {
   formMode: false,
   hiddenHeader: false,
   lockDefaultSchemaEdit: false,
-  title: 'EpicDesigner默认项目',
-})
+  title: 'NadaPreview',
+});
 const emits = defineEmits([
   'ready',
   'save',
   'reset',
   'imported',
   'toggleDeviceMode',
-])
+]);
 
-setupPanel(pluginManager)
-const EHeader = loadAsyncComponent(() => import('./modules/header/index.vue'))
+setupPanel(pluginManager);
+const EHeader = loadAsyncComponent(() => import('./modules/header/index.vue'));
 const EActivityBar = loadAsyncComponent(
   () => import('./modules/activityBar/index.vue'),
-)
+);
 const EEditContainer = loadAsyncComponent(
   () => import('./modules/editContainer/index.vue'),
-)
+);
 const ERightSidebar = loadAsyncComponent(
   () => import('./modules/rightSidebar/index.vue'),
-)
+);
 
-const pageManager = usePageManager()
-const revoke = useRevoke()
+const pageManager = usePageManager();
+const revoke = useRevoke();
 
 // 内部默认页面数据
 let innerDefaultSchema: PageSchema = {
@@ -80,52 +80,52 @@ function test (){
 defineExpose({
  test
 })`,
-}
+};
 
 // 更新初始化数据
 watchEffect(() => {
   // 如果props.defaultSchema有值，则优先使用props.defaultSchema
   if (props.defaultSchema) {
-    innerDefaultSchema = props.defaultSchema
+    innerDefaultSchema = props.defaultSchema;
   } else {
     // 切换表单模式默认schema数据
     if (props.formMode) {
-      innerDefaultSchema.schemas = pluginManager.formSchema
+      innerDefaultSchema.schemas = pluginManager.formSchema;
     }
   }
   // 记录默认组件id
-  pageManager.setDefaultComponentIds(innerDefaultSchema.schemas)
-})
+  pageManager.setDefaultComponentIds(innerDefaultSchema.schemas);
+});
 
 // 设计模式
-pageManager.setDesignMode()
+pageManager.setDesignMode();
 
-const previewRef = ref<InstanceType<typeof NadaPreview> | null>(null)
+const previewRef = ref<InstanceType<typeof NadaPreview> | null>(null);
 
 const state = reactive<DesignerState>({
   disabledHover: false,
   hoverNode: null,
   matched: [],
   selectedNode: null,
-})
+});
 
-const pageSchema = pageManager.pageSchema
+const pageSchema = pageManager.pageSchema;
 
 // 记录缩放状态 start
-const { disabledZoom } = useStore()
+const { disabledZoom } = useStore();
 watchEffect(() => {
-  disabledZoom.value = props.disabledZoom
-})
+  disabledZoom.value = props.disabledZoom;
+});
 // 记录缩放状态 end
 
 // 提供依赖注入的上下文
-provide('pageSchema', pageSchema)
-provide('revoke', revoke)
-provide('pageManager', pageManager)
+provide('pageSchema', pageSchema);
+provide('revoke', revoke);
+provide('pageManager', pageManager);
 provide(
   'designerProps',
   computed(() => props),
-)
+);
 
 provide('designer', {
   handleImported,
@@ -137,15 +137,15 @@ provide('designer', {
   setHoverNode,
   setSelectedNode,
   state,
-})
+});
 
 function init() {
   // 初始化默认节点
-  pageSchema.schemas = deepClone(innerDefaultSchema.schemas)
+  pageSchema.schemas = deepClone(innerDefaultSchema.schemas);
 
   // 选中根节点
-  setSelectedNode(pageSchema.schemas[0])
-  revoke.push(pageSchema.schemas, '初始化')
+  setSelectedNode(pageSchema.schemas[0]);
+  revoke.push(pageSchema.schemas, '初始化');
 }
 
 /**
@@ -155,8 +155,8 @@ function init() {
 async function setSelectedNode(
   schema: ComponentSchema = pageSchema.schemas[0],
 ) {
-  state.selectedNode = schema
-  state.matched = getMatchedById(pageSchema.schemas, schema.id!)
+  state.selectedNode = schema;
+  state.matched = getMatchedById(pageSchema.schemas, schema.id!);
 }
 
 /**
@@ -165,14 +165,14 @@ async function setSelectedNode(
  */
 async function setHoverNode(schema: ComponentSchema | null = null) {
   if (!schema || state.disabledHover) {
-    state.hoverNode = null
-    return false
+    state.hoverNode = null;
+    return false;
   }
   if (schema?.id === state.hoverNode?.id) {
-    return false
+    return false;
   }
   // console.log(schema?.id)
-  state.hoverNode = schema
+  state.hoverNode = schema;
 }
 
 /**
@@ -181,8 +181,8 @@ async function setHoverNode(schema: ComponentSchema | null = null) {
 function handleReady() {
   // 等待DOM更新循环结束后
   nextTick(() => {
-    emits('ready', { pageManager })
-  })
+    emits('ready', { pageManager });
+  });
 }
 
 /**
@@ -190,15 +190,15 @@ function handleReady() {
  * @param disabledHover
  */
 async function setDisabledHover(disabledHover = false) {
-  state.disabledHover = disabledHover
+  state.disabledHover = disabledHover;
 }
 
 /**
  * 接受一个PageSchema对象作为参数。根据传入的schemas和script属性，更新页面对应的数据
  */
 function setData(schema: PageSchema) {
-  pageManager.setPageSchema(schema)
-  revoke.push(pageSchema.schemas, '加载数据')
+  pageManager.setPageSchema(schema);
+  revoke.push(pageSchema.schemas, '加载数据');
 }
 
 /**
@@ -206,7 +206,7 @@ function setData(schema: PageSchema) {
  */
 function getData(): PageSchema {
   // 返回一个对象，包含当前 schemas 对象的普通对象表示和当前 script 的值
-  return deepClone(pageSchema)
+  return deepClone(pageSchema);
 }
 
 /**
@@ -215,31 +215,31 @@ function getData(): PageSchema {
 function reset() {
   // 判断数据是否已修改，如果未修改，则取消重置操作
   if (
-    deepEqual(pageSchema.schemas, innerDefaultSchema.schemas)
-    && pageSchema.script === innerDefaultSchema.script
+    deepEqual(pageSchema.schemas, innerDefaultSchema.schemas) &&
+    pageSchema.script === innerDefaultSchema.script
   )
-    return
+    return;
 
   // 调用 deepCompareAndModify 函数比较 pageSchema.schemas 和 innerDefaultSchema.schemas，进行修改
-  deepCompareAndModify(pageSchema.schemas, innerDefaultSchema.schemas)
+  deepCompareAndModify(pageSchema.schemas, innerDefaultSchema.schemas);
   // 更新 script.value
-  pageSchema.script = innerDefaultSchema.script
+  pageSchema.script = innerDefaultSchema.script;
   // 选中根节点
-  setSelectedNode(pageSchema.schemas[0])
-  revoke.push(pageSchema.schemas, '重置操作')
+  setSelectedNode(pageSchema.schemas[0]);
+  revoke.push(pageSchema.schemas, '重置操作');
 
-  emits('reset', pageSchema)
+  emits('reset', pageSchema);
 }
 
 /**
  * 保存数据
  */
 function handleSave() {
-  emits('save', getData())
+  emits('save', getData());
 }
 
 function handleToggleDeviceMode(mode: string) {
-  emits('toggleDeviceMode', mode)
+  emits('toggleDeviceMode', mode);
 }
 
 /**
@@ -247,24 +247,24 @@ function handleToggleDeviceMode(mode: string) {
  * @param data
  */
 function handleImported(data: PageSchema) {
-  emits('imported', data)
+  emits('imported', data);
 }
 
 /**
  * 预览
  */
 function handlePreview() {
-  previewRef.value!.handleOpen()
+  previewRef.value!.handleOpen();
 }
 
 function handleWheel(event: WheelEvent) {
   if (event.ctrlKey) {
     // 按下ctrl键时，禁止浏览器默认操作
-    event.preventDefault()
+    event.preventDefault();
   }
 }
 
-init()
+init();
 
 defineExpose({
   getData,
@@ -273,9 +273,8 @@ defineExpose({
   revoke,
   save: handleSave,
   setData,
-})
+});
 </script>
-
 <template>
   <div v-if="!pluginManager.initialized.value" class="nada-loading-box">
     <!-- <NadaBaseLoader /> -->
