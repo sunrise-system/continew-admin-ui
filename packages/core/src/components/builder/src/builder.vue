@@ -54,6 +54,7 @@ const {
 watch(
   () => props.pageSchema,
   (newSchema) => {
+    if (!newSchema) return;
     deepCompareAndModify(pageManager.pageSchema, newSchema);
   },
   {
@@ -130,7 +131,13 @@ defineExpose({
 </script>
 
 <template>
-  <div v-if="!pluginManager.initialized.value" class="nada-loading-box">
+  <div
+    v-if="
+      !pluginManager.initialized.value ||
+      pageManager.pageSchema.schemas.length === 0
+    "
+    class="epic-loading-box"
+  >
     <!-- <NadaBaseLoader /> -->
   </div>
   <Suspense v-else @resolve="handleReady">
