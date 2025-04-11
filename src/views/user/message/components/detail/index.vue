@@ -13,20 +13,20 @@
           <span>
             <icon-user class="icon" />
             <span class="label">发布人：</span>
-            <span>{{ form?.createUserString }}</span>
+            <span>{{ form?.sysCreatedBy }}</span>
           </span>
           <a-divider direction="vertical" />
           <span>
             <icon-history class="icon" />
             <span class="label">发布时间：</span>
-            <span>{{ form?.effectiveTime ? form?.effectiveTime : form?.createTime
+            <span>{{ form?.effectiveTime ? form?.effectiveTime : form?.sysCreatedTime
             }}</span>
           </span>
-          <a-divider v-if="form?.updateTime" direction="vertical" />
-          <span v-if="form?.updateTime">
+          <a-divider v-if="form?.sysLastModifiedTime" direction="vertical" />
+          <span v-if="form?.sysLastModifiedTime">
             <icon-schedule class="icon" />
             <span>更新时间：</span>
-            <span>{{ form?.updateTime }}</span>
+            <span>{{ form?.sysLastModifiedTime }}</span>
           </span>
         </a-space>
       </div>
@@ -53,9 +53,9 @@ const { id } = route.query
 const containerRef = ref<HTMLElement | null>()
 const [form, resetForm] = useResetReactive({
   title: '',
-  createUserString: '',
+  sysCreatedBy: '',
   effectiveTime: '',
-  createTime: '',
+  sysCreatedTime: '',
   content: '',
 })
 

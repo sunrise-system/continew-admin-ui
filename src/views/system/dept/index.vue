@@ -9,7 +9,7 @@
     <GiTable
       v-show="viewType === 'table'"
       ref="tableRef"
-      row-key="Id"
+      row-key="id"
       :data="dataList"
       :columns="columns"
       :loading="loading"

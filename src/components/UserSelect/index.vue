@@ -103,7 +103,7 @@ interface Props {
 
 // 查询表单
 const queryForm = reactive<UserQuery>({
-  sort: ['t1.createTime,desc', 't1.id,desc'],
+  sort: ['t1.sysCreatedTime,desc', 't1.id,desc'],
   defaultDepartment: '',
   roleId: props.roleId,
 })

@@ -19,10 +19,10 @@
       <a-descriptions-item label="邮箱">{{ dataDetail?.email || '暂无' }}</a-descriptions-item>
       <a-descriptions-item label="所属部门">{{ dataDetail?.deptName }}</a-descriptions-item>
       <a-descriptions-item label="角色"><GiCellTags :data="dataDetail?.roleNames" /></a-descriptions-item>
-      <a-descriptions-item label="创建人">{{ dataDetail?.createUserString }}</a-descriptions-item>
-      <a-descriptions-item label="创建时间">{{ dataDetail?.createTime }}</a-descriptions-item>
+      <a-descriptions-item label="创建人">{{ dataDetail?.sysCreatedBy }}</a-descriptions-item>
+      <a-descriptions-item label="创建时间">{{ dataDetail?.sysCreatedTime }}</a-descriptions-item>
       <a-descriptions-item label="修改人">{{ dataDetail?.updateUserString }}</a-descriptions-item>
-      <a-descriptions-item label="修改时间">{{ dataDetail?.updateTime }}</a-descriptions-item>
+      <a-descriptions-item label="修改时间">{{ dataDetail?.sysLastModifiedTime }}</a-descriptions-item>
       <a-descriptions-item label="描述" :span="2">{{ dataDetail?.description }}</a-descriptions-item>
     </a-descriptions>
   </a-drawer>

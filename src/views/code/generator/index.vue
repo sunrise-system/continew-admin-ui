@@ -44,8 +44,8 @@
           <a-link v-permission="['code:generator:config']" title="配置" @click="onConfig(record.activityId, record.description)">配置</a-link>
           <a-link
             v-permission="['code:generator:preview']"
-            :disabled="!record.createTime"
-            :title="record.createTime ? '生成' : '请先进行生成配置'"
+            :disabled="!record.sysCreatedTime"
+            :title="record.sysCreatedTime ? '生成' : '请先进行生成配置'"
             @click="onPreview([record.tableName])"
           >
             生成
@@ -82,7 +82,7 @@ const {
   select,
   selectAll,
   search,
-} = useTable((page) => listGenConfig({ ...queryForm, ...page }), { immediate: true, formatResult: (data) => data.map((i) => ({ ...i, disabled: !i.createTime })) })
+} = useTable((page) => listGenConfig({ ...queryForm, ...page }), { immediate: true, formatResult: (data) => data.map((i) => ({ ...i, disabled: !i.sysCreatedTime })) })
 const columns: TableInstance['columns'] = [
   {
     title: '序号',

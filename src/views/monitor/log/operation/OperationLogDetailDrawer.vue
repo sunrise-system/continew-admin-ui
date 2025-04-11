@@ -3,8 +3,8 @@
     <a-descriptions title="基本信息" :column="2" size="large" class="general-description">
       <a-descriptions-item label="日志 ID">{{ dataDetail?.id }}</a-descriptions-item>
       <a-descriptions-item label="Trace ID"><a-typography-paragraph :copyable="!!dataDetail?.traceId">{{ dataDetail?.traceId }}</a-typography-paragraph></a-descriptions-item>
-      <a-descriptions-item label="操作人">{{ dataDetail?.createUserString }}</a-descriptions-item>
-      <a-descriptions-item label="操作时间">{{ dataDetail?.createTime }}</a-descriptions-item>
+      <a-descriptions-item label="操作人">{{ dataDetail?.sysCreatedBy }}</a-descriptions-item>
+      <a-descriptions-item label="操作时间">{{ dataDetail?.sysCreatedTime }}</a-descriptions-item>
       <a-descriptions-item label="操作内容">{{ dataDetail?.description }}</a-descriptions-item>
       <a-descriptions-item label="所属模块">{{ dataDetail?.module }}</a-descriptions-item>
       <a-descriptions-item label="操作 IP"><a-typography-paragraph :copyable="!!dataDetail?.ip">{{ dataDetail?.ip }}</a-typography-paragraph></a-descriptions-item>

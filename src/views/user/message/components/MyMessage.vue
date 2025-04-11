@@ -68,7 +68,7 @@ defineOptions({ name: 'SystemMessage' })
 const { message_type } = useDict('message_type')
 
 const queryForm = reactive<MessageQuery>({
-  sort: ['createTime,desc'],
+  sort: ['sysCreatedTime,desc'],
 })
 
 const {
@@ -82,7 +82,7 @@ const {
   handleDelete,
 } = useTable((page) => listMessage({ ...queryForm, ...page }), { immediate: true })
 
-const columns: TableInstance['collumns'] = [
+const columns: TableInstance['columns'] = [
   {
     title: '序号',
     width: 66,
@@ -91,7 +91,7 @@ const columns: TableInstance['collumns'] = [
   },
   { title: '标题', dataIndex: 'title', slotName: 'title', minWidth: 100, ellipsis: true, tooltip: true },
   { title: '状态', dataIndex: 'isRead', slotName: 'isRead', align: 'center' },
-  { title: '时间', dataIndex: 'createTime', width: 180 },
+  { title: '时间', dataIndex: 'sysCreatedTime', width: 180 },
   { title: '类型', dataIndex: 'type', slotName: 'type', width: 180, ellipsis: true, tooltip: true },
 ]
 

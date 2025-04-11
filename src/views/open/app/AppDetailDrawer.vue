@@ -6,10 +6,10 @@
       <a-descriptions-item label="Access Key" :span="2"><CellCopy :content="dataDetail?.accessKey" /></a-descriptions-item>
       <a-descriptions-item label="状态"><GiCellStatus :status="dataDetail?.status" /></a-descriptions-item>
       <a-descriptions-item label="失效时间">{{ dataDetail?.expireTime }}</a-descriptions-item>
-      <a-descriptions-item label="创建人">{{ dataDetail?.createUserString }}</a-descriptions-item>
-      <a-descriptions-item label="创建时间">{{ dataDetail?.createTime }}</a-descriptions-item>
+      <a-descriptions-item label="创建人">{{ dataDetail?.sysCreatedBy }}</a-descriptions-item>
+      <a-descriptions-item label="创建时间">{{ dataDetail?.sysCreatedTime }}</a-descriptions-item>
       <a-descriptions-item label="修改人">{{ dataDetail?.updateUserString }}</a-descriptions-item>
-      <a-descriptions-item label="修改时间">{{ dataDetail?.updateTime }}</a-descriptions-item>
+      <a-descriptions-item label="修改时间">{{ dataDetail?.sysLastModifiedTime }}</a-descriptions-item>
       <a-descriptions-item label="描述">{{ dataDetail?.description }}</a-descriptions-item>
     </a-descriptions>
   </a-drawer>

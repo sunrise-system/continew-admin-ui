@@ -12,13 +12,13 @@
     @refresh="search"
   >
     <template #toolbar-left>
-      <a-input v-model="queryForm.createUserString" placeholder="搜索操作人" allow-clear @change="search">
+      <a-input v-model="queryForm.sysCreatedBy" placeholder="搜索操作人" allow-clear @change="search">
         <template #prefix><icon-search /></template>
       </a-input>
       <a-input v-model="queryForm.ip" placeholder="搜索操作 IP 或地点" allow-clear @change="search">
         <template #prefix><icon-search /></template>
       </a-input>
-      <DateRangePicker v-model="queryForm.createTime" @change="search" />
+      <DateRangePicker v-model="queryForm.sysCreatedTime" @change="search" />
       <a-button @click="reset">
         <template #icon><icon-refresh /></template>
         <template #default>重置</template>
@@ -30,8 +30,8 @@
         <template #default>导出</template>
       </a-button>
     </template>
-    <template v-if="has.hasPermOr(['monitor:log:get'])" #createTime="{ record }">
-      <a-link @click="onDetail(record)">{{ record.createTime }}</a-link>
+    <template v-if="has.hasPermOr(['monitor:log:get'])" #sysCreatedTime="{ record }">
+      <a-link @click="onDetail(record)">{{ record.sysCreatedTime }}</a-link>
     </template>
     <template #status="{ record }">
       <a-tag v-if="record.status === 1" color="green">
@@ -67,11 +67,11 @@ import has from '@/utils/has'
 defineOptions({ name: 'OperationLog' })
 
 const queryForm = reactive<LogQuery>({
-  createTime: [
+  sysCreatedTime: [
     dayjs().subtract(6, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
     dayjs().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
   ],
-  sort: ['createTime,desc'],
+  sort: ['sysCreatedTime,desc'],
 })
 
 const {
@@ -87,8 +87,8 @@ const columns: TableInstance['columns'] = [
     align: 'center',
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
   },
-  { title: '操作时间', dataIndex: 'createTime', slotName: 'createTime', width: 180 },
-  { title: '操作人', dataIndex: 'createUserString', ellipsis: true, tooltip: true },
+  { title: '操作时间', dataIndex: 'sysCreatedTime', slotName: 'sysCreatedTime', width: 180 },
+  { title: '操作人', dataIndex: 'sysCreatedBy', ellipsis: true, tooltip: true },
   { title: '操作内容', dataIndex: 'description', ellipsis: true, tooltip: true },
   { title: '所属模块', dataIndex: 'module', align: 'center', ellipsis: true, tooltip: true },
   {
@@ -122,8 +122,8 @@ const columns: TableInstance['columns'] = [
 const reset = () => {
   queryForm.description = undefined
   queryForm.ip = undefined
-  queryForm.createUserString = undefined
-  queryForm.createTime = [
+  queryForm.sysCreatedBy = undefined
+  queryForm.sysCreatedTime = [
     dayjs().subtract(6, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
     dayjs().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
   ]

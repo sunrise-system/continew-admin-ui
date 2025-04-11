@@ -37,7 +37,7 @@
                   status="success"
                   size="small"
                   title="同步"
-                  :disabled="dataList.length !== 0 && dataList[0].createTime == null"
+                  :disabled="dataList.length !== 0 && dataList[0].sysCreatedTime == null"
                 >
                   <template #icon><icon-sync /></template>同步
                 </a-button>

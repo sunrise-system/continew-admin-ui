@@ -116,7 +116,7 @@ const queryForm = reactive<FileQuery>({
   name: undefined,
   absPath: undefined,
   type: route.query.type?.toString() !== '0' ? route.query.type?.toString() : undefined,
-  sort: ['updateTime,desc'],
+  sort: ['sysLastModifiedTime,desc'],
 })
 const paginationOption = reactive({
   defaultPageSize: 30,

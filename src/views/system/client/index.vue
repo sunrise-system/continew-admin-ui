@@ -161,10 +161,10 @@ const columns: TableInstance['columns'] = [
       return <GiCellStatus status={record.status} />
     },
   },
-  { title: '创建人', dataIndex: 'createUserString', width: 140, ellipsis: true, tooltip: true, show: false },
-  { title: '创建时间', dataIndex: 'createTime', width: 180 },
+  { title: '创建人', dataIndex: 'sysCreatedBy', width: 140, ellipsis: true, tooltip: true, show: false },
+  { title: '创建时间', dataIndex: 'sysCreatedTime', width: 180 },
   { title: '修改人', dataIndex: 'updateUserString', width: 140, ellipsis: true, tooltip: true, show: false },
-  { title: '修改时间', dataIndex: 'updateTime', width: 180, show: false },
+  { title: '修改时间', dataIndex: 'sysLastModifiedTime', width: 180, show: false },
   {
     title: '操作',
     dataIndex: 'action',

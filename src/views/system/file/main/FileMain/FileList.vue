@@ -43,7 +43,7 @@
           <template #cell="{ record }">{{ formatFileSize(record.size) }}</template>
         </a-table-column>
         <a-table-column title="存储名称" data-index="storageName" :width="200" />
-        <a-table-column title="修改时间" data-index="updateTime" :width="200" />
+        <a-table-column title="修改时间" data-index="sysLastModifiedTime" :width="200" />
         <a-table-column title="操作" :width="120" align="center">
           <template #cell="{ record }">
             <a-popover trigger="click" position="bottom" :content-style="{ 'padding': 0, 'margin-top': 0 }">

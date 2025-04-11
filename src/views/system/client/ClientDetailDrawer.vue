@@ -18,10 +18,10 @@
       <a-descriptions-item label="状态" :span="2">
         <GiCellStatus :status="dataDetail?.status" />
       </a-descriptions-item>
-      <a-descriptions-item label="创建人">{{ dataDetail?.createUserString }}</a-descriptions-item>
-      <a-descriptions-item label="创建时间">{{ dataDetail?.createTime }}</a-descriptions-item>
+      <a-descriptions-item label="创建人">{{ dataDetail?.sysCreatedBy }}</a-descriptions-item>
+      <a-descriptions-item label="创建时间">{{ dataDetail?.sysCreatedTime }}</a-descriptions-item>
       <a-descriptions-item label="更新人">{{ dataDetail?.updateUserString }}</a-descriptions-item>
-      <a-descriptions-item label="更新时间">{{ dataDetail?.updateTime }}</a-descriptions-item>
+      <a-descriptions-item label="更新时间">{{ dataDetail?.sysLastModifiedTime }}</a-descriptions-item>
     </a-descriptions>
   </a-drawer>
 </template>

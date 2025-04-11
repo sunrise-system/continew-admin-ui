@@ -58,7 +58,7 @@ const userStore = useUserStore()
 const currentToken = userStore.token
 
 const queryForm = reactive<OnlineUserQuery>({
-  sort: ['createTime,desc'],
+  sort: ['sysCreatedTime,desc'],
 })
 
 const {

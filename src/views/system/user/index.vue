@@ -137,7 +137,7 @@ const queryFormColumns: ColumnItem[] = reactive([
   },
   {
     type: 'range-picker',
-    field: 'createTime',
+    field: 'sysCreatedTime',
     span: { xs: 24, sm: 10, xxl: 8 },
     formItemProps: {
       hideLabel: true,

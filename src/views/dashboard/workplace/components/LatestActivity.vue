@@ -42,7 +42,7 @@
           </a-badge>
         </template>
         <template #datetime>
-          <span :title="item.createTime">{{ item.createTimeString }}</span>
+          <span :title="item.sysCreatedTime">{{ item.createTimeString }}</span>
         </template>
         <template #content>
           <div class="content">
@@ -126,7 +126,7 @@ export interface DataItem {
     url: string
   }
   payload: object
-  createTime: string
+  sysCreatedTime: string
   createTimeString: string
 }
 
@@ -157,7 +157,7 @@ const getDataList = async () => {
     data.forEach((item) => {
       dataList.value.push({
         ...item,
-        createTimeString: dayjs(new Date(item.createTime)).fromNow(),
+        createTimeString: dayjs(new Date(item.sysCreatedTime)).fromNow(),
       })
     })
   } catch (err) {

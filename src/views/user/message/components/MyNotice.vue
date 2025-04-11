@@ -55,7 +55,7 @@ defineOptions({ name: 'SystemMessage' })
 const { notice_type } = useDict('notice_type')
 
 const queryForm = reactive<NoticeQuery>({
-  sort: ['createTime,desc'],
+  sort: ['sysCreatedTime,desc'],
 })
 
 const {
@@ -74,8 +74,8 @@ const columns: TableInstance['columns'] = [
   },
   { title: '标题', dataIndex: 'title', slotName: 'title', ellipsis: true, tooltip: true },
   { title: '类型', dataIndex: 'type', slotName: 'type', align: 'center' },
-  { title: '发布人', dataIndex: 'createUserString', ellipsis: true, tooltip: true },
-  { title: '发布时间', dataIndex: 'createTime', width: 180 },
+  { title: '发布人', dataIndex: 'sysCreatedBy', ellipsis: true, tooltip: true },
+  { title: '发布时间', dataIndex: 'sysCreatedTime', width: 180 },
 ]
 
 // 重置

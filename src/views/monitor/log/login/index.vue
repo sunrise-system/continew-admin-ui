@@ -11,13 +11,13 @@
     @refresh="search"
   >
     <template #toolbar-left>
-      <a-input v-model="queryForm.createUserString" placeholder="搜索登录用户" allow-clear @change="search">
+      <a-input v-model="queryForm.sysCreatedBy" placeholder="搜索登录用户" allow-clear @change="search">
         <template #prefix><icon-search /></template>
       </a-input>
       <a-input v-model="queryForm.ip" placeholder="搜索登录 IP 或地点" allow-clear @change="search">
         <template #prefix><icon-search /></template>
       </a-input>
-      <DateRangePicker v-model="queryForm.createTime" @change="search" />
+      <DateRangePicker v-model="queryForm.sysCreatedTime" @change="search" />
       <a-button @click="reset">
         <template #icon><icon-refresh /></template>
         <template #default>重置</template>
@@ -55,11 +55,11 @@ defineOptions({ name: 'LoginLog' })
 
 const queryForm = reactive<LogQuery>({
   module: '登录',
-  createTime: [
+  sysCreatedTime: [
     dayjs().subtract(6, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
     dayjs().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
   ],
-  sort: ['createTime,desc'],
+  sort: ['sysCreatedTime,desc'],
 })
 
 const {
@@ -76,8 +76,8 @@ const columns: TableInstance['columns'] = [
     align: 'center',
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
   },
-  { title: '登录时间', dataIndex: 'createTime', width: 180 },
-  { title: '用户昵称', dataIndex: 'createUserString', ellipsis: true, tooltip: true },
+  { title: '登录时间', dataIndex: 'sysCreatedTime', width: 180 },
+  { title: '用户昵称', dataIndex: 'sysCreatedBy', ellipsis: true, tooltip: true },
   { title: '登录行为', dataIndex: 'description' },
   {
     title: '状态',
@@ -109,8 +109,8 @@ const columns: TableInstance['columns'] = [
 // 重置
 const reset = () => {
   queryForm.ip = undefined
-  queryForm.createUserString = undefined
-  queryForm.createTime = [
+  queryForm.sysCreatedBy = undefined
+  queryForm.sysCreatedTime = [
     dayjs().subtract(6, 'day').startOf('day').format('YYYY-MM-DD HH:mm:ss'),
     dayjs().endOf('day').format('YYYY-MM-DD HH:mm:ss'),
   ]

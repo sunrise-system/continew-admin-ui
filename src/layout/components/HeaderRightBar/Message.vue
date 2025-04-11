@@ -5,7 +5,7 @@
       <a-list-item v-for="item in messageList" :key="item.id">
         <div class="content-wrapper" @click="open">
           <div class="content">{{ item.title }}</div>
-          <div class="date">{{ item.createTime }}</div>
+          <div class="date">{{ item.sysCreatedTime }}</div>
         </div>
       </a-list-item>
       <template #footer>
@@ -29,7 +29,7 @@ const emit = defineEmits<{
 
 const queryParam = reactive({
   isRead: false,
-  sort: ['createTime,desc'],
+  sort: ['sysCreatedTime,desc'],
   page: 1,
   size: 5,
 })

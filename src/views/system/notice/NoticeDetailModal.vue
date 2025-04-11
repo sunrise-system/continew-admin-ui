@@ -10,13 +10,13 @@
             <span>
               <icon-user class="icon" />
               <span class="label">发布人：</span>
-              <span>{{ dataDetail?.createUserString }}</span>
+              <span>{{ dataDetail?.sysCreatedBy }}</span>
             </span>
             <a-divider direction="vertical" />
             <span>
               <icon-history class="icon" />
               <span class="label">发布时间：</span>
-              <span>{{ dataDetail?.effectiveTime ? dataDetail?.effectiveTime : dataDetail?.createTime }}</span>
+              <span>{{ dataDetail?.effectiveTime ? dataDetail?.effectiveTime : dataDetail?.sysCreatedTime }}</span>
             </span>
           </a-space>
         </div>
@@ -25,11 +25,11 @@
     <a-divider />
     <AiEditor :model-value="dataDetail?.content" />
     <a-divider />
-    <div v-if="dataDetail?.updateTime" class="update-time-row">
+    <div v-if="dataDetail?.sysLastModifiedTime" class="update-time-row">
       <span>
         <icon-schedule class="icon" />
         <span>最后更新于：</span>
-        <span>{{ dataDetail?.updateTime }}</span>
+        <span>{{ dataDetail?.sysLastModifiedTime }}</span>
       </span>
     </div>
   </a-modal>
@@ -39,6 +39,7 @@
 import { useWindowSize } from '@vueuse/core'
 import AiEditor from './detail/components/index.vue'
 import { type NoticeResp, getNotice } from '@/apis/system'
+import { isMobile, parseData } from '@/utils'
 
 const { width } = useWindowSize()
 const dataDetail = ref<NoticeResp>({
@@ -48,7 +49,7 @@ const visible = ref(false)
 // 详情
 const onDetail = async (id: string) => {
   const { data } = await getNotice(id)
-  dataDetail.value = data
+  dataDetail.value = parseData(data)
   visible.value = true
 }
 

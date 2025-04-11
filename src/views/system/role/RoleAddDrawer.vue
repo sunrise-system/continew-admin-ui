@@ -53,6 +53,7 @@
             <a-tree
               ref="deptTreeRef"
               :data="deptList"
+              :field-names="{ value: 'id', label: 'name' }"
               :default-expand-all="isDeptExpanded"
               :check-strictly="!form.deptCheckStrictly"
               checkable

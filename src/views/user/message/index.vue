@@ -60,13 +60,13 @@ const tabItems = computed(() => [
 
 const messageQueryParam = reactive({
   isRead: false,
-  sort: ['createTime,desc'],
+  sort: ['sysCreatedTime,desc'],
   page: 1,
   size: 5,
 })
 
 const noticeQueryParam = reactive({
-  sort: ['createTime,desc'],
+  sort: ['sysCreatedTime,desc'],
   page: 1,
   size: 5,
 })
