@@ -31,7 +31,7 @@
         </a-space>
       </div>
       <div style="flex: 1;">
-        <AiEditor v-model="form.messageContent" />
+        <AiEditor v-model="form.noticeContent" />
       </div>
     </div>
   </div>
@@ -55,7 +55,7 @@ const [form, resetForm] = useResetReactive({
   sysCreatedBy: '',
   effectiveTime: '',
   sysCreatedTime: '',
-  messageContent: '',
+  noticeContent: '',
 })
 
 // 回退

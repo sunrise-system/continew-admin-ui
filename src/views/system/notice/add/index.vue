@@ -37,7 +37,7 @@
         </template>
       </GiForm>
       <div style="flex: 1;">
-<AiEditor v-model="form.messageContent" />
+<AiEditor v-model="form.noticeContent" />
       </div>
     </div>
 
@@ -85,7 +85,7 @@ const [form, resetForm] = useResetReactive({
   type: '',
   effectiveTime: '',
   terminateTime: '',
-  messageContent: '',
+  noticeContent: '',
   noticeScope: 1,
 })
 
