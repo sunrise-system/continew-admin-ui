@@ -31,6 +31,7 @@ import MyNotice from './components/MyNotice.vue'
 import { useDevice } from '@/hooks'
 import { type MessageResp, type NoticeResp, listMessage, listNotice } from '@/apis'
 import mittBus from '@/utils/mitt'
+import { parseList } from '@/utils'
 
 defineOptions({ name: 'UserMessage' })
 
@@ -74,7 +75,7 @@ const noticeQueryParam = reactive({
 
 const getMessageData = async () => {
   const { data } = await listMessage(messageQueryParam)
-  messageList.value = data.list.filter((item) => !item.isRead)
+  messageList.value = parseList(data).filter((item) => !item.isRead)
 }
 
 const getNoticeData = async () => {
