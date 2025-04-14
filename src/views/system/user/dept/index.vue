@@ -53,9 +53,6 @@ const emit = defineEmits<{
 // 选中节点
 const selectedKeys = ref()
 const select = (keys: Array<any>) => {
-  console.log('---------------------------------')
-  console.log(keys)
-
   if (selectedKeys.value && selectedKeys.value[0] === keys[0]) {
     return
   }
@@ -69,7 +66,6 @@ const { deptList, getDeptList } = useDept({
   onSuccess: () => {
     nextTick(() => {
       treeRef.value?.expandAll(true)
-
       select([deptList.value[0]?.id])
     })
   },
