@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http from '@/utils/http'
+import http, { fetchMotion } from '@/utils/http'
 
 export type * from './type'
 
@@ -7,7 +7,9 @@ const BASE_URL = '/system/message'
 
 /** @desc 查询消息列表 */
 export function listMessage(query: T.MessagePageQuery) {
-  return http.get<PageRes<T.MessageResp[]>>(`${BASE_URL}`, query)
+  const formArray: any = {}
+  formArray.data = query
+  return fetchMotion(`ADM08918A/list`, formArray)
 }
 
 /** @desc 删除消息 */
@@ -17,7 +19,9 @@ export function deleteMessage(ids: string | Array<string>) {
 
 /** @desc 标记已读 */
 export function readMessage(ids?: string | Array<string>) {
-  return http.patch(`${BASE_URL}/read`, ids)
+  const formArray: any = {}
+  formArray.id = ids
+  return fetchMotion(`ADM08918A/read`, formArray)
 }
 
 /** @desc 全部已读 */
