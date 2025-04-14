@@ -43,7 +43,7 @@ export function useTable<T extends U, U = T>(api: Api<T>, options?: Options<T, U
   const selectedKeys = ref<(string | number)[]>([])
   const select: TableInstance['onSelect'] = (rowKeys) => {
     if (Array.isArray(rowKey)) {
-    selectedKeys.value = rowKeys
+      selectedKeys.value = rowKeys
     }
   }
 
