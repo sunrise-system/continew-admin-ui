@@ -1,5 +1,5 @@
 <template>
-  <div class="gi_table_page">
+  <GiPageLayout>
     <GiTable
       row-key="id"
       :data="dataList"
@@ -18,7 +18,7 @@
           <template #default>重置</template>
         </a-button>
       </template>
-      <template #nickname="{ record }">{{ record.nickname }}({{ record.username }})</template>
+      <template #nickname="{ record }">{{ record.nickname }}({{ record.name }})</template>
       <template #action="{ record }">
         <a-space>
           <a-popconfirm
@@ -39,7 +39,7 @@
         </a-space>
       </template>
     </GiTable>
-  </div>
+  </GiPageLayout>
 </template>
 
 <script setup lang="ts">

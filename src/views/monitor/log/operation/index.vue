@@ -83,7 +83,7 @@ const {
 const columns: TableInstance['columns'] = [
   {
     title: '序号',
-    width: 66,
+    minWidth: 66,
     align: 'center',
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
   },
