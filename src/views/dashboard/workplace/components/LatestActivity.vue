@@ -42,7 +42,7 @@
           </a-badge>
         </template>
         <template #datetime>
-          <span :title="item.sysCreatedTime">{{ item.createTimeString }}</span>
+          <span :title="item.sysCreatedTime">{{ item.sysCreatedTimeString }}</span>
         </template>
         <template #content>
           <div class="content">
@@ -127,7 +127,7 @@ export interface DataItem {
   }
   payload: object
   sysCreatedTime: string
-  createTimeString: string
+  sysCreatedTimeString: string
 }
 
 const get = <T = unknown>(url: string, params?: object, config?: AxiosRequestConfig): Promise<ApiRes<T>> => {
@@ -157,7 +157,7 @@ const getDataList = async () => {
     data.forEach((item) => {
       dataList.value.push({
         ...item,
-        createTimeString: dayjs(new Date(item.sysCreatedTime)).fromNow(),
+        sysCreatedTimeString: dayjs(new Date(item.sysCreatedTime)).fromNow(),
       })
     })
   } catch (err) {
