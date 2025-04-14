@@ -93,7 +93,7 @@ const columns: TableInstance['columns'] = [
     align: 'center',
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
   },
-  { title: '标题', dataIndex: 'title', slotName: 'title', minWidth: 100, ellipsis: true, tooltip: true },
+  { title: '标题', dataIndex: 'name', slotName: 'name', minWidth: 100, ellipsis: true, tooltip: true },
   { title: '状态', dataIndex: 'isRead', slotName: 'isRead', minWidth: 100, align: 'center' },
   { title: '时间', dataIndex: 'sysCreatedTime', width: 180 },
   { title: '类型', dataIndex: 'type', slotName: 'type', width: 180, ellipsis: true, tooltip: true },
