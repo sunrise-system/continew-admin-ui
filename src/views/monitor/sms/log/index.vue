@@ -94,8 +94,8 @@ const columns: TableInstance['columns'] = [
   { title: '参数配置', dataIndex: 'params', slotName: 'params' },
   { title: '发送状态', dataIndex: 'status', slotName: 'status' },
   { title: '返回数据', dataIndex: 'resMsg', slotName: 'resMsg', width: 260 },
-  { title: '操作人', dataIndex: 'createUserString', slotName: 'createUser' },
-  { title: '操作时间', dataIndex: 'createTime', slotName: 'createTime' },
+  { title: '操作人', dataIndex: 'sysCreatedBy', slotName: 'createUser' },
+  { title: '操作时间', dataIndex: 'sysCreatedTime', slotName: 'sysCreatedTime' },
   {
     title: '操作',
     dataIndex: 'action',
