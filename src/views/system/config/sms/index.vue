@@ -1,5 +1,5 @@
 <template>
-  <div class="gi_table_page">
+  <GiPageLayout :margin="false" :body-style="{ padding: 0 }">
     <GiTable
       row-key="id"
       :data="dataList"
@@ -57,7 +57,7 @@
     </GiTable>
 
     <SmsConfigAddModal ref="SmsConfigAddModalRef" @save-success="search" />
-  </div>
+  </GiPageLayout>
 </template>
 
 <script setup lang="tsx">
@@ -169,7 +169,7 @@ const router = useRouter()
 // 发送记录
 const onLog = (record: SmsConfigResp) => {
   router.push({
-    path: '/system/sms/log',
+    name: 'SystemSmsLog',
     query: { configId: record.id },
   })
 }

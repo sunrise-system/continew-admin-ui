@@ -1,33 +1,35 @@
 <template>
-  <GiPageLayout>
-    <a-tabs v-model:active-key="activeKey" type="rounded" @change="change">
-      <a-tab-pane key="all">
-        <template #title>全部</template>
-        <a-card title="本地存储" :bordered="false" class="gi_card_title">
+  <GiPageLayout :margin="false" :body-style="{ padding: 0 }">
+    <div class="gi_page">
+      <a-tabs v-model:active-key="activeKey" type="rounded" @change="change">
+        <a-tab-pane key="all">
+          <template #title>全部</template>
+          <a-card title="本地存储" :bordered="false" class="gi_card_title">
           <StorageLocal :data="dataMap.local" :loading="loading" @save-success="getDataList" />
-        </a-card>
-        <a-card title="对象存储" :bordered="false" class="gi_card_title">
+          </a-card>
+          <a-card title="对象存储" :bordered="false" class="gi_card_title">
           <StorageOss :data="dataMap.oss" :loading="loading" @save-success="getDataList" />
-        </a-card>
-      </a-tab-pane>
+          </a-card>
+        </a-tab-pane>
       <a-tab-pane key="local">
-        <template #title>本地存储</template>
+          <template #title>本地存储</template>
         <StorageLocal :data="dataMap.local" :loading="loading" @save-success="getDataList" />
-      </a-tab-pane>
+        </a-tab-pane>
       <a-tab-pane key="oss">
-        <template #title>对象存储</template>
+          <template #title>对象存储</template>
         <StorageOss :data="dataMap.oss" :loading="loading" @save-success="getDataList" />
-      </a-tab-pane>
-      <template #extra>
-        <a-input-search
-          v-model="queryForm.description"
-          placeholder="搜索名称/编码"
-          style="width: 240px;"
-          allow-clear
-          @search="getDataList"
-        />
-      </template>
-    </a-tabs>
+        </a-tab-pane>
+        <template #extra>
+          <a-input-search
+            v-model="queryForm.description"
+            placeholder="搜索名称/编码"
+            style="width: 240px;"
+            allow-clear
+            @search="getDataList"
+          />
+        </template>
+      </a-tabs>
+    </div>
   </GiPageLayout>
 </template>
 
@@ -71,12 +73,8 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.gi_table_page {
-  overflow-y: auto;
-
-  :deep(.arco-tabs) {
-    overflow: visible;
-  }
+.gi_page {
+  padding: 0;
 }
 
 .block-title {
