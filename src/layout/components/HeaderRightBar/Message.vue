@@ -4,7 +4,7 @@
       <template #header>通知</template>
       <a-list-item v-for="item in messageList" :key="item.id">
         <div class="content-wrapper" @click="open">
-          <div class="content">{{ item.title }}</div>
+          <div class="content">{{ item.name }}</div>
           <div class="date">{{ item.sysCreatedTime }}</div>
         </div>
       </a-list-item>
@@ -22,6 +22,7 @@
 import { onMounted } from 'vue'
 import { type MessageResp, listMessage, readMessage } from '@/apis'
 import router from '@/router'
+import { parseList } from '@/utils'
 
 const emit = defineEmits<{
   (e: 'readall-success'): void
@@ -41,7 +42,7 @@ const getMessageData = async () => {
   try {
     loading.value = true
     const { data } = await listMessage(queryParam)
-    messageList.value = data.list
+    messageList.value = parseList(data)
   } finally {
     loading.value = false
   }
@@ -54,7 +55,7 @@ const open = () => {
 
 // 全部已读
 const readAll = async () => {
-  await readMessage()
+  await readMessage('all')
   await getMessageData()
   emit('readall-success')
 }
