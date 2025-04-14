@@ -20,6 +20,11 @@ export function readMessage(ids?: string | Array<string>) {
   return http.patch(`${BASE_URL}/read`, ids)
 }
 
+/** @desc 全部已读 */
+export function readAllMessage() {
+  return http.patch(`${BASE_URL}/readAll`)
+}
+
 /** @desc 查询未读消息数量 */
 export function getUnreadMessageCount() {
   return http.get(`${BASE_URL}/unread`)
