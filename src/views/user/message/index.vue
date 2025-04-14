@@ -30,6 +30,7 @@ import MyMessage from './components/MyMessage.vue'
 import MyNotice from './components/MyNotice.vue'
 import { useDevice } from '@/hooks'
 import { type MessageResp, type NoticeResp, listMessage, listNotice } from '@/apis'
+import mittBus from '@/utils/mitt'
 
 defineOptions({ name: 'UserMessage' })
 
@@ -84,6 +85,9 @@ const getNoticeData = async () => {
 onMounted(() => {
   getMessageData()
   getNoticeData()
+  mittBus.on('count-refresh', () => {
+    getMessageData()
+  })
 })
 
 const menuList = [
