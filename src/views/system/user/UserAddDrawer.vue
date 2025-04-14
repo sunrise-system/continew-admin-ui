@@ -8,7 +8,7 @@
     @before-ok="save"
     @close="reset"
   >
-<GiForm ref="formRef" v-model="form" :columns="columns" />
+    <GiForm ref="formRef" v-model="form" :columns="columns" />
   </a-drawer>
 </template>
 
