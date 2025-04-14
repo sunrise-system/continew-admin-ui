@@ -51,7 +51,7 @@
         <a-row align="center" :wrap="false" class="user">
           <!-- 管理员头像 -->
           <Avatar :src="userStore.avatar" :name="userStore.nickname" :size="32" />
-          <span class="username">{{ userStore.nickname }}</span>
+          <span class="name">{{ userStore.nickname }}</span>
           <icon-down />
         </a-row>
         <template #content>
@@ -163,7 +163,7 @@ onMounted(() => {
   cursor: pointer;
   color: var(--color-text-1);
 
-  .username {
+  .name {
     margin-left: 10px;
     white-space: nowrap;
   }

@@ -47,7 +47,7 @@
       </template>
           <template #isActive="{ record }">
             <GiCellBoolean :is-active="record.isActive" />
-      </template>
+          </template>
       <template #action="{ record }">
         <a-space>
           <a-link v-permission="['system:user:get']" title="详情" @click="onDetail(record)">详情</a-link>
@@ -110,22 +110,18 @@ const [queryForm, resetForm] = useResetReactive({
 const queryFormColumns: ColumnItem[] = reactive([
   {
     type: 'input',
+    label: '用户名',
     field: 'description',
     span: { xs: 24, sm: 8, xxl: 8 },
-    formItemProps: {
-      hideLabel: true,
-    },
     props: {
-      placeholder: '搜索用户名/昵称/描述',
+      placeholder: '用户名/昵称/描述',
     },
   },
   {
     type: 'select',
+    label: '状态',
     field: 'status',
     span: { xs: 24, sm: 6, xxl: 8 },
-    formItemProps: {
-      hideLabel: true,
-    },
     props: {
       options: DisEnableStatusList,
       placeholder: '全部状态',
@@ -133,11 +129,9 @@ const queryFormColumns: ColumnItem[] = reactive([
   },
   {
     type: 'range-picker',
+    label: '创建时间',
     field: 'sysCreatedTime',
     span: { xs: 24, sm: 10, xxl: 8 },
-    formItemProps: {
-      hideLabel: true,
-    },
   },
 ])
 
