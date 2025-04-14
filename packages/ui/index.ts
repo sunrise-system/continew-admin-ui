@@ -17,9 +17,3 @@ export function setupNaiveUi() {
     setupNaiveUi.bind(null, pluginManager)();
   });
 }
-
-export function setupArcod() {
-  import('./arcod').then(({ setupArcod }) => {
-    setupArcod.bind(null, pluginManager)();
-  });
-}

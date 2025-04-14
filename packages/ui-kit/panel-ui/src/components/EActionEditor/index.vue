@@ -157,7 +157,6 @@ function handleAdd(action: any) {
       :header="item.title"
       :name="item.title"
     >
-      X998
       <EActionEditorItem
         v-model="modelValueComputed"
         :item-events="item.events"

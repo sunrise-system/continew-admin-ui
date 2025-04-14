@@ -122,7 +122,7 @@ export function usePageManager() {
    */
   function getComponent(queryValue: string, queryField = 'id') {
     console.warn(
-      '[Epic 自定义函数]: `getComponent`方法已废弃，后续版本可能移除该函数，请使用`find`方法',
+      '[Nada 自定义函数]: `getComponent`方法已废弃，后续版本可能移除该函数，请使用`find`方法',
     );
     return find(queryValue, queryField);
   }
@@ -176,7 +176,7 @@ export function usePageManager() {
       })();
     } catch (error) {
       if (outputError) {
-        console.error('[Epic：自定义函数]异常：', error);
+        console.error('[Nada：自定义函数]异常：', error);
       }
     }
   }
@@ -248,7 +248,7 @@ export function usePageManager() {
       pluginManager.publicMethods[action.methodName]?.handler(...args);
     } catch (error) {
       // 如果调用失败，打印错误信息
-      console.error(`[Epic：公共函数(${action.methodName})]执行异常:`, error);
+      console.error(`[Nada：公共函数(${action.methodName})]执行异常:`, error);
     }
   }
 
@@ -263,7 +263,7 @@ export function usePageManager() {
       funcs.value[action.methodName]?.(...args);
     } catch (error) {
       // 如果调用失败，打印错误信息
-      console.error(`[Epic：自定义函数(${action.methodName})]执行异常:`, error);
+      console.error(`[Nada：自定义函数(${action.methodName})]执行异常:`, error);
     }
   }
 
@@ -278,7 +278,7 @@ export function usePageManager() {
 
     // 如果未找到组件实例，发出警告并返回
     if (!component) {
-      console.warn(`[Epic：组件${action.componentId}]未找到`);
+      console.warn(`[Nada：组件${action.componentId}]未找到`);
       return;
     }
 
@@ -288,7 +288,7 @@ export function usePageManager() {
     } catch (error) {
       // 如果调用失败，打印错误信息
       console.error(
-        `[Epic：组件${action.componentId}函数(${action.methodName})]执行异常:`,
+        `[Nada：组件${action.componentId}函数(${action.methodName})]执行异常:`,
         error,
       );
     }

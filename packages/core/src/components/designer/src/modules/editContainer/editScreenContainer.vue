@@ -224,7 +224,6 @@ function computedScale() {
       @drag="handleElementDrag($event, draggableComputed)"
       @dragend="handleElementDragEnd"
     >
-      XXXXXXXXXXXXXXXXXXXX
       <div
         id="canvasContainer"
         class="flex items-center justify-center"

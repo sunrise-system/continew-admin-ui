@@ -64,6 +64,6 @@ function handleDelete(index: number) {
         </span>
       </div>
     </div>
-    <div class="add-btn" @click="handleAdd">添加221</div>
+    <div class="add-btn" @click="handleAdd">添加</div>
   </div>
 </template>

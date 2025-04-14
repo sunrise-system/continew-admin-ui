@@ -6,7 +6,7 @@ import { computed, ref, shallowRef } from 'vue';
 import { NadaIcon } from '@nada-designer/base-ui';
 import { pluginManager } from '@nada-designer/utils';
 
-import EpicBreadcrumb from './breadcrumb.vue';
+import NadaBreadcrumb from './breadcrumb.vue';
 
 const hideRightMain = ref(false);
 
@@ -52,7 +52,7 @@ function handleClick(item: RightSidebarModel, index: number) {
 
     <div class="nada-right-sidebar w-308px" :class="{ hide: hideRightMain }">
       <div class="w-308px">
-        <EpicBreadcrumb />
+        <NadaBreadcrumb />
         <ul class="nada-actions-container">
           <li
             v-for="(item, index) in rightSidebars"

@@ -44,7 +44,9 @@ function handleClick(item: ActivitybarModel, index: number) {
           @click="handleClick(item, index)"
         >
           <NadaIcon class="relative" :name="item.icon" />
-          <div class="text-14px">X-X-{{ item.title }}</div>
+          <div class="text-14px">
+            {{ item.title }}
+          </div>
         </li>
       </ul>
     </div>

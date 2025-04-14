@@ -14,7 +14,7 @@ import {
   Revoke,
 } from '@nada-designer/utils';
 
-import EpicPreviewJson from './previewJson.vue';
+import NadaPreviewJson from './previewJson.vue';
 
 const Select = pluginManager.getComponent('select');
 
@@ -23,7 +23,7 @@ const pageSchema = inject('pageSchema') as PageSchema;
 const designer = inject('designer') as Designer;
 const revoke = inject('revoke') as Revoke;
 const designerProps = inject('designerProps') as Ref<DesignerProps>;
-const previewJson = ref<InstanceType<typeof EpicPreviewJson> | null>(null);
+const previewJson = ref<InstanceType<typeof NadaPreviewJson> | null>(null);
 
 const deviceOptions = [
   {
@@ -295,6 +295,6 @@ function handleSetCanvas(type: string) {
       <!-- 画布类型切换 end -->
     </div>
   </div>
-  <EpicPreviewJson ref="previewJson" />
+  <NadaPreviewJson ref="previewJson" />
   <!-- 工具条 end  -->
 </template>

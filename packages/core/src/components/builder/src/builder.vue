@@ -136,9 +136,9 @@ defineExpose({
       !pluginManager.initialized.value ||
       pageManager.pageSchema.schemas.length === 0
     "
-    class="epic-loading-box"
+    class="nada-loading-box"
   >
-    <!-- <NadaBaseLoader /> -->
+    <NadaBaseLoader />
   </div>
   <Suspense v-else @resolve="handleReady">
     <template #default>

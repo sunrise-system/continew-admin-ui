@@ -40,7 +40,7 @@ function handleAdd() {
       v-show="!innerValue?.length"
       class="my-2 bg-white py-4 text-center text-gray-400"
     >
-      暂无选项11
+      暂无选项
     </div>
     <!-- <div>
       <div :class="tree ? 'grid-cols-[16px_auto_auto_16px_16px]' : 'grid-cols-[16px_auto_auto_16px]'"
@@ -51,6 +51,6 @@ function handleAdd() {
       </div>
     </div> -->
     <EOptionItem v-model="innerValue" />
-    <Button @click="handleAdd"> 添加选项 22</Button>
+    <Button @click="handleAdd"> 添加选项 </Button>
   </div>
 </template>

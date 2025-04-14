@@ -41,7 +41,7 @@ function handleSave() {
             alt=""
             srcset=""
           />
-          <span class="ml-3">EpicDesigner</span>
+          <span class="ml-3">NadaDesigner</span>
         </a>
       </slot>
     </div>

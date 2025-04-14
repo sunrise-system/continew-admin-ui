@@ -3,7 +3,7 @@ import type { Designer, PageSchema } from '@nada-designer/types';
 
 import { computed, inject } from 'vue';
 
-import { NadaIcon, EpicTree } from '@nada-designer/base-ui';
+import { NadaIcon, NadaTree } from '@nada-designer/base-ui';
 import { pluginManager } from '@nada-designer/utils';
 
 const pageSchema = inject('pageSchema') as PageSchema;
@@ -22,7 +22,7 @@ function handleNodeClick(e: any) {
 </script>
 <template>
   <div class="nada-outline">
-    <EpicTree
+    <NadaTree
       :options="pageSchema.schemas"
       draggable
       :selected-keys="selectedKeys"
@@ -53,6 +53,6 @@ function handleNodeClick(e: any) {
           </span>
         </div>
       </template>
-    </EpicTree>
+    </NadaTree>
   </div>
 </template>

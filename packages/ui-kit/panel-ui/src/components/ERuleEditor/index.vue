@@ -149,7 +149,9 @@ function handleDelete(index: number) {
           v-if="componentSchema.show ? componentSchema.show() : true"
           class="m-t-2 flex first:m-0"
         >
-          <div class="nada-attr-label">X123 {{ componentSchema.label }}</div>
+          <div class="nada-attr-label">
+            {{ componentSchema.label }}
+          </div>
           <div class="flex-1">
             <NadaNode
               v-model="requiredRule[componentSchema.model]"

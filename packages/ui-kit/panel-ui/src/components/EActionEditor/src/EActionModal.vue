@@ -7,7 +7,7 @@ import type {
 
 import { computed, inject, nextTick, reactive, ref, toRaw } from 'vue';
 
-import { NadaIcon, EpicTree } from '@nada-designer/base-ui';
+import { NadaIcon, NadaTree } from '@nada-designer/base-ui';
 import {
   deepClone,
   findSchemaById,
@@ -221,7 +221,7 @@ defineExpose({
           </div>
           组件
           <div class="h-0 flex-1">
-            <EpicTree
+            <NadaTree
               v-model:selected-keys="selectedKeys"
               :options="pageSchema.schemas"
               @node-click="handleNodeClick"
@@ -255,7 +255,7 @@ defineExpose({
                   </Button>
                 </div>
               </template>
-            </EpicTree>
+            </NadaTree>
           </div>
         </div>
         <!-- 动作选择 start -->

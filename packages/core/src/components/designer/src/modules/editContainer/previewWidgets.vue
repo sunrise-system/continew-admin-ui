@@ -13,19 +13,13 @@ import { computed, inject, ref, watch } from 'vue';
 
 import { NadaIcon } from '@nada-designer/base-ui';
 import { useStore, useTimedQuery } from '@nada-designer/hooks';
-import {
-  findSchemaInfoById,
-  generateNewSchema,
-  pluginManager,
-  Revoke,
-} from '@nada-designer/utils';
+import { findSchemaInfoById, pluginManager } from '@nada-designer/utils';
 import { useResizeObserver } from '@vueuse/core';
 
 const pageManager = inject('pageManager', {}) as PageManager;
 const pageSchema = inject('pageSchema') as PageSchema;
 const designer = inject('designer') as Designer;
 const designerProps = inject('designerProps') as Ref<DesignerProps>;
-const revoke = inject('revoke') as Revoke;
 
 const selectorRef = ref<HTMLDivElement | null>(null);
 const hoverWidgetRef = ref<HTMLDivElement | null>(null);
@@ -320,46 +314,7 @@ function handleSelectParentNode() {
   designer.setSelectedNode(parentSchema);
 }
 
-/**
- * 复制选中节点元素
- */
-function handleCopy() {
-  const data = findSchemaInfoById(
-    pageSchema.schemas,
-    designer.state.selectedNode?.id ?? 'root',
-  );
-  if (!data) {
-    return false;
-  }
-  const { index, schema, list } = data;
-  const node = generateNewSchema(schema);
-  list.splice(index + 1, 0, node);
-  designer.setSelectedNode(node);
-
-  revoke.push(pageSchema.schemas, '复制组件');
-}
-
-/**
- * 删除元素
- */
-function handleDelete() {
-  const data = findSchemaInfoById(
-    pageSchema.schemas,
-    designer.state.selectedNode?.id ?? 'root',
-  );
-  if (!data) {
-    return false;
-  }
-  let { index, list } = data;
-  list.splice(index, 1);
-  if (index === list.length) {
-    index--;
-  }
-  designer.setSelectedNode(list[index]);
-  revoke.push(pageSchema.schemas, '删除组件');
-}
-
-// 初始化函数，传入一个指向 nada 编辑范围的引用
+// 初始化函数，传入一个指向 Nada 编辑范围的引用
 function handleInit(nadaEditRangeRef) {
   nadaEditRange = nadaEditRangeRef;
   nadaEditRange?.addEventListener('scroll', () => {
@@ -405,14 +360,14 @@ defineExpose({
         <div
           title="复制"
           class="nada-widget-action-item pointer-events-auto"
-          @click="handleCopy"
+          @click="designer.handleCopy"
         >
           <NadaIcon name="icon--nada--copy-all-outline-rounded" />
         </div>
         <div
           title="删除"
           class="nada-widget-action-item pointer-events-auto"
-          @click="handleDelete"
+          @click="designer.handleDelete"
         >
           <NadaIcon name="icon--nada--delete-outline-rounded" />
         </div>

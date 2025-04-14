@@ -122,7 +122,7 @@ function handleClick(schema: ComponentSchema) {
           :title="item.title"
           @click="handelChecked(item)"
         >
-          BB- {{ item.title }}
+          {{ item.title }}
         </div>
       </div>
       <!-- 分类选项 end  -->
@@ -152,7 +152,7 @@ function handleClick(schema: ComponentSchema) {
                 "
               />
               <div class="nada-componet-label w-0 flex-1 truncate">
-                X3-{{ element.label }}
+                {{ element.label }}
               </div>
             </div>
           </template>
