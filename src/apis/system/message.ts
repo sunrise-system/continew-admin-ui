@@ -3,8 +3,6 @@ import http, { fetchMotion } from '@/utils/http'
 
 export type * from './type'
 
-const BASE_URL = '/system/message'
-
 /** @desc 查询消息列表 */
 export function listMessage(query: T.MessagePageQuery) {
   const formArray: any = {}
@@ -14,7 +12,9 @@ export function listMessage(query: T.MessagePageQuery) {
 
 /** @desc 删除消息 */
 export function deleteMessage(ids: string | Array<string>) {
-  return http.del(`${BASE_URL}/${ids}`)
+  const formArray: any = {}
+  formArray.id = ids
+  return fetchMotion(`ADM08918A/delete`, formArray)
 }
 
 /** @desc 标记已读 */
@@ -26,10 +26,10 @@ export function readMessage(ids?: string | Array<string>) {
 
 /** @desc 全部已读 */
 export function readAllMessage() {
-  return http.patch(`${BASE_URL}/readAll`)
+  return fetchMotion(`ADM08918A/readAll`, {})
 }
 
 /** @desc 查询未读消息数量 */
 export function getUnreadMessageCount() {
-  return http.get(`${BASE_URL}/unread`)
+  return fetchMotion(`ADM08918A/unread`, {})
 }
