@@ -44,7 +44,7 @@ export const systemRoutes: RouteRecordRaw[] = [
   },
   {
     path: '/user',
-    name: 'user',
+    name: 'User',
     component: Layout,
     meta: { hidden: true },
     children: [

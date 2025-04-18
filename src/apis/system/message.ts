@@ -11,22 +11,22 @@ export function listMessage(query: T.MessagePageQuery) {
 }
 
 /** @desc 删除消息 */
-export function deleteMessage(ids: string | Array<string>) {
+export function deleteMessage(ids: Array<string>) {
   const formArray: any = {}
   formArray.id = ids
   return fetchMotion(`ADM08918A/delete`, formArray)
 }
 
 /** @desc 标记已读 */
-export function readMessage(ids?: string | Array<string>) {
+export function readMessage(ids: Array<string>) {
   const formArray: any = {}
   formArray.id = ids
-  return fetchMotion(`ADM08918A/read`, formArray)
+  return fetchMotion(`ADM08918A/mark_read`, formArray)
 }
 
 /** @desc 全部已读 */
 export function readAllMessage() {
-  return fetchMotion(`ADM08918A/readAll`, {})
+  return fetchMotion(`ADM08918A/mark_all_reads`, {})
 }
 
 /** @desc 查询未读消息数量 */

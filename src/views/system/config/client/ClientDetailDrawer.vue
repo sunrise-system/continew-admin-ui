@@ -1,9 +1,9 @@
 <template>
-  <a-drawer v-model:visible="visible" title="终端详情" :width="width >= 600 ? 600 : '100%'" :footer="false">
+  <a-drawer v-model:visible="visible" title="客户端详情" :width="width >= 600 ? 600 : '100%'" :footer="false">
     <a-descriptions :column="2" size="large" class="general-description">
       <a-descriptions-item label="ID">{{ dataDetail?.id }}</a-descriptions-item>
-      <a-descriptions-item label="终端ID" :span="2"><a-typography-paragraph :copyable="!!dataDetail?.clientId">{{ dataDetail?.clientId }}</a-typography-paragraph></a-descriptions-item>
-      <a-descriptions-item label="终端类型" :span="2">
+      <a-descriptions-item label="客户端ID" :span="2"><a-typography-paragraph :copyable="!!dataDetail?.clientId">{{ dataDetail?.clientId }}</a-typography-paragraph></a-descriptions-item>
+      <a-descriptions-item label="客户端类型" :span="2">
         <GiCellTag :value="dataDetail?.clientType" :dict="client_type" />
       </a-descriptions-item>
       <a-descriptions-item label="认证类型" :span="2">
@@ -17,10 +17,10 @@
         <a-tag v-if="dataDetail?.status === 1" color="green">启用</a-tag>
         <a-tag v-else color="red">禁用</a-tag>
       </a-descriptions-item>
-      <a-descriptions-item label="创建人">{{ dataDetail?.createUserString }}</a-descriptions-item>
-      <a-descriptions-item label="创建时间">{{ dataDetail?.createTime }}</a-descriptions-item>
+      <a-descriptions-item label="创建人">{{ dataDetail?.sysCreatedBy }}</a-descriptions-item>
+      <a-descriptions-item label="创建时间">{{ dataDetail?.sysCreatedTime }}</a-descriptions-item>
       <a-descriptions-item label="更新人">{{ dataDetail?.updateUserString }}</a-descriptions-item>
-      <a-descriptions-item label="更新时间">{{ dataDetail?.updateTime }}</a-descriptions-item>
+      <a-descriptions-item label="更新时间">{{ dataDetail?.sysLastModifiedTime }}</a-descriptions-item>
     </a-descriptions>
   </a-drawer>
 </template>

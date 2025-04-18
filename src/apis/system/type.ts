@@ -40,7 +40,7 @@ export interface UserQuery {
   userIds?: Array<string>
   roleId?: string
 }
-export interface UserPageQuery extends UserQuery, PageQuery { }
+export interface UserPageQuery extends UserQuery, PageQuery {}
 
 /** 角色类型 */
 export interface RoleResp {
@@ -85,7 +85,7 @@ export interface RoleUserQuery {
   description?: string
   sort: Array<string>
 }
-export interface RoleUserPageQuery extends RoleUserQuery, PageQuery { }
+export interface RoleUserPageQuery extends RoleUserQuery, PageQuery {}
 
 /** 菜单类型 */
 export interface MenuResp {
@@ -208,7 +208,7 @@ export interface FileItem {
   parentPath: string
   absPath: string
   metadata: string
-  md5: string
+  sha256: string
   contentType: string
   thumbnailSize: number
   thumbnailUrl: string
@@ -265,14 +265,12 @@ export interface StorageQuery {
   sort: Array<string>
 }
 
-/** 终端类型 */
+/** 客户端类型 */
 export interface ClientResp {
   id: string
   clientId: string
-  clientKey: string
-  clientSecret: string
-  authType: string
   clientType: string
+  authType: string
   activeTimeout: string
   timeout: string
   status: string
@@ -286,10 +284,8 @@ export interface ClientResp {
 export interface ClientDetailResp {
   id: string
   clientId: string
-  clientKey: string
-  clientSecret: string
-  authType: string
   clientType: string
+  authType: string
   activeTimeout: string
   timeout: string
   status: string
@@ -301,14 +297,12 @@ export interface ClientDetailResp {
   updateUserString: string
 }
 export interface ClientQuery {
-  clientKey: string
-  clientSecret: string
-  authType: string[]
   clientType: string
+  authType: string[]
   status: string
   sort: Array<string>
 }
-export interface ClientPageQuery extends ClientQuery, PageQuery { }
+export interface ClientPageQuery extends ClientQuery, PageQuery {}
 
 /** 系统参数类型 */
 export interface OptionResp {
@@ -400,7 +394,7 @@ export interface SmsConfigQuery {
   accessKey: string | undefined
   sort: Array<string>
 }
-export interface SmsConfigPageQuery extends SmsConfigQuery, PageQuery { }
+export interface SmsConfigPageQuery extends SmsConfigQuery, PageQuery {}
 
 /** 短信日志类型 */
 export interface SmsLogResp {
@@ -423,7 +417,7 @@ export interface SmsLogQuery {
   status: number | undefined
   sort: Array<string>
 }
-export interface SmsLogPageQuery extends SmsLogQuery, PageQuery { }
+export interface SmsLogPageQuery extends SmsLogQuery, PageQuery {}
 
 /** 绑定三方账号信息 */
 export interface BindSocialAccountRes {

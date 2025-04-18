@@ -81,6 +81,7 @@ import { getUnreadMessageCount } from '@/apis'
 import { useUserStore } from '@/stores'
 import { getToken } from '@/utils/auth'
 import { useBreakpoint, useDevice } from '@/hooks'
+import { parseData } from '@/utils'
 
 defineOptions({ name: 'HeaderRight' })
 
@@ -117,7 +118,7 @@ const initWebSocket = (token: string) => {
 // 查询未读消息数量
 const getMessageCount = async () => {
   const { data } = await getUnreadMessageCount()
-  unreadMessageCount.value = data.total
+  unreadMessageCount.value = parseData(data).total
   const token = getToken()
   if (token) {
     initWebSocket(token)
