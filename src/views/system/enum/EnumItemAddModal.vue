@@ -30,7 +30,7 @@
 <script setup lang="ts">
 import { Message } from '@arco-design/web-vue'
 import { useWindowSize } from '@vueuse/core'
-import { addDictItem, getDictItem, updateDictItem } from '@/apis/system/enum'
+import { addEnumItem, getEnumItem, updateEnumItem } from '@/apis/system/enum'
 import { type ColumnItem, GiForm } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
 
@@ -122,10 +122,10 @@ const save = async () => {
     const isInvalid = await formRef.value?.formRef?.validate()
     if (isInvalid) return false
     if (isUpdate.value) {
-      await updateDictItem(form, dataId.value)
+      await updateEnumItem(form, dataId.value)
       Message.success('修改成功')
     } else {
-      await addDictItem({ ...form, dictId: dictId.value })
+      await addEnumItem({ ...form, dictId: dictId.value })
       Message.success('新增成功')
     }
     emit('save-success')
@@ -147,7 +147,7 @@ const onAdd = (id: string) => {
 const onUpdate = async (id: string) => {
   reset()
   dataId.value = id
-  const { data } = await getDictItem(id)
+  const { data } = await getEnumItem(id)
   Object.assign(form, data)
   visible.value = true
 }
