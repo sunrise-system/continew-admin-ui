@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <DictAddModal ref="DictAddModalRef" @save-success="getTreeData" />
+    <EnummAddModal ref="DictAddModalRef" @save-success="getTreeData" />
   </div>
 </template>
 
@@ -48,16 +48,16 @@
 import { Message, Modal } from '@arco-design/web-vue'
 import type { TreeNodeData } from '@arco-design/web-vue'
 import { mapTree } from 'xe-utils'
-import DictAddModal from './DictAddModal.vue'
+import EnummAddModal from './EnumAddModal.vue'
 import RightMenu from './RightMenu.vue'
-import { type DictResp, deleteDict, listDict } from '@/apis/system/enum'
+import { type EnumResp, deleteEnum, listEnum } from '@/apis/system/enum'
 import has from '@/utils/has'
 
 const emit = defineEmits<{
-  (e: 'node-click', dict: { dictId: string, dictName?: string, dictCode?: string }): void
+  (e: 'node-click', enumm: { dictId: string, dictName?: string, dictCode?: string }): void
 }>()
 
-interface TreeItem extends DictResp {
+interface TreeItem extends EnumResp {
   popupVisible: boolean
 }
 const dataList = ref<TreeItem[]>([])
@@ -82,7 +82,7 @@ const loading = ref(false)
 const getTreeData = async () => {
   try {
     loading.value = true
-    const { data } = await listDict()
+    const { data } = await listEnum()
     dataList.value = mapTree(data, (i) => ({
       ...i,
       popupVisible: false,
@@ -118,14 +118,14 @@ const treeData = computed(() => {
   return search(searchKey.value.toLowerCase())
 })
 
-const DictAddModalRef = ref<InstanceType<typeof DictAddModal>>()
+const DictAddModalRef = ref<InstanceType<typeof EnumAddModal>>()
 // 新增
 const onAdd = () => {
   DictAddModalRef.value?.onAdd()
 }
 
 // 点击菜单项
-const onMenuItemClick = (mode: string, node: DictResp) => {
+const onMenuItemClick = (mode: string, node: EnumResp) => {
   if (mode === 'update') {
     DictAddModalRef.value?.onUpdate(node.id)
   } else if (mode === 'delete') {
@@ -136,7 +136,7 @@ const onMenuItemClick = (mode: string, node: DictResp) => {
       okButtonProps: { status: 'danger' },
       onBeforeOk: async () => {
         try {
-          const res = await deleteDict(node.id)
+          const res = await deleteEnum(node.id)
           if (res.success) {
             Message.success('删除成功')
             await getTreeData()
