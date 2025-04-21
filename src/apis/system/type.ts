@@ -136,6 +136,19 @@ export interface DeptQuery {
   status?: number
 }
 
+/** 枚举 */
+export interface EnumResp {
+  id: string
+  name: string
+  code: string
+  isSystem: boolean
+  description: string
+  sysCreatedBy: string
+  sysCreatedTime: string
+  updateUserString: string
+  sysLastModifiedTime: string
+}
+
 /** 字典类型 */
 export interface DictResp {
   id: string
