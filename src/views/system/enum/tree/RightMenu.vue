@@ -16,16 +16,16 @@
 </template>
 
 <script setup lang="ts">
-import type { DictResp } from '@/apis/system'
+import type { EnumResp } from '@/apis/system'
 
 interface Props {
-  data: DictResp
+  data: EnumResp
 }
 
 const props = withDefaults(defineProps<Props>(), {})
 
 const emit = defineEmits<{
-  (e: 'on-menu-item-click', mode: string, data: DictResp): void
+  (e: 'on-menu-item-click', mode: string, data: EnumResp): void
 }>()
 
 // 点击菜单项
