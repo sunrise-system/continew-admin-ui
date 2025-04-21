@@ -1,7 +1,7 @@
 <template>
   <GiPageLayout>
     <template #left>
-      <DictTree @node-click="handleSelectDict" />
+      <EnumTree @node-click="handleSelectDict" />
     </template>
     <a-row align="stretch" :gutter="14" class="h-full page_content">
       <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" :xxl="24" flex="1" class="h-full overflow-hidden">
@@ -60,16 +60,16 @@
       </a-col>
     </a-row>
 
-    <DictItemAddModal ref="DictItemAddModalRef" @save-success="search" />
+    <EnummItemAddModal ref="DictItemAddModalRef" @save-success="search" />
   </GiPageLayout>
 </template>
 
 <script setup lang="ts">
 import type { TableInstance } from '@arco-design/web-vue'
 import { Message, Modal } from '@arco-design/web-vue'
-import DictTree from './tree/index.vue'
-import DictItemAddModal from './EnumItemAddModal.vue'
-import { type DictItemResp, type EnumItemQuery, clearDictCache, deleteDictItem, listDictItem } from '@/apis/system/enum'
+import EnumTree from './tree/index.vue'
+import EnummItemAddModal from './EnumItemAddModal.vue'
+import { type EnumItemQuery, type EnumItemResp, clearEnumCache, deleteEnumItem, listEnumItem } from '@/apis/system/enum'
 import { useTable } from '@/hooks'
 import { isMobile } from '@/utils'
 import has from '@/utils/has'
@@ -87,7 +87,7 @@ const {
   pagination,
   search,
   handleDelete,
-} = useTable((page) => listDictItem({ ...queryForm, ...page }), { immediate: false })
+} = useTable((page) => listEnumItem({ ...queryForm, ...page }), { immediate: false })
 const columns: TableInstance['columns'] = [
   {
     title: '序号',
@@ -131,7 +131,7 @@ const reset = () => {
 
 // 删除
 const onDelete = (record: DictItemResp) => {
-  return handleDelete(() => deleteDictItem(record.id), {
+  return handleDelete(() => deleteEnumItem(record.id), {
     content: `是否确定删除字典项「${record.label}」？`,
     showModal: true,
   })
@@ -150,7 +150,7 @@ const onClearCache = () => {
     hideCancel: false,
     maskClosable: false,
     onOk: async () => {
-      await clearDictCache(dictCode.value)
+      await clearEnumCache(dictCode.value)
       Message.success('清除成功')
     },
   })
