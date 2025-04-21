@@ -40,7 +40,7 @@ export interface UserQuery {
   userIds?: Array<string>
   roleId?: string
 }
-export interface UserPageQuery extends UserQuery, PageQuery {}
+export interface UserPageQuery extends UserQuery, PageQuery { }
 
 /** 角色类型 */
 export interface RoleResp {
@@ -85,7 +85,7 @@ export interface RoleUserQuery {
   description?: string
   sort: Array<string>
 }
-export interface RoleUserPageQuery extends RoleUserQuery, PageQuery {}
+export interface RoleUserPageQuery extends RoleUserQuery, PageQuery { }
 
 /** 菜单类型 */
 export interface MenuResp {
@@ -166,13 +166,37 @@ export interface DictItemResp {
   updateUserString: string
   sysLastModifiedTime: string
 }
+
+export interface EnumItemResp {
+  id: string
+  label: string
+  value: string
+  color: string
+  sort: number
+  description: string
+  status: 1 | 2
+  dictId: number
+  sysCreatedBy: string
+  sysCreatedTime: string
+  updateUserString: string
+  sysLastModifiedTime: string
+}
+
 export interface DictItemQuery {
   description?: string
   status?: number
   sort: Array<string>
   dictId: string
 }
+
 export interface DictItemPageQuery extends DictItemQuery, PageQuery {
+}
+
+export interface EnumItemQuery {
+  description?: string
+  status?: number
+  sort: Array<string>
+  id: string
 }
 
 /** 公告类型 */
@@ -302,7 +326,7 @@ export interface ClientQuery {
   status: string
   sort: Array<string>
 }
-export interface ClientPageQuery extends ClientQuery, PageQuery {}
+export interface ClientPageQuery extends ClientQuery, PageQuery { }
 
 /** 系统参数类型 */
 export interface OptionResp {
@@ -394,7 +418,7 @@ export interface SmsConfigQuery {
   accessKey: string | undefined
   sort: Array<string>
 }
-export interface SmsConfigPageQuery extends SmsConfigQuery, PageQuery {}
+export interface SmsConfigPageQuery extends SmsConfigQuery, PageQuery { }
 
 /** 短信日志类型 */
 export interface SmsLogResp {
@@ -417,7 +441,7 @@ export interface SmsLogQuery {
   status: number | undefined
   sort: Array<string>
 }
-export interface SmsLogPageQuery extends SmsLogQuery, PageQuery {}
+export interface SmsLogPageQuery extends SmsLogQuery, PageQuery { }
 
 /** 绑定三方账号信息 */
 export interface BindSocialAccountRes {
