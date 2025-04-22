@@ -30,14 +30,14 @@ const { width } = useWindowSize()
 const dataId = ref('')
 const visible = ref(false)
 const isUpdate = computed(() => !!dataId.value)
-const title = computed(() => (isUpdate.value ? '修改字典' : '新增字典'))
+const title = computed(() => (isUpdate.value ? '修改枚举档案' : '新增枚举档案'))
 const formRef = ref<InstanceType<typeof GiForm>>()
 
 const [form, resetForm] = useResetReactive({})
 
 const columns: ColumnItem[] = reactive([
   {
-    label: '名称',
+    label: '枚举档案名称',
     field: 'name',
     type: 'input',
     span: 24,
@@ -47,7 +47,7 @@ const columns: ColumnItem[] = reactive([
     },
   },
   {
-    label: '编码',
+    label: '枚举档案编码',
     field: 'code',
     type: 'input',
     span: 24,
@@ -58,7 +58,7 @@ const columns: ColumnItem[] = reactive([
     disabled: () => isUpdate.value,
   },
   {
-    label: '描述',
+    label: '枚举档案描述',
     field: 'description',
     type: 'textarea',
     span: 24,
