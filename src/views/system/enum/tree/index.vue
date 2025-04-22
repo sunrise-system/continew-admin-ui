@@ -12,7 +12,7 @@
       <div class="tree">
         <a-tree
           :data="(treeData as unknown as TreeNodeData[])"
-          :field-names="{ key: 'id' }"
+          :field-names="{ key: 'id', label: 'name' }"
           block-node
           :selected-keys="selectedKeys"
           @select="select"
@@ -40,7 +40,7 @@
       </div>
     </div>
 
-    <EnummAddModal ref="DictAddModalRef" @save-success="getTreeData" />
+    <EnumAddModal ref="EnumAddModalRef" @save-success="getTreeData" />
   </div>
 </template>
 
@@ -48,13 +48,14 @@
 import { Message, Modal } from '@arco-design/web-vue'
 import type { TreeNodeData } from '@arco-design/web-vue'
 import { mapTree } from 'xe-utils'
-import EnummAddModal from './EnumAddModal.vue'
+import EnumAddModal from './EnumAddModal.vue'
 import RightMenu from './RightMenu.vue'
 import { type EnumResp, deleteEnum, listEnum } from '@/apis/system/enum'
 import has from '@/utils/has'
+import { parseList } from '@/utils'
 
 const emit = defineEmits<{
-  (e: 'node-click', enumm: { dictId: string, dictName?: string, dictCode?: string }): void
+  (e: 'node-click', enum: { categoryId: string, name?: string, code?: string }): void
 }>()
 
 interface TreeItem extends EnumResp {
@@ -71,9 +72,9 @@ const select = (keys: Array<any>) => {
   selectedKeys.value = keys
   const selectedDict = dataList.value.find((item) => item.id === keys[0])
   emit('node-click', {
-    dictId: keys[0],
-    dictName: selectedDict?.name,
-    dictCode: selectedDict?.code,
+    categoryId: keys[0],
+    name: selectedDict?.name,
+    code: selectedDict?.code,
   })
 }
 
@@ -83,7 +84,8 @@ const getTreeData = async () => {
   try {
     loading.value = true
     const { data } = await listEnum()
-    dataList.value = mapTree(data, (i) => ({
+
+    dataList.value = mapTree(parseList(data), (i) => ({
       ...i,
       popupVisible: false,
       icon: () => {
@@ -118,16 +120,16 @@ const treeData = computed(() => {
   return search(searchKey.value.toLowerCase())
 })
 
-const DictAddModalRef = ref<InstanceType<typeof EnumAddModal>>()
+const EnumAddModalRef = ref<InstanceType<typeof EnumAddModal>>()
 // 新增
 const onAdd = () => {
-  DictAddModalRef.value?.onAdd()
+  EnumAddModalRef.value?.onAdd()
 }
 
 // 点击菜单项
 const onMenuItemClick = (mode: string, node: EnumResp) => {
   if (mode === 'update') {
-    DictAddModalRef.value?.onUpdate(node.id)
+    EnumAddModalRef.value?.onUpdate(node.id)
   } else if (mode === 'delete') {
     Modal.warning({
       title: '提示',
