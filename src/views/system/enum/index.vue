@@ -33,13 +33,6 @@
               <template #default>清除缓存</template>
             </a-button>
           </template>
-          <template #label="{ record }">
-            <a-tag v-if="record.color === 'primary'" color="arcoblue">{{ record.label }}</a-tag>
-            <a-tag v-else-if="record.color === 'success'" color="green">{{ record.label }}</a-tag>
-            <a-tag v-else-if="record.color === 'warning'" color="orangered">{{ record.label }}</a-tag>
-            <a-tag v-else-if="record.color === 'error'" color="red">{{ record.label }}</a-tag>
-            <a-tag v-else-if="record.color === 'default'" color="gray">{{ record.label }}</a-tag>
-          </template>
           <template #status="{ record }">
             <GiCellStatus :status="record.status" />
           </template>
@@ -96,22 +89,10 @@ const columns: TableInstance['columns'] = [
     align: 'center',
     render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
   },
-  { title: '标签', dataIndex: 'label', slotName: 'label', minWidth: 100, align: 'center' },
-  { title: '值', dataIndex: 'value', minWidth: 100, align: 'center', ellipsis: true, tooltip: true },
+  { title: '名称', dataIndex: 'name', slotName: 'name', minWidth: 100, align: 'center' },
+  { title: '编码', dataIndex: 'code', minWidth: 100, align: 'center', ellipsis: true, tooltip: true },
   { title: '状态', dataIndex: 'status', slotName: 'status', align: 'center' },
-  {
-    title: '排序',
-    dataIndex: 'sort',
-    align: 'center',
-    sortable: {
-      sortDirections: ['ascend', 'descend'],
-    },
-  },
   { title: '描述', dataIndex: 'description', minWidth: 130, ellipsis: true, tooltip: true },
-  { title: '创建人', dataIndex: 'sysCreatedBy', width: 140, ellipsis: true, tooltip: true, show: false },
-  { title: '创建时间', dataIndex: 'sysCreatedTime', width: 180 },
-  { title: '修改人', dataIndex: 'updateUserString', width: 140, ellipsis: true, tooltip: true, show: false },
-  { title: '修改时间', dataIndex: 'sysLastModifiedTime', width: 180, show: false },
   {
     title: '操作',
     dataIndex: 'action',
@@ -133,7 +114,7 @@ const reset = () => {
 // 删除
 const onDelete = (record: EnumItemResp) => {
   return handleDelete(() => deleteEnumItem(record.id), {
-    content: `是否确定删除字典项「${record.label}」？`,
+    content: `是否确定删除字典项「${record.name}」？`,
     showModal: true,
   })
 }
