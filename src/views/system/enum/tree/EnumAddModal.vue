@@ -19,6 +19,7 @@ import { useWindowSize } from '@vueuse/core'
 import { addEnum, getEnum, updateEnum } from '@/apis/system/enum'
 import { type ColumnItem, GiForm } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
+import { parseData } from '@/utils'
 
 const emit = defineEmits<{
   (e: 'save-success'): void
@@ -100,8 +101,8 @@ const onAdd = () => {
 const onUpdate = async (id: string) => {
   reset()
   dataId.value = id
-  const { data } = await getDict(id)
-  Object.assign(form, data)
+  const { data } = await getEnum(id)
+  Object.assign(form, parseData(data))
   visible.value = true
 }
 
