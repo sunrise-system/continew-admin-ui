@@ -208,6 +208,7 @@ export interface DictItemPageQuery extends DictItemQuery, PageQuery {
 export interface EnumItemQuery {
   description?: string
   status?: number
+  categoryId: string
   sort: Array<string>
   id: string
 }
