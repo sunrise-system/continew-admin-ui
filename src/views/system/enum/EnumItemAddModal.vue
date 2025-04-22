@@ -34,6 +34,7 @@ import { useWindowSize } from '@vueuse/core'
 import { addEnumItem, getEnumItem, updateEnumItem } from '@/apis/system/enum'
 import { type ColumnItem, GiForm } from '@/components/GiForm'
 import { useResetReactive } from '@/hooks'
+import { parseData } from '@/utils'
 
 const emit = defineEmits<{
   (e: 'save-success'): void
@@ -99,7 +100,7 @@ const columns: ColumnItem[] = reactive([
   },
   {
     label: '状态',
-    field: 'status',
+    field: 'isActive',
     type: 'switch',
     span: 24,
     props: {
@@ -150,7 +151,7 @@ const onUpdate = async (id: string) => {
   reset()
   dataId.value = id
   const { data } = await getEnumItem(id)
-  Object.assign(form, data)
+  Object.assign(form, parseData(data))
   visible.value = true
 }
 
