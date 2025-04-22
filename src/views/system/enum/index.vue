@@ -83,14 +83,8 @@ const {
   handleDelete,
 } = useTable((page) => listEnumItem({ ...queryForm, ...page }), { immediate: false })
 const columns: TableInstance['columns'] = [
-  {
-    title: '序号',
-    width: 66,
-    align: 'center',
-    render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
-  },
-  { title: '名称', dataIndex: 'name', slotName: 'name', minWidth: 100, align: 'center' },
-  { title: '编码', dataIndex: 'code', minWidth: 100, align: 'center', ellipsis: true, tooltip: true },
+  { title: '名称', dataIndex: 'name', slotName: 'name', minWidth: 60, align: 'center' },
+  { title: '编码', dataIndex: 'code', minWidth: 60, align: 'center', ellipsis: true, tooltip: true },
   { title: '状态', dataIndex: 'status', slotName: 'status', align: 'center' },
   { title: '描述', dataIndex: 'description', minWidth: 130, ellipsis: true, tooltip: true },
   {
