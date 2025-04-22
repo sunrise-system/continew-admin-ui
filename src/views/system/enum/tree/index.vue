@@ -9,7 +9,7 @@
       </a-button>
     </div>
     <div class="tree-wrapper">
-      <div class="tree">
+<div class="tree">
         <a-tree
           :data="(treeData as unknown as TreeNodeData[])"
           :field-names="{ key: 'id', label: 'name' }"
@@ -55,7 +55,7 @@ import has from '@/utils/has'
 import { parseList } from '@/utils'
 
 const emit = defineEmits<{
-  (e: 'node-click', enum: { categoryId: string, name?: string, code?: string }): void
+  (e: 'node-click', Enum: { categoryId: string, name?: string, code?: string }): void
 }>()
 
 interface TreeItem extends EnumResp {
