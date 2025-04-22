@@ -9,6 +9,7 @@
     @before-ok="save"
     @close="reset"
   >
+  {{ categoryId }}
     <GiForm ref="formRef" v-model="form" :columns="columns">
       <template #color>
         <a-select
@@ -41,13 +42,14 @@ const emit = defineEmits<{
 const { width } = useWindowSize()
 
 const dataId = ref('')
-const dictId = ref('')
+const categoryId = ref('')
 const visible = ref(false)
 const isUpdate = computed(() => !!dataId.value)
 const title = computed(() => (isUpdate.value ? '修改字典项' : '新增字典项'))
 const formRef = ref<InstanceType<typeof GiForm>>()
 
 const [form, resetForm] = useResetReactive({
+  categoryId: '',
   sort: 999,
   status: 1,
 })
@@ -125,7 +127,7 @@ const save = async () => {
       await updateEnumItem(form, dataId.value)
       Message.success('修改成功')
     } else {
-      await addEnumItem({ ...form, dictId: dictId.value })
+      await addEnumItem({ ...form, categoryId: categoryId.value })
       Message.success('新增成功')
     }
     emit('save-success')
@@ -139,7 +141,7 @@ const save = async () => {
 const onAdd = (id: string) => {
   reset()
   dataId.value = ''
-  dictId.value = id
+  categoryId.value = id
   visible.value = true
 }
 
