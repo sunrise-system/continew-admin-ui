@@ -60,7 +60,7 @@
       </a-col>
     </a-row>
 
-    <EnummItemAddModal ref="DictItemAddModalRef" @save-success="search" />
+    <EnumItemAddModal ref="EnumItemAddModalRef" @save-success="search" />
   </GiPageLayout>
 </template>
 
@@ -68,7 +68,7 @@
 import type { TableInstance } from '@arco-design/web-vue'
 import { Message, Modal } from '@arco-design/web-vue'
 import EnumTree from './tree/index.vue'
-import EnummItemAddModal from './EnumItemAddModal.vue'
+import EnumItemAddModal from './EnumItemAddModal.vue'
 import { type EnumItemQuery, type EnumItemResp, clearEnumCache, deleteEnumItem, listEnumItem } from '@/apis/system/enum'
 import { useTable } from '@/hooks'
 import { isMobile } from '@/utils'
@@ -78,6 +78,7 @@ defineOptions({ name: 'SystemEnum' })
 
 const queryForm = reactive<EnumItemQuery>({
   id: '',
+  categoryId: '',
   sort: ['sysCreatedTime,desc'],
 })
 
@@ -130,49 +131,49 @@ const reset = () => {
 }
 
 // 删除
-const onDelete = (record: DictItemResp) => {
+const onDelete = (record: EnumItemResp) => {
   return handleDelete(() => deleteEnumItem(record.id), {
     content: `是否确定删除字典项「${record.label}」？`,
     showModal: true,
   })
 }
 
-const dictName = ref()
-const dictCode = ref()
+const enumName = ref()
+const enumCode = ref()
 // 清除缓存
 const onClearCache = () => {
-  if (!dictCode.value) {
+  if (!enumCode.value) {
     return Message.warning('请先选择字典')
   }
   Modal.warning({
     title: '提示',
-    content: `是否确定清除字典「${dictName.value}(${dictCode.value})」缓存？`,
+    content: `是否确定清除字典「${enumName.value}(${enumCode.value})」缓存？`,
     hideCancel: false,
     maskClosable: false,
     onOk: async () => {
-      await clearEnumCache(dictCode.value)
+      await clearEnumCache(enumCode.value)
       Message.success('清除成功')
     },
   })
 }
 
 // 根据选中字典查询
-const handleSelectDict = (dict: { dictId: string, dictName: string, dictCode: string }) => {
-  queryForm.dictId = dict.dictId
-  dictName.value = dict.dictName
-  dictCode.value = dict.dictCode
+const handleSelectDict = (Enum: { categoryId: string, name: string, code: string }) => {
+  queryForm.categoryId = Enum.categoryId
+  enumName.value = Enum.name
+  enumCode.value = Enum.code
   search()
 }
 
-const DictItemAddModalRef = ref<InstanceType<typeof DictItemAddModal>>()
+const EnumItemAddModalRef = ref<InstanceType<typeof EnumItemAddModal>>()
 // 新增
 const onAdd = () => {
-  DictItemAddModalRef.value?.onAdd(queryForm.dictId)
+  EnumItemAddModalRef.value?.onAdd(queryForm.categoryId)
 }
 
 // 修改
-const onUpdate = (record: DictItemResp) => {
-  DictItemAddModalRef.value?.onUpdate(record.id)
+const onUpdate = (record: EnumItemResp) => {
+  EnumItemAddModalRef.value?.onUpdate(record.id)
 }
 </script>
 
