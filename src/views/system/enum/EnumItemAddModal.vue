@@ -9,7 +9,6 @@
     @before-ok="save"
     @close="reset"
   >
-  {{ categoryId }}
     <GiForm ref="formRef" v-model="form" :columns="columns">
       <template #color>
         <a-select
@@ -57,8 +56,8 @@ const [form, resetForm] = useResetReactive({
 
 const columns: ColumnItem[] = reactive([
   {
-    label: '标签',
-    field: 'label',
+    label: '名称',
+    field: 'name',
     type: 'input',
     span: 24,
     required: true,
@@ -67,8 +66,8 @@ const columns: ColumnItem[] = reactive([
     },
   },
   {
-    label: '值',
-    field: 'value',
+    label: '编码',
+    field: 'code',
     type: 'input',
     span: 24,
     required: true,
