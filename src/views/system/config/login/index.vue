@@ -18,8 +18,8 @@
           <a-switch
             v-model="form.LOGIN_CAPTCHA_ENABLED"
             type="round"
-            :checked-value="1"
-            :unchecked-value="0"
+            :checked-value="true"
+            :unchecked-value="false"
           >
             <template #checked>是</template>
             <template #unchecked>否</template>
@@ -52,6 +52,7 @@ import { useWindowSize } from '@vueuse/core'
 import { type FormInstance, Message, Modal } from '@arco-design/web-vue'
 import { type LoginConfig, type OptionResp, listOption, resetOptionValue, updateOption } from '@/apis/system'
 import { useResetReactive } from '@/hooks'
+import { parseList } from '@/utils'
 
 defineOptions({ name: 'SystemLoginConfig' })
 const { width } = useWindowSize()
@@ -59,7 +60,7 @@ const { width } = useWindowSize()
 const loading = ref<boolean>(false)
 const formRef = ref<FormInstance>()
 const [form] = useResetReactive({
-  LOGIN_CAPTCHA_ENABLED: 1,
+  LOGIN_CAPTCHA_ENABLED: true,
 })
 const rules: FormInstance['rules'] = {
   LOGIN_CAPTCHA_ENABLED: [{ required: true, message: '请选择' }],
@@ -72,7 +73,7 @@ const loginConfig = ref<LoginConfig>({
 // 重置
 const reset = () => {
   formRef.value?.resetFields()
-  form.LOGIN_CAPTCHA_ENABLED = loginConfig.value.LOGIN_CAPTCHA_ENABLED.value || 0
+  form.LOGIN_CAPTCHA_ENABLED = loginConfig.value.LOGIN_CAPTCHA_ENABLED.value === 'true' || true
 }
 
 const isUpdate = ref(false)
@@ -96,10 +97,12 @@ const getDataList = async () => {
     loading.value = true
     const { data } = await listOption(queryForm)
     loginConfig.value = parseList(data).reduce((obj: LoginConfig, option: OptionResp) => {
-      obj[option.code] = { ...option, value: Number.parseInt(option.value) }
+      obj[option.code] = { ...option, value: option.value === 'true' }
       return obj
     }, {})
     handleCancel()
+  } catch (error) {
+    console.log(error)
   } finally {
     loading.value = false
   }
