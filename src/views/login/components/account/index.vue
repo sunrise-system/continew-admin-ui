@@ -115,9 +115,8 @@ const handleLogin = async () => {
     if (isInvalid) return
     loading.value = true
     await userStore.accountLogin({
-      UserId: form.username,
-      // password: encryptByRsa(form.password) || '',
-      PasswdHash: form.password || '',
+      username: form.username,
+      password: encryptByRsa(form.password) || '',
       captcha: form.captcha,
       uuid: form.uuid,
     })
