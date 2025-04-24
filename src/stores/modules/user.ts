@@ -16,6 +16,7 @@ import {
 } from '@/apis'
 import { clearToken, getToken, setToken } from '@/utils/auth'
 import { resetHasRouteFlag } from '@/router/guard'
+import { parseData } from '@/utils'
 
 const storeSetup = () => {
   const userInfo = reactive<UserInfo>({
@@ -52,8 +53,9 @@ const storeSetup = () => {
   // 登录
   const accountLogin = async (req: AccountLoginReq) => {
     const res = await accountLoginApi({ ...req, clientId: import.meta.env.VITE_CLIENT_ID, authType: AuthTypeConstants.ACCOUNT })
-    setToken(res.data.token)
-    token.value = res.data.token
+    const t = parseData(res.data).token
+    setToken(t)
+    token.value = t
   }
 
   // 邮箱登录
