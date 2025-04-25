@@ -27,8 +27,13 @@
           block-node
           default-expand-all
           :selected-keys="selectedKeys"
+          show-line
           @select="select"
         >
+        <template #switcher-icon="node, { groupId }">
+            <IconCaretDown v-if="!node.groupId" />
+            <IconIdcard v-else />
+          </template>
           <template #title="node">
             <a-typography-paragraph
               :ellipsis="{
@@ -222,43 +227,22 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
+:deep(.arco-tree-node-title-text) {
+  width: 100%;
+  white-space: nowrap;
+}
+
 :deep(.arco-tree-node) {
   line-height: normal;
   border-radius: var(--border-radius-medium);
-  margin: 5px 0;
-  .action {
-    opacity: 0;
-    margin-right: 8px;
-    padding: 4px;
-    transition: all 0.25s;
-    border-radius: 8px;
-
-    &:hover{
-      background-color: var(--color-bg-1);
-    }
-  }
   &:hover {
     background-color: var(--color-secondary-hover);
-    .action {
-      opacity: 1;
-    }
-  }
-
-  .arco-tree-node-switcher {
-    width: 0;
-    margin-right: 0;
   }
 
   .arco-tree-node-title {
     &:hover {
       background-color: transparent;
     }
-  }
-
-  .arco-tree-node-title-text {
-    width: 100%;
-    white-space: normal;
-    overflow-wrap: anywhere;
   }
 }
 
@@ -270,9 +254,6 @@ onMounted(() => {
   }
   .arco-typography {
     color: rgb(var(--primary-6));
-  }
-  .action {
-    opacity: 1;
   }
 }
 
@@ -286,13 +267,7 @@ onMounted(() => {
   height: 100%;
 
   .search {
-    display: flex;
-    justify-content: start;
-    margin-bottom: 10px;
-    .arco-btn {
-      margin-left: 8px;
-      padding: 0 15px;
-    }
+    margin-bottom: 16px;
   }
 
   .tree-wrapper {

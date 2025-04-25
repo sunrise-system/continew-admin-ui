@@ -28,10 +28,6 @@
               <template #icon><icon-plus /></template>
               <template #default>新增</template>
             </a-button>
-            <a-button v-permission="['system:dict:item:clearCache']" type="outline" status="warning" @click="onClearCache">
-              <template #icon><icon-delete /></template>
-              <template #default>清除缓存</template>
-            </a-button>
           </template>
           <template #status="{ record }">
             <GiCellStatus :status="record.status" />
@@ -115,22 +111,6 @@ const onDelete = (record: EnumItemResp) => {
 
 const enumName = ref()
 const enumCode = ref()
-// 清除缓存
-const onClearCache = () => {
-  if (!enumCode.value) {
-    return Message.warning('请先选择字典')
-  }
-  Modal.warning({
-    title: '提示',
-    content: `是否确定清除字典「${enumName.value}(${enumCode.value})」缓存？`,
-    hideCancel: false,
-    maskClosable: false,
-    onOk: async () => {
-      await clearEnumCache(enumCode.value)
-      Message.success('清除成功')
-    },
-  })
-}
 
 // 根据选中字典查询
 const handleSelectDict = (Enum: { categoryId: string, name: string, code: string }) => {

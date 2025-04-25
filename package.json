@@ -1,23 +1,4 @@
 {
-  "name": "continew-admin-ui",
-  "type": "module",
-  "version": "3.6.0-SNAPSHOT",
-  "private": true,
-  "packageManager": "pnpm@9.10.0",
-  "scripts": {
-    "bootstrap": "pnpm install --registry=https://registry.npmmirror.com",
-    "build": "vue-tsc --noEmit && vite build",
-    "build:test": "vue-tsc --noEmit && vite build --mode test",
-    "build:turbo": "turbo run build",
-    "dev": "vite --host",
-    "lib": "vitest run && pnpm run build -F epic-designer",
-    "lint": "eslint .",
-    "lint:fix": "eslint . --fix",
-    "preview": "vite preview --port 5050",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "postinstall": "pnpm -r run stub --if-present",
-    "typecheck": "vue-tsc --noEmit"
-  },
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
     "@arco-design/color": "^0.4.0",
@@ -38,6 +19,7 @@
     "cron-parser": "^4.9.0",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.4",
+    "default-passive-events": "^2.0.0",
     "echarts": "^5.4.2",
     "jsencrypt": "^3.3.2",
     "lint-staged": "^15.2.10",
@@ -110,10 +92,29 @@
     "vite-plugin-svg-icons": "^2.0.1",
     "vue-tsc": "2.0.19"
   },
+  "lint-staged": {
+    "*": "eslint --fix"
+  },
+  "name": "continew-admin-ui",
+  "packageManager": "pnpm@9.10.0",
+  "private": true,
+  "scripts": {
+    "bootstrap": "pnpm install --registry=https://registry.npmmirror.com",
+    "build": "vue-tsc --noEmit && vite build",
+    "build:test": "vue-tsc --noEmit && vite build --mode test",
+    "build:turbo": "turbo run build",
+    "dev": "vite --host",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "lib": "vitest run && pnpm run build -F epic-designer",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "postinstall": "pnpm -r run stub --if-present",
+    "preview": "vite preview --port 5050",
+    "typecheck": "vue-tsc --noEmit"
+  },
   "simple-git-hooks": {
     "pre-commit": "pnpm lint-staged"
   },
-  "lint-staged": {
-    "*": "eslint --fix"
-  }
+  "type": "module",
+  "version": "3.6.0-SNAPSHOT"
 }
