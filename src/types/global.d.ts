@@ -14,7 +14,14 @@ export interface LabelValueState {
   extra?: string
 }
 
-declare global{
+/** 键值对类型 */
+export interface NameCodeState {
+  name: string
+  code: any
+  extra?: string
+}
+
+declare global {
   type Recordable<T = any> = Record<string, T>
 }
 
