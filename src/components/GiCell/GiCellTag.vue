@@ -25,7 +25,7 @@ const props = withDefaults(defineProps<Partial<GiCellTagType>>(), {
 const dictItem = computed((): NameCodeState => {
   try {
     return props.option.find(
-      (d) => d.value === String(props.code),
+      (d) => d.code === String(props.value),
     ) || { name: '', code: '' }
   } catch (error) {
     return { name: '', code: '' }
