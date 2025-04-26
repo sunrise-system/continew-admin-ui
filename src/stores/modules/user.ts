@@ -53,9 +53,9 @@ const storeSetup = () => {
   // 登录
   const accountLogin = async (req: AccountLoginReq) => {
     const res = await accountLoginApi({ ...req, clientId: import.meta.env.VITE_CLIENT_ID, authType: AuthTypeConstants.ACCOUNT })
-    const t = parseData(res.data).token
-    setToken(t)
-    token.value = t
+    const data = parseData(res.data)
+    setToken(data.token)
+    token.value = data.token
   }
 
   // 邮箱登录
