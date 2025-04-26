@@ -28,12 +28,12 @@
 <script setup lang="ts">
 import { useWindowSize } from '@vueuse/core'
 import { type ClientDetailResp, getClient as getDetail } from '@/apis/system/client'
-import { useDict } from '@/hooks/app'
+import { useEnum } from '@/hooks/app'
 
 const {
   client_type,
   auth_type_enum,
-} = useDict('client_type', 'auth_type_enum')
+} = useEnum('client_type', 'auth_type_enum')
 
 const { width } = useWindowSize()
 
