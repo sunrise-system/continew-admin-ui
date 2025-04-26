@@ -267,7 +267,13 @@ onMounted(() => {
   height: 100%;
 
   .search {
-    margin-bottom: 16px;
+    display: flex;
+    justify-content: start;
+    margin-bottom: 10px;
+    .arco-btn {
+      margin-left: 8px;
+      padding: 0 15px;
+    }
   }
 
   .tree-wrapper {
