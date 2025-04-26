@@ -1,6 +1,6 @@
-import type { LabelValueState } from '@/types/global'
+import type { NameCodeState } from '@/types/global'
 
 export interface GiCellTagType {
-  dict: LabelValueState[] | any[]
+  option: NameCodeState[] | any[]
   value: number | string
 }
