@@ -1,5 +1,5 @@
 import type * as T from './type'
-import http from '@/utils/http'
+import http, { fetchMotion } from '@/utils/http'
 
 const BASE_URL = '/user/profile'
 
@@ -9,8 +9,11 @@ export function uploadAvatar(data: FormData) {
 }
 
 /** @desc 修改用户基本信息 */
-export function updateUserBaseInfo(data: { nickname: string, gender: number }) {
-  return http.patch(`${BASE_URL}/basic/info`, data)
+export function updateUserBaseInfo(data: any) {
+  const formArray: any = {}
+  formArray.data = data
+  return fetchMotion(`ADM08903A/profile`, formArray)
+  // return http.patch(`${BASE_URL}/basic/info`, data)
 }
 
 /** @desc 修改密码 */
