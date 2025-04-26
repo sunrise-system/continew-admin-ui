@@ -5,7 +5,7 @@
       :data="dataList"
       :columns="columns"
       :loading="loading"
-      :scroll="{ x: '100%', y: '100%', minWidth: 1200 }"
+      :scroll="{ x: '100%', y: '100%', minWidth: 900 }"
       :pagination="pagination"
       :disabled-tools="['size']"
       :disabled-column-keys="['clientKey']"
@@ -18,6 +18,7 @@
           placeholder="请选择客户端类型"
           allow-clear
           style="width: 160px"
+          :field-names="{ value: 'id', label: 'name' }"
           @change="search"
         />
         <a-select
@@ -66,20 +67,20 @@ import ClientDetailDrawer from './ClientDetailDrawer.vue'
 import { type ClientQuery, type ClientResp, deleteClient, listClient } from '@/apis/system/client'
 import { DisEnableStatusList } from '@/constant/common'
 import { useTable } from '@/hooks'
-import { useDict } from '@/hooks/app'
+import { useEnum } from '@/hooks/app'
 import { isMobile } from '@/utils'
 import has from '@/utils/has'
 import CellCopy from '@/components/CellCopy/index.vue'
 import GiCellTag from '@/components/GiCell/GiCellTag.vue'
 import GiCellTags from '@/components/GiCell/GiCellTags.vue'
-import GiCellStatus from '@/components/GiCell/GiCellStatus.vue'
+import GiCellBoolean from '@/components/GiCell/GiCellBoolean.vue'
 
 defineOptions({ name: 'SystemClient' })
 
 const {
   client_type,
   auth_type_enum,
-} = useDict('client_type', 'auth_type_enum')
+} = useEnum('client_type', 'auth_type_enum')
 
 const queryForm = reactive<ClientQuery>({
   clientType: '',
@@ -89,7 +90,7 @@ const queryForm = reactive<ClientQuery>({
 })
 const formatAuthType = (data: string[]) => {
   return data.map((item: string) => {
-    return auth_type_enum.value.find((d: LabelValue) => d.value === item).label
+    return auth_type_enum.value.find((d) => d.code === item)?.name
   })
 }
 
@@ -102,21 +103,14 @@ const {
 } = useTable((page) => listClient({ ...queryForm, ...page }), { immediate: true })
 const columns: TableInstance['columns'] = [
   {
-    title: '序号',
-    width: 66,
-    align: 'center',
-    render: ({ rowIndex }) => h('span', {}, rowIndex + 1 + (pagination.current - 1) * pagination.pageSize),
-    fixed: !isMobile() ? 'left' : undefined,
-  },
-  {
     title: '客户端 ID',
-    dataIndex: 'clientId',
-    slotName: 'clientId',
+    dataIndex: 'id',
+    slotName: 'id',
     ellipsis: true,
     tooltip: true,
     render: ({ record }) => {
       return (
-        <CellCopy content={record.clientId} />
+        <CellCopy content={record.id} />
       )
     },
   },
@@ -128,7 +122,7 @@ const columns: TableInstance['columns'] = [
     tooltip: true,
     align: 'center',
     render: ({ record }) => {
-      return <GiCellTag value={record.clientType} dict={client_type.value} />
+      return <GiCellTag value={record.clientType} option={client_type.value} />
     },
   },
   {
@@ -148,17 +142,13 @@ const columns: TableInstance['columns'] = [
   { title: 'Token 有效期', dataIndex: 'timeout', slotName: 'timeout', align: 'center', render: ({ record }) => `${record.timeout} 秒` },
   {
     title: '状态',
-    dataIndex: 'status',
-    slotName: 'status',
+    dataIndex: 'isActive',
+    slotName: 'isActive',
     align: 'center',
     render: ({ record }) => {
-      return <GiCellStatus status={record.status} />
+      return <GiCellBoolean isActive={record.isActive} />
     },
   },
-  { title: '创建人', dataIndex: 'sysCreatedBy', width: 140, ellipsis: true, tooltip: true, show: false },
-  { title: '创建时间', dataIndex: 'sysCreatedTime', width: 180 },
-  { title: '修改人', dataIndex: 'updateUserString', width: 140, ellipsis: true, tooltip: true, show: false },
-  { title: '修改时间', dataIndex: 'sysLastModifiedTime', width: 180, show: false },
   {
     title: '操作',
     dataIndex: 'action',
@@ -181,7 +171,7 @@ const reset = () => {
 // 删除
 const onDelete = (record: ClientResp) => {
   return handleDelete(() => deleteClient(record.id), {
-    content: `是否确定删除客户端「${record.clientId}」？`,
+    content: `是否确定删除客户端「${record.id}」？`,
     showModal: true,
   })
 }
