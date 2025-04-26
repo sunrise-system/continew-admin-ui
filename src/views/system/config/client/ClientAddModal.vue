@@ -20,7 +20,8 @@ import { addClient, getClient, updateClient } from '@/apis/system/client'
 import { type ColumnItem, GiForm } from '@/components/GiForm'
 import { DisEnableStatusList } from '@/constant/common'
 import { useResetReactive } from '@/hooks'
-import { useDict } from '@/hooks/app'
+import { useEnum } from '@/hooks/app'
+import { parseData } from '@/utils'
 
 const emit = defineEmits<{
   (e: 'save-success'): void
@@ -33,7 +34,7 @@ const visible = ref(false)
 const isUpdate = computed(() => !!dataId.value)
 const title = computed(() => (isUpdate.value ? '修改客户端' : '新增客户端'))
 const formRef = ref<InstanceType<typeof GiForm>>()
-const { client_type, auth_type_enum } = useDict('auth_type_enum', 'client_type')
+const { client_type, auth_type_enum } = useEnum('auth_type_enum', 'client_type')
 
 const [form, resetForm] = useResetReactive({
   activeTimeout: 1800,
@@ -51,6 +52,10 @@ const columns: ColumnItem[] = reactive([
     span: 12,
     props: {
       options: client_type,
+      fieldNames: {
+        value: 'code',
+        label: 'name',
+      }
     },
   },
   {
@@ -63,6 +68,10 @@ const columns: ColumnItem[] = reactive([
       options: auth_type_enum,
       multiple: true,
       maxTagCount: 2,
+      fieldNames: {
+        value: 'code',
+        label: 'name',
+      }
     },
   },
   {
@@ -155,7 +164,7 @@ const onUpdate = async (id: string) => {
   reset()
   dataId.value = id
   const { data } = await getClient(id)
-  Object.assign(form, data)
+  Object.assign(form, parseData(data))
   visible.value = true
 }
 
