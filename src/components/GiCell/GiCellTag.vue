@@ -1,34 +1,34 @@
 <template>
   <span v-if="!dictItem"></span>
-  <span v-else-if="!dictItem.extra">{{ dictItem.label }}</span>
-  <a-tag v-else-if="dictItem.extra === 'primary'" color="arcoblue">{{ dictItem.label }}</a-tag>
-  <a-tag v-else-if="dictItem.extra === 'success'" color="green">{{ dictItem.label }}</a-tag>
-  <a-tag v-else-if="dictItem.extra === 'warning'" color="orangered">{{ dictItem.label }}</a-tag>
-  <a-tag v-else-if="dictItem.extra === 'error'" color="red">{{ dictItem.label }}</a-tag>
-  <a-tag v-else-if="dictItem.extra === 'default'" color="gray">{{ dictItem.label }}</a-tag>
-  <a-tag v-else :color="dictItem.extra">{{ dictItem.label }}</a-tag>
+  <span v-else-if="!dictItem.extra">{{ dictItem.name }}</span>
+  <a-tag v-else-if="dictItem.extra === 'primary'" color="arcoblue">{{ dictItem.name }}</a-tag>
+  <a-tag v-else-if="dictItem.extra === 'success'" color="green">{{ dictItem.name }}</a-tag>
+  <a-tag v-else-if="dictItem.extra === 'warning'" color="orangered">{{ dictItem.name }}</a-tag>
+  <a-tag v-else-if="dictItem.extra === 'error'" color="red">{{ dictItem.name }}</a-tag>
+  <a-tag v-else-if="dictItem.extra === 'default'" color="gray">{{ dictItem.name }}</a-tag>
+  <a-tag v-else :color="dictItem.extra">{{ dictItem.name }}</a-tag>
 </template>
 
 <script setup lang="ts">
-import type { LabelValueState } from '@/types/global'
+import type { NameCodeState } from '@/types/global'
 import type { GiCellTagType } from '@/components/GiCell/type'
 
 defineOptions({ name: 'GiCellTag' })
 const props = withDefaults(defineProps<Partial<GiCellTagType>>(), {
-  dict: [{
-    label: '',
-    value: '',
+  option: [{
+    name: '',
+    code: '',
   }],
   value: '',
 })
 
-const dictItem = computed((): LabelValueState => {
+const dictItem = computed((): NameCodeState => {
   try {
-    return props.dict.find(
-      (d) => d.value === String(props.value) || d.value === Number(props.value),
-    ) || { label: '', value: '' }
+    return props.option.find(
+      (d) => d.value === String(props.code),
+    ) || { name: '', code: '' }
   } catch (error) {
-    return { label: '', value: '' }
+    return { name: '', code: '' }
   }
 })
 </script>
