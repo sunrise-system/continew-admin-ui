@@ -32,12 +32,12 @@ export function socialAuth(source: string) {
 
 /** @desc 退出登录 */
 export function logout() {
-  return fnMotion(`ADM08901A/logout`, {})
+  return fetchMotion(`ADM08901A/logout`, {})
 }
 
 /** @desc 获取用户信息 */
 export const getUserInfo = () => {
-  return fnMotion(`ADM08903A_mock`, {})
+  return fetchMotion(`ADM08903A_mock`, {})
 }
 
 /** @desc 获取路由信息 */
