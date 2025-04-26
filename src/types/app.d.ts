@@ -37,4 +37,12 @@ declare namespace App {
     label: string
     value: string
   }
+
+  /** 枚举项项 */
+  interface EnumItem {
+    disabled?: boolean
+    extra?: string
+    label: string
+    value: string
+  }
 }
