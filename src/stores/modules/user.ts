@@ -61,22 +61,25 @@ const storeSetup = () => {
   // 邮箱登录
   const emailLogin = async (req: EmailLoginReq) => {
     const res = await emailLoginApi({ ...req, clientId: import.meta.env.VITE_CLIENT_ID, authType: AuthTypeConstants.EMAIL })
-    setToken(res.data.token)
-    token.value = res.data.token
+    const data = parseData(res.data)
+    setToken(data.token)
+    token.value = data.token
   }
 
   // 手机号登录
   const phoneLogin = async (req: PhoneLoginReq) => {
     const res = await phoneLoginApi({ ...req, clientId: import.meta.env.VITE_CLIENT_ID, authType: AuthTypeConstants.PHONE })
-    setToken(res.data.token)
-    token.value = res.data.token
+    const data = parseData(res.data)
+    setToken(data.token)
+    token.value = data.token
   }
 
   // 三方账号登录
   const socialLogin = async (source: string, req: any) => {
     const res = await socialLoginApi({ ...req, source, clientId: import.meta.env.VITE_CLIENT_ID, authType: AuthTypeConstants.SOCIAL })
-    setToken(res.data.token)
-    token.value = res.data.token
+    const data = parseData(res.data)
+    setToken(data.token)
+    token.value = data.token
   }
 
   // 退出登录回调
@@ -102,11 +105,12 @@ const storeSetup = () => {
   // 获取用户信息
   const getInfo = async () => {
     const res = await getUserInfoApi()
-    Object.assign(userInfo, res.data)
-    userInfo.avatar = res.data.avatar
-    if (res.data.roles && res.data.roles.length) {
-      roles.value = res.data.roles
-      permissions.value = res.data.permissions
+    const data = parseData(res.data)
+    Object.assign(userInfo, data)
+    userInfo.avatar = data.avatar
+    if (data.roles && data.roles.length) {
+      roles.value = data.roles
+      permissions.value = data.permissions
     }
   }
 
