@@ -8,6 +8,7 @@
         <a-tag color="arcoblue" size="small">+{{ number }}</a-tag>
         <template #content>
           <a-space wrap>
+            {{ data }}
             <a-tag v-for="tag in data.filter((i, n) => n >= data.length - number)" :key="tag" size="small">
               {{ tag }}
             </a-tag>
