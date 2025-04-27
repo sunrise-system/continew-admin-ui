@@ -55,6 +55,7 @@ const {
   revoke,
   setHoverNode,
   setSelectedNode,
+  setupHotkeys,
   state,
 } = useDesigner(props, emit);
 
@@ -87,13 +88,14 @@ provide('designer', {
   setSelectedNode,
   state,
 });
-
+const designerRef = ref<HTMLElement | null>(null);
 /**
  * 组件（包含异步组件）加载完成后
  */
 function handleReady() {
   nextTick(() => {
     ready.value = true;
+    designerRef.value && setupHotkeys(designerRef.value);
     emit('ready', { pageManager });
   });
 }
@@ -111,7 +113,7 @@ async function setDisabledHover(disabledHover = false) {
  */
 function setData(schema: PageSchema) {
   pageManager.setPageSchema(schema);
-  revoke.push(pageSchema.schemas, '加载数据');
+  revoke.push('加载数据');
 }
 
 /**
@@ -174,6 +176,8 @@ defineExpose({
         class="nada-designer-main nada-scoped"
         @wheel="handleWheel"
         @mouseover="setHoverNode()"
+        ref="designerRef"
+        tabindex="0"
       >
         <div class="nada-header-container">
           <slot name="header">
