@@ -434,7 +434,7 @@ export function mapSchemas(
 export function findSchemaById(
   schemas: ComponentSchema[],
   id: string,
-): ComponentSchema {
+): ComponentSchema | null {
   // 查询节点
   const schema = findSchemas(
     schemas,
@@ -444,9 +444,9 @@ export function findSchemaById(
     true,
   ) as ComponentSchema & { children: ComponentSchema };
 
-  // 判断节点是否存在，不存在则抛出异常
+  // 判断节点是否存在，不存在则返回null
   if (!schema) {
-    throw new Error(`没有查询到id为${id}的节点`);
+    return null;
   }
 
   return schema;
